@@ -4,7 +4,8 @@
 public class PlayTicTacToe {
 
     public static void main (String[] args) {
-        TicTacToe game = new TicTacToe();
+        TicTacToeBoard gameBoard = new TicTacToeBoard();
+        TicTacToe game = new TicTacToe(gameBoard, new TicTacToeAi(gameBoard));
         game.play();
     }
 

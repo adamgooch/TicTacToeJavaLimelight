@@ -12,36 +12,41 @@ import java.io.InputStreamReader;
 public class TicTacToe {
     private TicTacToeBoard gameBoard;
     private TicTacToeAi ai;
+    protected InputStreamReader userInputReader;
 
-    public TicTacToe() {
-        gameBoard = new TicTacToeBoard();
-        ai = new TicTacToeAi(gameBoard);
+    public TicTacToe(TicTacToeBoard gameBoard, TicTacToeAi ai) {
+        //gameBoard = new TicTacToeBoard();
+        this.gameBoard = gameBoard;
+        this.ai = ai;
+        userInputReader = new InputStreamReader(System.in);
     }
 
     public void play() {
-        for(int i = 0; i < 1; i++) {
-            System.out.print(gameBoard.toString());
+        //for(int i = 0; i < 1; i++) {
+            System.out.print(gameBoard.printBoard());
             System.out.print("What is your move? ");
-            int desiredSquare = getPlayerMove();
-            while(!gameBoard.putMarkInSquare('X', desiredSquare)){
+            while(!getValidPlayerMove()){
                 System.out.print("Invalid Move: Please enter a valid move ");
-                desiredSquare = getPlayerMove();
-            }
-            System.out.print(gameBoard.toString());
+            };
+            System.out.print(gameBoard.printBoard());
             ai.move();
-            System.out.print(gameBoard.toString());
-        }
+            System.out.print(gameBoard.printBoard());
+        //}
     }
 
-    private int getPlayerMove() {
-        InputStreamReader is = new InputStreamReader(System.in);
-        BufferedReader inputReader = new BufferedReader(is);
-        String desiredSquare = " ";
+    protected boolean getValidPlayerMove() {
+        BufferedReader inputReader = new BufferedReader(userInputReader);
+        String userInput = "9";
+        int desiredSquare = 9;
         try {
-            desiredSquare = inputReader.readLine();
+            userInput = inputReader.readLine();
+            System.out.println("input = " + userInput);
+            desiredSquare = Integer.parseInt(userInput);
         } catch (IOException e) {
-            // Should never happen
+            // Something wrong with the system
+        } catch (NumberFormatException e) {
+            // bad user input
         }
-        return Integer.parseInt(desiredSquare);
+        return gameBoard.putMarkInSquare('X', desiredSquare);
     }
 }

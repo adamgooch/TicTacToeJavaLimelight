@@ -16,7 +16,7 @@ public class TicTacToeBoard {
         }
     }
 
-    public String toString() {
+    public String printBoard() {
         return "\n " + gameBoard[0][0] + " | " + gameBoard[0][1] + " | " + gameBoard[0][2] + "\n" +
                  " " + gameBoard[1][0] + " | " + gameBoard[1][1] + " | " + gameBoard[1][2] + "\n" +
                  " " + gameBoard[2][0] + " | " + gameBoard[2][1] + " | " + gameBoard[2][2] + "\n\n";
@@ -25,7 +25,7 @@ public class TicTacToeBoard {
     public boolean putMarkInSquare(char mark, int square) {
         int row = getRow(square);
         int column = getColumn(square);
-        if(gameBoard[row][column] != 'X' && gameBoard[row][column] != 'O') {
+        if(square < 9 && gameBoard[row][column] != 'X' && gameBoard[row][column] != 'O') {
             gameBoard[row][column] = mark;
             return true;
         }
