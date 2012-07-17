@@ -10,32 +10,40 @@ import java.io.InputStreamReader;
  * To change this template use File | Settings | File Templates.
  */
 public class TicTacToe {
+    public static int movesMade;
     private TicTacToeBoard gameBoard;
     private TicTacToeAi ai;
-    protected InputStreamReader userInputReader;
+    protected BufferedReader inputReader;
 
     public TicTacToe(TicTacToeBoard gameBoard, TicTacToeAi ai) {
         //gameBoard = new TicTacToeBoard();
         this.gameBoard = gameBoard;
         this.ai = ai;
-        userInputReader = new InputStreamReader(System.in);
+        InputStreamReader userInput = new InputStreamReader(System.in);
+        inputReader = new BufferedReader(userInput);
+        movesMade = 0;
     }
 
     public void play() {
-        //for(int i = 0; i < 1; i++) {
+        while(!gameOver()){
             System.out.print(gameBoard.printBoard());
-            System.out.print("What is your move? ");
-            while(!getValidPlayerMove()){
-                System.out.print("Invalid Move: Please enter a valid move ");
-            };
+            getPlayerMove();
             System.out.print(gameBoard.printBoard());
-            ai.move();
-            System.out.print(gameBoard.printBoard());
-        //}
+            if(!gameOver())
+                ai.move();
+        }
     }
 
+    protected void getPlayerMove(){
+        System.out.print("What is your move? ");
+
+        while(!getValidPlayerMove()){
+            System.out.print("Invalid Move: Please enter a valid move ");
+        };
+        movesMade++;
+    }
     protected boolean getValidPlayerMove() {
-        BufferedReader inputReader = new BufferedReader(userInputReader);
+
         String userInput = "9";
         int desiredSquare = 9;
         try {
@@ -48,5 +56,11 @@ public class TicTacToe {
             // bad user input
         }
         return gameBoard.putMarkInSquare('X', desiredSquare);
+    }
+
+    protected boolean gameOver() {
+        if(movesMade >= TicTacToeBoard.NUMBER_OF_SQUARES)
+            return true;
+        return false;
     }
 }

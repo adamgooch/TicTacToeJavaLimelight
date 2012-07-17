@@ -14,8 +14,10 @@ public class TicTacToeAi {
 
     public void move() {
         for(int i = 0; i < TicTacToeBoard.NUMBER_OF_SQUARES; i++){
-            if(gameBoard.putMarkInSquare('O', i))
+            if(gameBoard.putMarkInSquare('O', i)){
+                TicTacToe.movesMade++;
                 break;
+            }
         }
     }
 }
