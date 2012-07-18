@@ -31,107 +31,83 @@ public class TicTacToeTest extends TestSuite {
 
     @Test
     public void playShouldShowTheInitialGameBoard() {
-        InputStream pseudoUserInput = new ByteArrayInputStream("0\n1\n2\n3\n4\n5\n6\n7\n8\n".getBytes());
-        InputStreamReader userInputReader = new InputStreamReader(pseudoUserInput);
-        game.inputReader = new BufferedReader(userInputReader);
-
-        when(mockBoard.putMarkInSquare('X', 0)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 1)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 2)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 3)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 4)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 5)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 6)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 7)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 8)).thenReturn(true);
-
+        createUserInput("0\n1\n2\n3\n4\n5\n6\n7\n8\n");
+        for(int i = 0; i < 9; i++) {
+            when(mockBoard.putMarkInSquare('X', i)).thenReturn(true);
+        }
         game.play();
         verify(mockBoard, atLeastOnce()).printBoard();
     }
 
     @Test
     public void playShouldLetTheAIMoveAfterThePlayerHasMoved() {
-        InputStream pseudoUserInput = new ByteArrayInputStream("0\n1\n2\n3\n4\n5\n6\n7\n8\n".getBytes());
-        InputStreamReader userInputReader = new InputStreamReader(pseudoUserInput);
-        game.inputReader = new BufferedReader(userInputReader);
-
-        when(mockBoard.putMarkInSquare('X', 0)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 1)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 2)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 3)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 4)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 5)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 6)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 7)).thenReturn(true);
-        when(mockBoard.putMarkInSquare('X', 8)).thenReturn(true);
-
+        createUserInput("0\n1\n2\n3\n4\n5\n6\n7\n8\n");
+        for(int i = 0; i < 9; i++) {
+            when(mockBoard.putMarkInSquare('X', i)).thenReturn(true);
+        }
         game.play();
         verify(mockAi, atLeastOnce()).move();
     }
 
     @Test
     public void getValidPlayerMoveShouldBeTrueWhenThePlayerEnters4() {
-        InputStream pseudoUserInput = new ByteArrayInputStream("4\n".getBytes());
-        InputStreamReader userInputReader = new InputStreamReader(pseudoUserInput);
-        game.inputReader = new BufferedReader(userInputReader);
-
+        createUserInput("4\n");
         when(mockBoard.putMarkInSquare('X', 4)).thenReturn(true);
-        assertTrue(game.getValidPlayerMove());
+        assertTrue(game.isValidPlayerMove());
     }
 
     @Test
     public void getValidPlayerMoveShouldReturnTrueWhenThePlayerEnters8() {
-        InputStream pseudoUserInput = new ByteArrayInputStream("8\n".getBytes());
-        InputStreamReader userInputReader = new InputStreamReader(pseudoUserInput);
-        game.inputReader = new BufferedReader(userInputReader);
-
+        createUserInput("8\n");
         when(mockBoard.putMarkInSquare('X', 8)).thenReturn(true);
-        assertTrue(game.getValidPlayerMove());
+        assertTrue(game.isValidPlayerMove());
     }
 
     @Test
     public void getValidPlayerMoveShouldReturnFalseWhenThePlayerEnters9() {
-        InputStream pseudoUserInput = new ByteArrayInputStream("9\n".getBytes());
-        InputStreamReader userInputReader = new InputStreamReader(pseudoUserInput);
-        game.inputReader = new BufferedReader(userInputReader);
-
+        createUserInput("9\n");
         when(mockBoard.putMarkInSquare('X', 9)).thenReturn(false);
-        assertFalse(game.getValidPlayerMove());
+        assertFalse(game.isValidPlayerMove());
     }
 
     @Test
     public void getValidPlayerMoveShouldReturnFalseWhenThePlayerEntersAString() {
-        InputStream pseudoUserInput = new ByteArrayInputStream("what\n".getBytes());
-        InputStreamReader userInputReader = new InputStreamReader(pseudoUserInput);
-        game.inputReader = new BufferedReader(userInputReader);
-
+        createUserInput("what\n");
         when(mockBoard.putMarkInSquare('X', 9)).thenReturn(false);
-        assertFalse(game.getValidPlayerMove());
+        assertFalse(game.isValidPlayerMove());
     }
 
     @Test
     public void gameOverShouldBeFalseAfter1MoveHasBeenMade() {
-        InputStream pseudoUserInput = new ByteArrayInputStream("0\n".getBytes());
-        InputStreamReader userInputReader = new InputStreamReader(pseudoUserInput);
-        game.inputReader = new BufferedReader(userInputReader);
-
+        createUserInput("0\n");
         when(mockBoard.putMarkInSquare('X', 0)).thenReturn(true);
         assertFalse(game.gameOver());
     }
 
     @Test
     public void gameOverShouldBeTrueAfter9MovesHaveBeenMade() {
-        InputStream pseudoUserInput;
-        String testData;
+        createUserInput("0\n1\n2\n3\n4\n5\n6\n7\n8\n");
         for(int i = 0; i < 9; i++){
-            testData = Integer.toString(i);
-            pseudoUserInput = new ByteArrayInputStream(testData.getBytes());
-            InputStreamReader userInputReader = new InputStreamReader(pseudoUserInput);
-            game.inputReader = new BufferedReader(userInputReader);
-
             when(mockBoard.putMarkInSquare('X', i)).thenReturn(true);
             game.getPlayerMove();
         }
         assertTrue(game.gameOver());
+    }
+
+    @Test
+    public void gameOverShouldBeTrueWhenXWinsInARow() {
+        createUserInput("0\n1\n2\n");
+        for(int i = 0; i < 3; i++){
+            when(mockBoard.putMarkInSquare('X', i)).thenReturn(true);
+            game.getPlayerMove();
+        }
+        when(mockBoard.winner()).thenReturn(true);
+        assertTrue(game.gameOver());
+    }
+
+    private void createUserInput(String input) {
+        InputStream pseudoUserInput = new ByteArrayInputStream(input.getBytes());
+        InputStreamReader userInputReader = new InputStreamReader(pseudoUserInput);
+        game.inputReader = new BufferedReader(userInputReader);
     }
 }

@@ -16,7 +16,6 @@ public class TicTacToe {
     protected BufferedReader inputReader;
 
     public TicTacToe(TicTacToeBoard gameBoard, TicTacToeAi ai) {
-        //gameBoard = new TicTacToeBoard();
         this.gameBoard = gameBoard;
         this.ai = ai;
         InputStreamReader userInput = new InputStreamReader(System.in);
@@ -25,24 +24,25 @@ public class TicTacToe {
     }
 
     public void play() {
+        System.out.print(gameBoard.printBoard());
         while(!gameOver()){
-            System.out.print(gameBoard.printBoard());
             getPlayerMove();
             System.out.print(gameBoard.printBoard());
             if(!gameOver())
                 ai.move();
+            System.out.print(gameBoard.printBoard());
         }
+        System.out.println("GAME OVER\n");
     }
 
     protected void getPlayerMove(){
         System.out.print("What is your move? ");
-
-        while(!getValidPlayerMove()){
+            while(!isValidPlayerMove()){
             System.out.print("Invalid Move: Please enter a valid move ");
         };
         movesMade++;
     }
-    protected boolean getValidPlayerMove() {
+    protected boolean isValidPlayerMove() {
 
         String userInput = "9";
         int desiredSquare = 9;
@@ -59,7 +59,8 @@ public class TicTacToe {
     }
 
     protected boolean gameOver() {
-        if(movesMade >= TicTacToeBoard.NUMBER_OF_SQUARES)
+        if(movesMade >= TicTacToeBoard.NUMBER_OF_SQUARES  ||
+                gameBoard.winner())
             return true;
         return false;
     }

@@ -11,7 +11,7 @@ public class TicTacToeBoard {
 
     public TicTacToeBoard() {
         gameBoard = new char[3][3];
-        for(int i = 0; i < NUMBER_OF_SQUARES; i++){
+        for(int i = 0; i < NUMBER_OF_SQUARES; i++) {
             gameBoard[getRow(i)][getColumn(i)] = Character.forDigit(i, 9);
         }
     }
@@ -32,11 +32,47 @@ public class TicTacToeBoard {
         return false;
     }
 
-    private int getRow(int square){
+    private int getRow(int square) {
         return square / 3;
     }
 
-    private int getColumn(int square){
+    private int getColumn(int square) {
         return square % 3;
+    }
+
+    public boolean winner() {
+        for(int i = 0; i < 3; i++){
+            if(winnerInRow(i) || winnerInColumn(i))
+                return true;
+        }
+        if(winnerInDiagonal())
+            return true;
+        return false;
+    }
+
+    private boolean winnerInRow(int row) {
+        if(gameBoard[row][0] == gameBoard[row][1] &&
+                gameBoard[row][0] == gameBoard[row][2]) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean winnerInColumn(int column) {
+        if(gameBoard[0][column] == gameBoard[1][column] &&
+                gameBoard[0][column] == gameBoard[2][column]) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean winnerInDiagonal() {
+        if(gameBoard[0][0] == gameBoard[1][1] &&
+                gameBoard[1][1] == gameBoard[2][2])
+            return true;
+        if(gameBoard[0][2] == gameBoard[1][1] &&
+                gameBoard[2][0] == gameBoard[1][1])
+            return true;
+        return false;
     }
 }

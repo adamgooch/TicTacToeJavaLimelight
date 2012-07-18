@@ -71,4 +71,52 @@ public class TicTacToeBoardTest extends TestSuite {
                   " 3 | X | 5\n" +
                   " 6 | 7 | 8\n\n");
     }
+
+    @Test
+    public void winnerShouldReturnTrueWhenXHasWonInARow() {
+        for(int i = 0; i < 3; i++){
+            board.putMarkInSquare('X', i);
+        }
+        assertTrue(board.winner());
+    }
+
+    @Test
+    public void winnerShouldReturnTrueWhenOHasWonInAColumn() {
+        board.putMarkInSquare('O', 1);
+        board.putMarkInSquare('O', 4);
+        board.putMarkInSquare('O', 7);
+        assertTrue(board.winner());
+    }
+
+    @Test
+    public void winnerShouldReturnTrueWhenXHasWonDiagonally() {
+        board.putMarkInSquare('X', 0);
+        board.putMarkInSquare('X', 4);
+        board.putMarkInSquare('X', 8);
+        assertTrue(board.winner());
+    }
+
+    @Test
+    public void winnerShouldReturnTrueWhenOHasWonDiagonally() {
+        board.putMarkInSquare('O', 2);
+        board.putMarkInSquare('O', 4);
+        board.putMarkInSquare('O', 6);
+        assertTrue(board.winner());
+    }
+
+    @Test
+    public void winnerShouldReturnFalseWhenXBlocksDiagonally() {
+        board.putMarkInSquare('O', 2);
+        board.putMarkInSquare('X', 4);
+        board.putMarkInSquare('O', 6);
+        assertFalse(board.winner());
+    }
+
+    @Test
+    public void winnerShouldReturnFalseWhenOBlocksDiagonally() {
+        board.putMarkInSquare('X', 0);
+        board.putMarkInSquare('O', 4);
+        board.putMarkInSquare('X', 8);
+        assertFalse(board.winner());
+    }
 }
