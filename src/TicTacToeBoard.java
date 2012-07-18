@@ -32,6 +32,10 @@ public class TicTacToeBoard {
         return false;
     }
 
+    public char getMarkInSquare(int square) {
+        return gameBoard[getRow(square)][getColumn(square)];
+    }
+
     private int getRow(int square) {
         return square / 3;
     }
@@ -75,4 +79,5 @@ public class TicTacToeBoard {
             return true;
         return false;
     }
+
 }

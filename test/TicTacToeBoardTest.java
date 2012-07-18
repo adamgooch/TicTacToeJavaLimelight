@@ -19,7 +19,7 @@ public class TicTacToeBoardTest extends TestSuite {
     private TicTacToeBoard board;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         board = new TicTacToeBoard();
     }
 

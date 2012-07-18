@@ -28,9 +28,10 @@ public class TicTacToe {
         while(!gameOver()){
             getPlayerMove();
             System.out.print(gameBoard.printBoard());
-            if(!gameOver())
+            if(!gameOver()){
                 ai.move();
-            System.out.print(gameBoard.printBoard());
+                System.out.print(gameBoard.printBoard());
+            }
         }
         System.out.println("GAME OVER\n");
     }
