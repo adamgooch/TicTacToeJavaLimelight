@@ -15,12 +15,11 @@ public class TicTacToeAi {
     }
 
     public void move() {
-        if(!possibleWin()){
-            if(!possibleThreat()){
-                takeFirstAvailableSquare();
-            }
+        if(TicTacToe.movesMade <= 1) {
+            makeFirstMove();
+        } else if(!possibleWin() && !possibleThreat() && !createThreat()) {
+            takeFirstAvailableSquare();
         }
-
         TicTacToe.movesMade++;
     }
 
@@ -111,9 +110,34 @@ public class TicTacToeAi {
         return row * 3 + column;
     }
 
+    private boolean createThreat() {
+        if( gameBoard.getMarkInSquare(4) == 'O' &&
+                gameBoard.getMarkInSquare(1) != 'O'){
+            gameBoard.putMarkInSquare('O', 1);
+            return true;
+        }
+        return false;
+    }
+
+    private void makeFirstMove() {
+        if(gameBoard.getMarkInSquare(0) == 'X' ||
+           gameBoard.getMarkInSquare(2) == 'X' ||
+           gameBoard.getMarkInSquare(6) == 'X' ||
+           gameBoard.getMarkInSquare(8) == 'X') {
+            gameBoard.putMarkInSquare('O', 4);
+        } else if(gameBoard.getMarkInSquare(7) == 'X' ||
+                gameBoard.getMarkInSquare(5) == 'X') {
+            gameBoard.putMarkInSquare('O', 8);
+        } else {
+            takeFirstAvailableSquare();
+        }
+    }
+
     private void takeFirstAvailableSquare() {
-        for(int i = 0; i < TicTacToeBoard.NUMBER_OF_SQUARES; i++){
+        boolean flag = true;
+        for(int i = 0; i < TicTacToeBoard.NUMBER_OF_SQUARES; i++) {
             if(gameBoard.putMarkInSquare('O', i)){
+                flag = false;
                 break;
             }
         }

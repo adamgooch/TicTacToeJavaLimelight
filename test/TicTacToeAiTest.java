@@ -1,4 +1,5 @@
 import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,6 +21,7 @@ public class TicTacToeAiTest extends TestSuite {
     public void setUp() {
         mockBoard = mock(TicTacToeBoard.class);
         ai = new TicTacToeAi(mockBoard);
+        TicTacToe.movesMade = 0;
     }
 
     @Test
@@ -84,9 +86,56 @@ public class TicTacToeAiTest extends TestSuite {
         assertTrue(ai.possibleThreat());
     }
 
+    @Test
+    public void firstMoveShouldBeInACornerIfXStartsInCenter() {
+        setupFakeBoard("0123X5678".toCharArray());
+        ensureNoOtherMoveWasMade();
+        ai.move();
+        verify(mockBoard).putMarkInSquare('O', 0);
+    }
+
+    @Test
+    public void firstMoveShouldBeInCenterIfXStartsInACorner() {
+        setupFakeBoard("01X345678".toCharArray());
+        ensureNoOtherMoveWasMade();
+        ai.move();
+        verify(mockBoard).putMarkInSquare('O', 4);
+    }
+
+    @Test
+    public void firstMoveShouldBeAdjacentToXIfXStartsInSquare7() {
+        setupFakeBoard("0123456X8".toCharArray());
+        ensureNoOtherMoveWasMade();
+        ai.move();
+        verify(mockBoard).putMarkInSquare('O', 8);
+    }
+
+    @Test
+    public void firstMoveShouldBeAdjacentToXIfXStartsSquare5() {
+        setupFakeBoard("01234X678".toCharArray());
+        ensureNoOtherMoveWasMade();
+        ai.move();
+        verify(mockBoard).putMarkInSquare('O', 8);
+    }
+
+    @Test
+    public void secondMoveShouldCreateAThreatIfNoBlockIsNecessary() {
+        setupFakeBoard("01X3O5X78".toCharArray());
+        ensureNoOtherMoveWasMade();
+        TicTacToe.movesMade = 3;
+        ai.move();
+        verify(mockBoard).putMarkInSquare('O', 1);
+    }
+
     private void setupFakeBoard(char[] board) {
         for(int i = 0; i < board.length; i++){
             when(mockBoard.getMarkInSquare(i)).thenReturn(board[i]);
+        }
+    }
+
+    private void ensureNoOtherMoveWasMade() {
+        for(int i = 0; i < 9; i++){
+            when(mockBoard.putMarkInSquare('O', i)).thenReturn(true);
         }
     }
 

@@ -1,6 +1,6 @@
 /**
  * Created with IntelliJ IDEA.
- * User: Tank
+ * User: Adam Gooch
  * Date: 7/16/12
  * Time: 2:11 PM
  * To change this template use File | Settings | File Templates.
