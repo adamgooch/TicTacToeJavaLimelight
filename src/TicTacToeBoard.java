@@ -7,16 +7,18 @@
  */
 public class TicTacToeBoard {
     public static final int NUMBER_OF_SQUARES = 9;
+    public static final int BOARD_DIMENSION = 3;
+    public static boolean winner = false;
     private char[][] gameBoard;
 
     public TicTacToeBoard() {
-        gameBoard = new char[3][3];
+        gameBoard = new char[BOARD_DIMENSION][BOARD_DIMENSION];
         for(int i = 0; i < NUMBER_OF_SQUARES; i++) {
             gameBoard[getRow(i)][getColumn(i)] = Character.forDigit(i, 9);
         }
     }
 
-    public String printBoard() {
+    public String asString() {
         return "\n " + gameBoard[0][0] + " | " + gameBoard[0][1] + " | " + gameBoard[0][2] + "\n" +
                  " " + gameBoard[1][0] + " | " + gameBoard[1][1] + " | " + gameBoard[1][2] + "\n" +
                  " " + gameBoard[2][0] + " | " + gameBoard[2][1] + " | " + gameBoard[2][2] + "\n\n";
@@ -25,8 +27,11 @@ public class TicTacToeBoard {
     public boolean putMarkInSquare(char mark, int square) {
         int row = getRow(square);
         int column = getColumn(square);
-        if(square < 9 && gameBoard[row][column] != 'X' && gameBoard[row][column] != 'O') {
+        if(square < NUMBER_OF_SQUARES &&
+                gameBoard[row][column] != 'X' &&
+                gameBoard[row][column] != 'O') {
             gameBoard[row][column] = mark;
+            checkForWinner();
             return true;
         }
         return false;
@@ -37,21 +42,20 @@ public class TicTacToeBoard {
     }
 
     private int getRow(int square) {
-        return square / 3;
+        return square / BOARD_DIMENSION;
     }
 
     private int getColumn(int square) {
-        return square % 3;
+        return square % BOARD_DIMENSION;
     }
-
-    public boolean winner() {
-        for(int i = 0; i < 3; i++){
+    // break out to another class
+    private void checkForWinner() {
+        for(int i = 0; i < BOARD_DIMENSION; i++){
             if(winnerInRow(i) || winnerInColumn(i))
-                return true;
+                winner = true;
         }
         if(winnerInDiagonal())
-            return true;
-        return false;
+            winner = true;
     }
 
     private boolean winnerInRow(int row) {

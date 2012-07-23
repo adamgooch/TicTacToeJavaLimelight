@@ -1,12 +1,7 @@
 import junit.framework.TestSuite;
 import org.junit.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import static junit.framework.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,11 +16,12 @@ public class TicTacToeBoardTest extends TestSuite {
     @Before
     public void setUp() {
         board = new TicTacToeBoard();
+        board.winner = false;
     }
 
     @Test
     public void printBoardShouldReturnAnAsciiTicTacToeBoard() {
-        assertEquals(board.printBoard(),
+        assertEquals(board.asString(),
                 "\n 0 | 1 | 2\n" +
                   " 3 | 4 | 5\n" +
                   " 6 | 7 | 8\n\n");
@@ -56,7 +52,7 @@ public class TicTacToeBoardTest extends TestSuite {
     @Test
     public void printBoardShouldHaveAnXInTheCenterAfterAnXHasMovedInSquare4() {
         board.putMarkInSquare('X', 4);
-        assertEquals(board.printBoard(),
+        assertEquals(board.asString(),
                 "\n 0 | 1 | 2\n" +
                   " 3 | X | 5\n" +
                   " 6 | 7 | 8\n\n");
@@ -66,7 +62,7 @@ public class TicTacToeBoardTest extends TestSuite {
     public void printBoardShouldHaveAnXInTheCenterAndAnOInTheTopLeftSquare() {
         board.putMarkInSquare('X', 4);
         board.putMarkInSquare('O', 0);
-        assertEquals(board.printBoard(),
+        assertEquals(board.asString(),
                 "\n O | 1 | 2\n" +
                   " 3 | X | 5\n" +
                   " 6 | 7 | 8\n\n");
@@ -74,10 +70,10 @@ public class TicTacToeBoardTest extends TestSuite {
 
     @Test
     public void winnerShouldReturnTrueWhenXHasWonInARow() {
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < board.BOARD_DIMENSION; i++){
             board.putMarkInSquare('X', i);
         }
-        assertTrue(board.winner());
+        assertTrue(board.winner);
     }
 
     @Test
@@ -85,7 +81,7 @@ public class TicTacToeBoardTest extends TestSuite {
         board.putMarkInSquare('O', 1);
         board.putMarkInSquare('O', 4);
         board.putMarkInSquare('O', 7);
-        assertTrue(board.winner());
+        assertTrue(board.winner);
     }
 
     @Test
@@ -93,7 +89,7 @@ public class TicTacToeBoardTest extends TestSuite {
         board.putMarkInSquare('X', 0);
         board.putMarkInSquare('X', 4);
         board.putMarkInSquare('X', 8);
-        assertTrue(board.winner());
+        assertTrue(board.winner);
     }
 
     @Test
@@ -101,7 +97,7 @@ public class TicTacToeBoardTest extends TestSuite {
         board.putMarkInSquare('O', 2);
         board.putMarkInSquare('O', 4);
         board.putMarkInSquare('O', 6);
-        assertTrue(board.winner());
+        assertTrue(board.winner);
     }
 
     @Test
@@ -109,7 +105,7 @@ public class TicTacToeBoardTest extends TestSuite {
         board.putMarkInSquare('O', 2);
         board.putMarkInSquare('X', 4);
         board.putMarkInSquare('O', 6);
-        assertFalse(board.winner());
+        assertFalse(board.winner);
     }
 
     @Test
@@ -117,6 +113,6 @@ public class TicTacToeBoardTest extends TestSuite {
         board.putMarkInSquare('X', 0);
         board.putMarkInSquare('O', 4);
         board.putMarkInSquare('X', 8);
-        assertFalse(board.winner());
+        assertFalse(board.winner);
     }
 }

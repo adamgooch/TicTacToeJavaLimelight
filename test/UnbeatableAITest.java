@@ -1,5 +1,4 @@
 import junit.framework.TestSuite;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,15 +12,15 @@ import static org.mockito.Mockito.*;
  * Time: 10:16 AM
  * To change this template use File | Settings | File Templates.
  */
-public class TicTacToeAiTest extends TestSuite {
-    private TicTacToeAi ai;
+public class UnbeatableAITest extends TestSuite {
+    private UnbeatableAI ai;
     private TicTacToeBoard mockBoard;
 
     @Before
     public void setUp() {
         mockBoard = mock(TicTacToeBoard.class);
-        ai = new TicTacToeAi(mockBoard);
-        TicTacToe.movesMade = 0;
+        ai = new UnbeatableAI(mockBoard);
+        TicTacToeGame.movesMade = 0;
     }
 
     @Test
@@ -122,7 +121,7 @@ public class TicTacToeAiTest extends TestSuite {
     public void secondMoveShouldCreateAThreatIfNoBlockIsNecessary() {
         setupFakeBoard("01X3O5X78".toCharArray());
         ensureNoOtherMoveWasMade();
-        TicTacToe.movesMade = 3;
+        TicTacToeGame.movesMade = 3;
         ai.move();
         verify(mockBoard).putMarkInSquare('O', 1);
     }

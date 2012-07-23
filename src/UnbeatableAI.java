@@ -5,26 +5,28 @@
  * Time: 11:09 AM
  * To change this template use File | Settings | File Templates.
  */
-public class TicTacToeAi {
+
+// should be interface AI, this could be TTTAIUnbeatable
+public class UnbeatableAI implements TicTacToeAI {
     private TicTacToeBoard gameBoard;
     private int openSquare;
 
 
-    public TicTacToeAi(TicTacToeBoard gameBoard){
+    public UnbeatableAI(TicTacToeBoard gameBoard){
         this.gameBoard = gameBoard;
     }
 
     public void move() {
-        if(TicTacToe.movesMade <= 1) {
+        if(TicTacToeGame.movesMade <= 1) {
             makeFirstMove();
         } else if(!possibleWin() && !possibleThreat() && !createThreat()) {
             takeFirstAvailableSquare();
         }
-        TicTacToe.movesMade++;
+        TicTacToeGame.movesMade++;
     }
 
     protected boolean possibleWin() {
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < TicTacToeBoard.BOARD_DIMENSION; i++) {
             if(canWinInRow('O', i))
                 return gameBoard.putMarkInSquare('O', openSquare);
             if(canWinInColumn('O', i))
@@ -36,11 +38,16 @@ public class TicTacToeAi {
     }
 
     private boolean canWinInRow(char mark, int row) {
-        int count = 0;
-        for(int column = 0; column < 3; column++) {
-            int square = getSquare(row, column);
-            count = count + incOrDecCount(square);
-        }
+        int count = countMarks(mark, row, "row");
+        return canWin(mark, count);
+    }
+
+    private boolean canWinInColumn(char mark, int column) {
+        int count = countMarks(mark, column, "column");
+        return canWin(mark, count);
+    }
+
+    private boolean canWin(char mark, int count){
         if(mark == 'O' && count == 2)
             return true;
         else if(mark == 'X' && count == -2)
@@ -48,17 +55,15 @@ public class TicTacToeAi {
         return false;
     }
 
-    private boolean canWinInColumn(char mark, int column) {
+    private int countMarks(char mark, int constant, String constantIdentifier){
         int count = 0;
-        for(int row = 0; row < 3; row++) {
+        for(int i = 0; i < TicTacToeBoard.BOARD_DIMENSION; i++) {
+            int row = constantIdentifier.equals("row") ? constant : i;
+            int column = constantIdentifier.equals("column") ? constant : i;
             int square = getSquare(row, column);
             count = count + incOrDecCount(square);
         }
-        if(mark == 'O' && count == 2)
-            return true;
-        else if(mark == 'X' && count == -2)
-            return true;
-        return false;
+        return count;
     }
 
     private boolean canWinInDiagonal(char mark) {
@@ -95,7 +100,7 @@ public class TicTacToeAi {
     }
 
     protected boolean possibleThreat() {
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < TicTacToeBoard.BOARD_DIMENSION; i++) {
             if(canWinInRow('X', i))
                 return gameBoard.putMarkInSquare('O', openSquare);
             if(canWinInColumn('X', i))
@@ -107,7 +112,7 @@ public class TicTacToeAi {
     }
 
     private int getSquare(int row, int column) {
-        return row * 3 + column;
+        return row * TicTacToeBoard.BOARD_DIMENSION + column;
     }
 
     private boolean createThreat() {
@@ -134,10 +139,8 @@ public class TicTacToeAi {
     }
 
     private void takeFirstAvailableSquare() {
-        boolean flag = true;
         for(int i = 0; i < TicTacToeBoard.NUMBER_OF_SQUARES; i++) {
             if(gameBoard.putMarkInSquare('O', i)){
-                flag = false;
                 break;
             }
         }
