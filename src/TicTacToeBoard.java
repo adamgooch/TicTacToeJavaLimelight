@@ -1,9 +1,7 @@
+
 /**
- * Created with IntelliJ IDEA.
- * User: Adam Gooch
+ * Author: Adam Gooch
  * Date: 7/16/12
- * Time: 2:11 PM
- * To change this template use File | Settings | File Templates.
  */
 public class TicTacToeBoard {
     public static final int NUMBER_OF_SQUARES = 9;

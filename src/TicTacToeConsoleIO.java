@@ -3,11 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Tank
+ * Author: Adam Gooch
  * Date: 7/22/12
- * Time: 9:04 PM
- * To change this template use File | Settings | File Templates.
  */
 public class TicTacToeConsoleIO implements TicTacToeIO {
     private TicTacToeBoard gameBoard;
@@ -42,7 +39,6 @@ public class TicTacToeConsoleIO implements TicTacToeIO {
         int desiredSquare = 9;
         try {
             userInput = inputReader.readLine();
-            System.out.println("input = " + userInput);
             desiredSquare = Integer.parseInt(userInput);
         } catch (IOException e) {
             // Something wrong with the system

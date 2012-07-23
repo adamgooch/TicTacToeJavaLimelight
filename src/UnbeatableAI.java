@@ -1,12 +1,9 @@
+
 /**
- * Created with IntelliJ IDEA.
- * User: Tank
+ * Author: Adam Gooch
  * Date: 7/17/12
- * Time: 11:09 AM
- * To change this template use File | Settings | File Templates.
  */
 
-// should be interface AI, this could be TTTAIUnbeatable
 public class UnbeatableAI implements TicTacToeAI {
     private TicTacToeBoard gameBoard;
     private int openSquare;

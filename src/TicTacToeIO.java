@@ -1,9 +1,7 @@
+
 /**
- * Created with IntelliJ IDEA.
- * User: Tank
+ * Author: Adam Gooch
  * Date: 7/22/12
- * Time: 9:03 PM
- * To change this template use File | Settings | File Templates.
  */
 public interface TicTacToeIO {
     public void displayBoard();
