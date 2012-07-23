@@ -114,12 +114,12 @@ public class UnbeatableAI implements AI {
     private boolean createThreat() {
         if(gameBoard.getMarkInSquare(4) == 'O' &&
                 gameBoard.getMarkInSquare(1) != 'O') {
-            gameBoard.putMarkInSquare('O', 1);
-            return true;
+            if(gameBoard.putMarkInSquare('O', 1))
+                return true;
         } else if(gameBoard.getMarkInSquare(4) == 'X' &&
                 gameBoard.getMarkInSquare(0) == 'O') {
-            gameBoard.putMarkInSquare('O', 2);
-            return true;
+            if(gameBoard.putMarkInSquare('O', 2))
+                return true;
         }
         return false;
     }
