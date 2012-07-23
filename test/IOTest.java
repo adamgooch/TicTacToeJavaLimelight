@@ -1,5 +1,3 @@
-package TicTacToe;
-
 import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,11 +10,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Tank
+ * Author: Adam Gooch
  * Date: 7/22/12
- * Time: 9:31 PM
- * To change this template use File | Settings | File Templates.
  */
 public class IOTest extends TestSuite {
     private ConsoleIO io;

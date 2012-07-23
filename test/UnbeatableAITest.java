@@ -1,5 +1,3 @@
-package TicTacToe;
-
 import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,11 +6,8 @@ import static junit.framework.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Tank
+ * Author: Adam Gooch
  * Date: 7/18/12
- * Time: 10:16 AM
- * To change this template use File | Settings | File Templates.
  */
 public class UnbeatableAITest extends TestSuite {
     private UnbeatableAI ai;
@@ -126,6 +121,15 @@ public class UnbeatableAITest extends TestSuite {
         Game.movesMade = 3;
         ai.move();
         verify(mockBoard).putMarkInSquare('O', 1);
+    }
+
+    @Test
+    public void moveShouldCreateAThreatIfNoBlockIsNecessary() {
+        setupFakeBoard("O123X567X".toCharArray());
+        ensureNoOtherMoveWasMade();
+        Game.movesMade = 3;
+        ai.move();
+        verify(mockBoard).putMarkInSquare('O', 2);
     }
 
     private void setupFakeBoard(char[] board) {

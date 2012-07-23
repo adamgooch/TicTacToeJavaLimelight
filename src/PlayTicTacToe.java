@@ -1,7 +1,6 @@
-package TicTacToe;
-
 /**
- *
+ * Author: Adam Gooch
+ * Date: 7/17/12
  */
 public class PlayTicTacToe {
 

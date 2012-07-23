@@ -1,5 +1,3 @@
-package TicTacToe;
-
 /**
  * Author: Adam Gooch
  * Date: 7/16/12
@@ -26,7 +24,7 @@ public class Game {
                 console.displayBoard();
             }
         }
-        console.displayMessage("GAME OVER!");
+        console.displayMessage("GAME OVER!\n");
     }
 
     protected boolean gameOver() {

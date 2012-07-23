@@ -1,1 +1,7 @@
-Under Construction
+This is an unbeatable game of Tic Tac Toe played via a console.
+
+To play, open your console and set your working directory to:
+TicTacToe/out/production/TicTacToe/
+
+Then run:
+java PlayTicTacToe

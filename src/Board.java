@@ -1,5 +1,3 @@
-package TicTacToe;
-
 /**
  * Author: Adam Gooch
  * Date: 7/16/12

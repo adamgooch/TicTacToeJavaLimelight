@@ -1,5 +1,3 @@
-package TicTacToe;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,7 +30,7 @@ public class ConsoleIO implements IO {
     public void getPlayerMove() {
         displayMessage("What is your move? ");
         while(!isValidPlayerMove()){
-            System.out.print("Invalid Move: Please enter a valid move ");
+            displayMessage("Invalid Move: Please enter a valid move ");
         };
     }
 

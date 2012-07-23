@@ -1,11 +1,3 @@
-package TicTacToe; /**
-* Created with IntelliJ IDEA.
-* User: Tank
-* Date: 7/16/12
-* Time: 11:50 AM
-* To change this template use File | Settings | File Templates.
-*/
-
 import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +7,10 @@ import java.io.*;
 import static junit.framework.Assert.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Author: Adam Gooch
+ * Date: 7/16/12
+ */
 public class GameTest extends TestSuite {
     private Game game;
     private UnbeatableAI mockAi;
