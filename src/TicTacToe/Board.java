@@ -1,15 +1,16 @@
+package TicTacToe;
 
 /**
  * Author: Adam Gooch
  * Date: 7/16/12
  */
-public class TicTacToeBoard {
+public class Board {
     public static final int NUMBER_OF_SQUARES = 9;
     public static final int BOARD_DIMENSION = 3;
     public static boolean winner = false;
     private char[][] gameBoard;
 
-    public TicTacToeBoard() {
+    public Board() {
         gameBoard = new char[BOARD_DIMENSION][BOARD_DIMENSION];
         for(int i = 0; i < NUMBER_OF_SQUARES; i++) {
             gameBoard[getRow(i)][getColumn(i)] = Character.forDigit(i, 9);

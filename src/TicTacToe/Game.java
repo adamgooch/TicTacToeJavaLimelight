@@ -1,14 +1,15 @@
+package TicTacToe;
 
 /**
  * Author: Adam Gooch
  * Date: 7/16/12
  */
-public class TicTacToeGame {
+public class Game {
     public static int movesMade;
-    private TicTacToeAI ai;
-    private TicTacToeIO console;
+    private AI ai;
+    private IO console;
 
-    public TicTacToeGame(TicTacToeAI ai, TicTacToeIO io) {
+    public Game(AI ai, IO io) {
         this.ai = ai;
         this.console = io;
         movesMade = 0;
@@ -29,8 +30,8 @@ public class TicTacToeGame {
     }
 
     protected boolean gameOver() {
-        if(movesMade >= TicTacToeBoard.NUMBER_OF_SQUARES  ||
-                TicTacToeBoard.winner)
+        if(movesMade >= Board.NUMBER_OF_SQUARES  ||
+                Board.winner)
             return true;
         return false;
     }

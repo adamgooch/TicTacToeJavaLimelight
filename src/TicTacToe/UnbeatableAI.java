@@ -1,29 +1,30 @@
+package TicTacToe;
 
 /**
  * Author: Adam Gooch
  * Date: 7/17/12
  */
 
-public class UnbeatableAI implements TicTacToeAI {
-    private TicTacToeBoard gameBoard;
+public class UnbeatableAI implements AI {
+    private Board gameBoard;
     private int openSquare;
 
 
-    public UnbeatableAI(TicTacToeBoard gameBoard){
+    public UnbeatableAI(Board gameBoard){
         this.gameBoard = gameBoard;
     }
 
     public void move() {
-        if(TicTacToeGame.movesMade <= 1) {
+        if(Game.movesMade <= 1) {
             makeFirstMove();
         } else if(!possibleWin() && !possibleThreat() && !createThreat()) {
             takeFirstAvailableSquare();
         }
-        TicTacToeGame.movesMade++;
+        Game.movesMade++;
     }
 
     protected boolean possibleWin() {
-        for(int i = 0; i < TicTacToeBoard.BOARD_DIMENSION; i++) {
+        for(int i = 0; i < Board.BOARD_DIMENSION; i++) {
             if(canWinInRow('O', i))
                 return gameBoard.putMarkInSquare('O', openSquare);
             if(canWinInColumn('O', i))
@@ -54,7 +55,7 @@ public class UnbeatableAI implements TicTacToeAI {
 
     private int countMarks(char mark, int constant, String constantIdentifier){
         int count = 0;
-        for(int i = 0; i < TicTacToeBoard.BOARD_DIMENSION; i++) {
+        for(int i = 0; i < Board.BOARD_DIMENSION; i++) {
             int row = constantIdentifier.equals("row") ? constant : i;
             int column = constantIdentifier.equals("column") ? constant : i;
             int square = getSquare(row, column);
@@ -97,7 +98,7 @@ public class UnbeatableAI implements TicTacToeAI {
     }
 
     protected boolean possibleThreat() {
-        for(int i = 0; i < TicTacToeBoard.BOARD_DIMENSION; i++) {
+        for(int i = 0; i < Board.BOARD_DIMENSION; i++) {
             if(canWinInRow('X', i))
                 return gameBoard.putMarkInSquare('O', openSquare);
             if(canWinInColumn('X', i))
@@ -109,7 +110,7 @@ public class UnbeatableAI implements TicTacToeAI {
     }
 
     private int getSquare(int row, int column) {
-        return row * TicTacToeBoard.BOARD_DIMENSION + column;
+        return row * Board.BOARD_DIMENSION + column;
     }
 
     private boolean createThreat() {
@@ -136,7 +137,7 @@ public class UnbeatableAI implements TicTacToeAI {
     }
 
     private void takeFirstAvailableSquare() {
-        for(int i = 0; i < TicTacToeBoard.NUMBER_OF_SQUARES; i++) {
+        for(int i = 0; i < Board.NUMBER_OF_SQUARES; i++) {
             if(gameBoard.putMarkInSquare('O', i)){
                 break;
             }

@@ -1,3 +1,5 @@
+package TicTacToe;
+
 import junit.framework.TestSuite;
 import org.junit.*;
 
@@ -10,12 +12,12 @@ import static junit.framework.Assert.*;
  * Time: 1:57 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TicTacToeBoardTest extends TestSuite {
-    private TicTacToeBoard board;
+public class BoardTest extends TestSuite {
+    private Board board;
 
     @Before
     public void setUp() {
-        board = new TicTacToeBoard();
+        board = new Board();
         board.winner = false;
     }
 

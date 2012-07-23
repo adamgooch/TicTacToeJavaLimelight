@@ -1,3 +1,5 @@
+package TicTacToe;
+
 import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,17 +18,17 @@ import static org.mockito.Mockito.when;
  * Time: 9:31 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TicTacToeIOTest extends TestSuite {
-    private TicTacToeConsoleIO io;
-    private TicTacToeBoard mockBoard;
+public class IOTest extends TestSuite {
+    private ConsoleIO io;
+    private Board mockBoard;
     private ByteArrayOutputStream outContent;
 
     @Before
     public void setUp() {
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        mockBoard = mock(TicTacToeBoard.class);
-        io = new TicTacToeConsoleIO(mockBoard);
+        mockBoard = mock(Board.class);
+        io = new ConsoleIO(mockBoard);
     }
 
     @Test

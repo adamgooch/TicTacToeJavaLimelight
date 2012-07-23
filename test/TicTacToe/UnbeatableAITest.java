@@ -1,3 +1,5 @@
+package TicTacToe;
+
 import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,13 +16,13 @@ import static org.mockito.Mockito.*;
  */
 public class UnbeatableAITest extends TestSuite {
     private UnbeatableAI ai;
-    private TicTacToeBoard mockBoard;
+    private Board mockBoard;
 
     @Before
     public void setUp() {
-        mockBoard = mock(TicTacToeBoard.class);
+        mockBoard = mock(Board.class);
         ai = new UnbeatableAI(mockBoard);
-        TicTacToeGame.movesMade = 0;
+        Game.movesMade = 0;
     }
 
     @Test
@@ -121,7 +123,7 @@ public class UnbeatableAITest extends TestSuite {
     public void secondMoveShouldCreateAThreatIfNoBlockIsNecessary() {
         setupFakeBoard("01X3O5X78".toCharArray());
         ensureNoOtherMoveWasMade();
-        TicTacToeGame.movesMade = 3;
+        Game.movesMade = 3;
         ai.move();
         verify(mockBoard).putMarkInSquare('O', 1);
     }

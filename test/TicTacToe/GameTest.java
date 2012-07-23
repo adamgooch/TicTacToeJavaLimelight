@@ -1,4 +1,4 @@
-/**
+package TicTacToe; /**
 * Created with IntelliJ IDEA.
 * User: Tank
 * Date: 7/16/12
@@ -15,18 +15,18 @@ import java.io.*;
 import static junit.framework.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class TicTacToeGameTest extends TestSuite {
-    private TicTacToeGame game;
+public class GameTest extends TestSuite {
+    private Game game;
     private UnbeatableAI mockAi;
-    private TicTacToeIO mockIO;
+    private IO mockIO;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Before
     public void setUp() {
         System.setOut(new PrintStream(outContent));
         mockAi = mock(UnbeatableAI.class);
-        mockIO = mock(TicTacToeConsoleIO.class);
-        game = new TicTacToeGame(mockAi, mockIO);
+        mockIO = mock(ConsoleIO.class);
+        game = new Game(mockAi, mockIO);
     }
 
     @Test
@@ -49,13 +49,13 @@ public class TicTacToeGameTest extends TestSuite {
 
     @Test
     public void gameOverShouldBeFalseAfter1MoveHasBeenMade() {
-        TicTacToeGame.movesMade = 1;
+        Game.movesMade = 1;
         assertFalse(game.gameOver());
     }
 
     @Test
     public void gameOverShouldBeTrueAfter9MovesHaveBeenMade() {
-        TicTacToeGame.movesMade = 9;
+        Game.movesMade = 9;
         assertTrue(game.gameOver());
     }
 

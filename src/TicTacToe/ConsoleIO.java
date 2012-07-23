@@ -1,3 +1,5 @@
+package TicTacToe;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -6,11 +8,11 @@ import java.io.InputStreamReader;
  * Author: Adam Gooch
  * Date: 7/22/12
  */
-public class TicTacToeConsoleIO implements TicTacToeIO {
-    private TicTacToeBoard gameBoard;
+public class ConsoleIO implements IO {
+    private Board gameBoard;
     protected BufferedReader inputReader;
 
-    public TicTacToeConsoleIO (TicTacToeBoard gameBoard) {
+    public ConsoleIO(Board gameBoard) {
         this.gameBoard = gameBoard;
         InputStreamReader inputStreamReader = new InputStreamReader(System.in);
         inputReader = new BufferedReader(inputStreamReader);
