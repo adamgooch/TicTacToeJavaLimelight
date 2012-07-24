@@ -17,75 +17,13 @@ public class UnbeatableAITest extends TestSuite {
     public void setUp() {
         mockBoard = mock(Board.class);
         ai = new UnbeatableAI(mockBoard);
-        Game.movesMade = 0;
-    }
-
-    @Test
-    public void possibleWinShouldBeTrueWhenAICanWinInARow() {
-        setupFakeBoard("012O4O678".toCharArray());
-        when(mockBoard.putMarkInSquare('O', 4)).thenReturn(true);
-        assertTrue(ai.possibleWin());
-    }
-
-    @Test
-    public void possibleWinShouldBeTrueWhenAICanWinInAColumn() {
-        setupFakeBoard("O12345O78".toCharArray());
-        when(mockBoard.putMarkInSquare('O', 3)).thenReturn(true);
-        assertTrue(ai.possibleWin());
-    }
-
-    @Test
-    public void possibleWinShouldBeFalseWhenAICannotWin() {
-        setupFakeBoard("01234O678".toCharArray());
-        assertFalse(ai.possibleWin());
-    }
-
-    @Test
-    public void possibleWinShouldBeTrueWhenAICanWinInADiagonal() {
-        setupFakeBoard("O123O5678".toCharArray());
-        when(mockBoard.putMarkInSquare('O', 8)).thenReturn(true);
-        assertTrue(ai.possibleWin());
-    }
-
-    @Test
-    public void possibleWinShouldBeTrueWhenAICanWinInTheOtherDiagonal() {
-        setupFakeBoard("01O3O5678".toCharArray());
-        when(mockBoard.putMarkInSquare('O', 6)).thenReturn(true);
-        assertTrue(ai.possibleWin());
-    }
-
-    @Test
-    public void possibleThreatShouldBeTrueWhenPlayerCanWinInARow() {
-        setupFakeBoard("012345X7X".toCharArray());
-        when(mockBoard.putMarkInSquare('O', 7)).thenReturn(true);
-        assertTrue(ai.possibleThreat());
-    }
-
-    @Test
-    public void possibleThreatShouldBeTrueWhenPlayerCanWinInAColumn() {
-        setupFakeBoard("X12X45678".toCharArray());
-        when(mockBoard.putMarkInSquare('O', 6)).thenReturn(true);
-        assertTrue(ai.possibleThreat());
-    }
-
-    @Test
-    public void possibleThreatShouldBeTrueWhenPlayerCanWinInADiagonal() {
-        setupFakeBoard("X1234567X".toCharArray());
-        when(mockBoard.putMarkInSquare('O', 4)).thenReturn(true);
-        assertTrue(ai.possibleThreat());
-    }
-
-    @Test
-    public void possibleThreatShouldBeTrueWhenPlayerCanWinInTheOtherDiagonal() {
-        setupFakeBoard("01X345X78".toCharArray());
-        when(mockBoard.putMarkInSquare('O', 4)).thenReturn(true);
-        assertTrue(ai.possibleThreat());
+        Board.squaresTaken = 0;
     }
 
     @Test
     public void firstMoveShouldBeInACornerIfXStartsInCenter() {
         setupFakeBoard("0123X5678".toCharArray());
-        ensureNoOtherMoveWasMade();
+        allowOToMoveInAnySquare();
         ai.move();
         verify(mockBoard).putMarkInSquare('O', 0);
     }
@@ -93,15 +31,15 @@ public class UnbeatableAITest extends TestSuite {
     @Test
     public void firstMoveShouldBeInCenterIfXStartsInACorner() {
         setupFakeBoard("01X345678".toCharArray());
-        ensureNoOtherMoveWasMade();
+        allowOToMoveInAnySquare();
         ai.move();
         verify(mockBoard).putMarkInSquare('O', 4);
     }
-
+    /* I don't think I need these any more with the new algorithm
     @Test
     public void firstMoveShouldBeAdjacentToXIfXStartsInSquare7() {
         setupFakeBoard("0123456X8".toCharArray());
-        ensureNoOtherMoveWasMade();
+        allowOToMoveInAnySquare();
         ai.move();
         verify(mockBoard).putMarkInSquare('O', 8);
     }
@@ -109,27 +47,105 @@ public class UnbeatableAITest extends TestSuite {
     @Test
     public void firstMoveShouldBeAdjacentToXIfXStartsSquare5() {
         setupFakeBoard("01234X678".toCharArray());
-        ensureNoOtherMoveWasMade();
+        allowOToMoveInAnySquare();
+        ai.move();
+        verify(mockBoard).putMarkInSquare('O', 8);
+    }
+    */
+    @Test
+    public void moveShouldWinIfPossible() {
+        setupFakeBoard("0123OO678".toCharArray());
+        allowOToMoveInAnySquare();
+        Board.squaresTaken = 2;
+        ai.move();
+        verify(mockBoard).putMarkInSquare('O', 3);
+    }
+
+    @Test
+    public void moveShouldBlockXWinIfOneExists() {
+        setupFakeBoard("X123X5678".toCharArray());
+        allowOToMoveInAnySquare();
+        Board.squaresTaken = 2;
         ai.move();
         verify(mockBoard).putMarkInSquare('O', 8);
     }
 
     @Test
-    public void secondMoveShouldCreateAThreatIfNoBlockIsNecessary() {
-        setupFakeBoard("01X3O5X78".toCharArray());
-        ensureNoOtherMoveWasMade();
-        Game.movesMade = 3;
-        ai.move();
-        verify(mockBoard).putMarkInSquare('O', 1);
+    public void nextPlayerMoveForcesLossShouldBeFalse() {
+        setupFakeBoard("01234X678".toCharArray());
+        allowOToMoveInAnySquare();
+        assertFalse(ai.nextPlayerMoveForcesLoss());
     }
 
     @Test
-    public void moveShouldCreateAThreatIfNoBlockIsNecessary() {
-        setupFakeBoard("O123X567X".toCharArray());
-        ensureNoOtherMoveWasMade();
-        Game.movesMade = 3;
+    public void nextPlayerMoveForcesLossShouldBeTrueIfXCanWin2WaysWithNextMove() {
+        Board realBoard = new Board();
+        ai = new UnbeatableAI(realBoard);
+        realBoard.putMarkInSquare('X', 0);
+        realBoard.putMarkInSquare('O', 1);
+        realBoard.putMarkInSquare('O', 2);
+        realBoard.putMarkInSquare('O', 4);
+        realBoard.putMarkInSquare('X', 5);
+        realBoard.putMarkInSquare('X', 7);
+        assertTrue(ai.nextPlayerMoveForcesLoss());
+    }
+
+    @Test
+    public void moveShouldGoInSquare6IfThatSquareCauses2WinScenarioForX() {
+        Board realBoard = new Board();
+        ai = new UnbeatableAI(realBoard);
+        realBoard.putMarkInSquare('X', 0);
+        realBoard.putMarkInSquare('O', 1);
+        realBoard.putMarkInSquare('O', 4);
+        realBoard.putMarkInSquare('X', 5);
+        realBoard.putMarkInSquare('X', 7);
         ai.move();
-        verify(mockBoard).putMarkInSquare('O', 2);
+        assertEquals('O', realBoard.getMarkInSquare(6));
+    }
+
+    @Test
+    public void moveShouldGoInSquare1IfXHasTakenSquares2and6() {
+        Board realBoard = new Board();
+        ai = new UnbeatableAI(realBoard);
+        realBoard.putMarkInSquare('X', 2);
+        realBoard.putMarkInSquare('O', 4);
+        realBoard.putMarkInSquare('X', 6);
+        ai.move();
+        assertEquals(4, Board.squaresTaken);
+        assertEquals('O', realBoard.getMarkInSquare(1));
+    }
+
+    @Test
+    public void playerBlockDoesNotForceLossShouldBeTrueWhenXBlocksAndCannotWin() {
+        Board realBoard = new Board();
+        ai = new UnbeatableAI(realBoard);
+        realBoard.putMarkInSquare('O', 1);
+        realBoard.putMarkInSquare('X', 2);
+        realBoard.putMarkInSquare('O', 4);
+        realBoard.putMarkInSquare('X', 6);
+        assertTrue(ai.playerBlockDoesNotForceLoss());
+    }
+
+    @Test
+    public void playerBlockDoesNotForceLossShouldBeFalseWhenXBlocksAndEnsuresWin() {
+        Board realBoard = new Board();
+        ai = new UnbeatableAI(realBoard);
+        realBoard.putMarkInSquare('O', 0);
+        realBoard.putMarkInSquare('X', 2);
+        realBoard.putMarkInSquare('O', 4);
+        realBoard.putMarkInSquare('X', 6);
+        assertFalse(ai.playerBlockDoesNotForceLoss());
+    }
+
+    @Test
+    public void only4MovesShouldBeMade() {
+        Board realBoard = new Board();
+        ai = new UnbeatableAI(realBoard);
+        realBoard.putMarkInSquare('X', 7);
+        realBoard.putMarkInSquare('O', 8);
+        realBoard.putMarkInSquare('X', 5);
+        ai.move();
+        assertEquals(4, Board.squaresTaken);
     }
 
     private void setupFakeBoard(char[] board) {
@@ -138,10 +154,9 @@ public class UnbeatableAITest extends TestSuite {
         }
     }
 
-    private void ensureNoOtherMoveWasMade() {
+    private void allowOToMoveInAnySquare() {
         for(int i = 0; i < 9; i++){
             when(mockBoard.putMarkInSquare('O', i)).thenReturn(true);
         }
     }
-
 }

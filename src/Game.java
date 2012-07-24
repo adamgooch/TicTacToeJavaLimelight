@@ -3,21 +3,18 @@
  * Date: 7/16/12
  */
 public class Game {
-    public static int movesMade;
     private AI ai;
     private IO console;
 
     public Game(AI ai, IO io) {
         this.ai = ai;
         this.console = io;
-        movesMade = 0;
     }
 
     public void play() {
         console.displayBoard();
         while(!gameOver()) {
             console.getPlayerMove();
-            movesMade++;
             console.displayBoard();
             if(!gameOver()){
                 ai.move();
@@ -25,12 +22,23 @@ public class Game {
             }
         }
         console.displayMessage("GAME OVER!\n");
+        console.displayMessage(getWinnerMessage());
     }
 
     protected boolean gameOver() {
-        if(movesMade >= Board.NUMBER_OF_SQUARES  ||
-                Board.winner)
+        if(Board.squaresTaken >= Board.NUMBER_OF_SQUARES ||
+                BoardAnalyzer.thereIsAWinner())
             return true;
         return false;
+    }
+
+    protected String getWinnerMessage() {
+        if(BoardAnalyzer.winner == 'X') {
+            return "YOU WIN!\n";
+        } else if(BoardAnalyzer.winner == 'O') {
+            return "I WIN!";
+        } else {
+            return "Nobody wins.\n";
+        }
     }
 }

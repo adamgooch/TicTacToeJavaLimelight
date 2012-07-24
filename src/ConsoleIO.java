@@ -43,7 +43,7 @@ public class ConsoleIO implements IO {
         } catch (IOException e) {
             // Something wrong with the system
         } catch (NumberFormatException e) {
-            // bad user input
+            // bad user input doesn't matter, gameBoard doesn't care
         }
         return gameBoard.putMarkInSquare('X', desiredSquare);
     }

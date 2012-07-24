@@ -5,7 +5,7 @@
 public class Board {
     public static final int NUMBER_OF_SQUARES = 9;
     public static final int BOARD_DIMENSION = 3;
-    public static boolean winner = false;
+    public static int squaresTaken = 0;
     private char[][] gameBoard;
 
     public Board() {
@@ -24,14 +24,26 @@ public class Board {
     public boolean putMarkInSquare(char mark, int square) {
         int row = getRow(square);
         int column = getColumn(square);
-        if(square < NUMBER_OF_SQUARES &&
-                gameBoard[row][column] != 'X' &&
-                gameBoard[row][column] != 'O') {
+        if(squareIsValid(square)) {
             gameBoard[row][column] = mark;
-            checkForWinner();
+            squaresTaken++;
             return true;
         }
         return false;
+    }
+
+    private boolean squareIsValid(int square) {
+        if(square < NUMBER_OF_SQUARES &&
+                getMarkInSquare(square) != 'X' &&
+                getMarkInSquare(square) != 'O')
+            return true;
+        return false;
+    }
+    public void removeMarkInSquare(int square) {
+        int row = getRow(square);
+        int column = getColumn(square);
+        gameBoard[row][column] = Character.forDigit(square, 9);
+        squaresTaken--;
     }
 
     public char getMarkInSquare(int square) {
@@ -45,40 +57,4 @@ public class Board {
     private int getColumn(int square) {
         return square % BOARD_DIMENSION;
     }
-    // break out to another class
-    private void checkForWinner() {
-        for(int i = 0; i < BOARD_DIMENSION; i++){
-            if(winnerInRow(i) || winnerInColumn(i))
-                winner = true;
-        }
-        if(winnerInDiagonal())
-            winner = true;
-    }
-
-    private boolean winnerInRow(int row) {
-        if(gameBoard[row][0] == gameBoard[row][1] &&
-                gameBoard[row][0] == gameBoard[row][2]) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean winnerInColumn(int column) {
-        if(gameBoard[0][column] == gameBoard[1][column] &&
-                gameBoard[0][column] == gameBoard[2][column]) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean winnerInDiagonal() {
-        if(gameBoard[0][0] == gameBoard[1][1] &&
-                gameBoard[1][1] == gameBoard[2][2])
-            return true;
-        if(gameBoard[0][2] == gameBoard[1][1] &&
-                gameBoard[2][0] == gameBoard[1][1])
-            return true;
-        return false;
-    }
-
 }

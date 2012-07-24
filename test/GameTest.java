@@ -15,43 +15,24 @@ public class GameTest extends TestSuite {
     private Game game;
     private UnbeatableAI mockAi;
     private IO mockIO;
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Before
     public void setUp() {
-        System.setOut(new PrintStream(outContent));
         mockAi = mock(UnbeatableAI.class);
         mockIO = mock(ConsoleIO.class);
+        Board.squaresTaken = 0;
         game = new Game(mockAi, mockIO);
     }
 
     @Test
-    public void playShouldShowTheInitialGameBoard() {
-        game.play();
-        verify(mockIO, atLeastOnce()).displayBoard();
-    }
-
-    @Test
-    public void playShouldLetThePlayerMove() {
-        game.play();
-        verify(mockIO, atLeastOnce()).getPlayerMove();
-    }
-
-    @Test
-    public void playShouldLetTheAIMoveAfterThePlayerHasMoved() {
-        game.play();
-        verify(mockAi, atLeastOnce()).move();
-    }
-
-    @Test
     public void gameOverShouldBeFalseAfter1MoveHasBeenMade() {
-        Game.movesMade = 1;
+        Board.squaresTaken = 1;
         assertFalse(game.gameOver());
     }
 
     @Test
     public void gameOverShouldBeTrueAfter9MovesHaveBeenMade() {
-        Game.movesMade = 9;
+        Board.squaresTaken = 9;
         assertTrue(game.gameOver());
     }
 

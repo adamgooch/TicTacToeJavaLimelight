@@ -12,7 +12,6 @@ public class BoardTest extends TestSuite {
     @Before
     public void setUp() {
         board = new Board();
-        board.winner = false;
     }
 
     @Test
@@ -65,50 +64,16 @@ public class BoardTest extends TestSuite {
     }
 
     @Test
-    public void winnerShouldReturnTrueWhenXHasWonInARow() {
-        for(int i = 0; i < board.BOARD_DIMENSION; i++){
-            board.putMarkInSquare('X', i);
-        }
-        assertTrue(board.winner);
-    }
-
-    @Test
-    public void winnerShouldReturnTrueWhenOHasWonInAColumn() {
-        board.putMarkInSquare('O', 1);
-        board.putMarkInSquare('O', 4);
-        board.putMarkInSquare('O', 7);
-        assertTrue(board.winner);
-    }
-
-    @Test
-    public void winnerShouldReturnTrueWhenXHasWonDiagonally() {
-        board.putMarkInSquare('X', 0);
+    public void removeMarkInSquareShouldRemoveAnXFromSquare4() {
         board.putMarkInSquare('X', 4);
-        board.putMarkInSquare('X', 8);
-        assertTrue(board.winner);
-    }
-
-    @Test
-    public void winnerShouldReturnTrueWhenOHasWonDiagonally() {
-        board.putMarkInSquare('O', 2);
-        board.putMarkInSquare('O', 4);
-        board.putMarkInSquare('O', 6);
-        assertTrue(board.winner);
-    }
-
-    @Test
-    public void winnerShouldReturnFalseWhenXBlocksDiagonally() {
-        board.putMarkInSquare('O', 2);
-        board.putMarkInSquare('X', 4);
-        board.putMarkInSquare('O', 6);
-        assertFalse(board.winner);
-    }
-
-    @Test
-    public void winnerShouldReturnFalseWhenOBlocksDiagonally() {
-        board.putMarkInSquare('X', 0);
-        board.putMarkInSquare('O', 4);
-        board.putMarkInSquare('X', 8);
-        assertFalse(board.winner);
+        assertEquals(board.asString(),
+                      "\n 0 | 1 | 2\n" +
+                        " 3 | X | 5\n" +
+                        " 6 | 7 | 8\n\n");
+        board.removeMarkInSquare(4);
+        assertEquals(board.asString(),
+                      "\n 0 | 1 | 2\n" +
+                        " 3 | 4 | 5\n" +
+                        " 6 | 7 | 8\n\n");
     }
 }
