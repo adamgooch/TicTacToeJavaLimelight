@@ -35,7 +35,7 @@ public class UnbeatableAITest extends TestSuite {
         ai.move();
         verify(mockBoard).putMarkInSquare('O', 4);
     }
-    /* I don't think I need these any more with the new algorithm
+
     @Test
     public void firstMoveShouldBeAdjacentToXIfXStartsInSquare7() {
         setupFakeBoard("0123456X8".toCharArray());
@@ -51,7 +51,7 @@ public class UnbeatableAITest extends TestSuite {
         ai.move();
         verify(mockBoard).putMarkInSquare('O', 8);
     }
-    */
+
     @Test
     public void moveShouldWinIfPossible() {
         setupFakeBoard("0123OO678".toCharArray());

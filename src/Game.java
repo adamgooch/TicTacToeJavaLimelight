@@ -26,8 +26,8 @@ public class Game {
     }
 
     protected boolean gameOver() {
-        if(Board.squaresTaken >= Board.NUMBER_OF_SQUARES ||
-                BoardAnalyzer.thereIsAWinner())
+        if(BoardAnalyzer.thereIsAWinner() ||
+                Board.squaresTaken >= Board.NUMBER_OF_SQUARES)
             return true;
         return false;
     }
@@ -36,7 +36,7 @@ public class Game {
         if(BoardAnalyzer.winner == 'X') {
             return "YOU WIN!\n";
         } else if(BoardAnalyzer.winner == 'O') {
-            return "I WIN!";
+            return "I WIN!\n";
         } else {
             return "Nobody wins.\n";
         }

@@ -29,6 +29,8 @@ public class UnbeatableAI implements AI {
     private void makeFirstMove() {
         if(xStartsInCorner()) {
             gameBoard.putMarkInSquare('O', 4);
+        } else if(xStartsInRightOrBottomMiddle()) {
+            gameBoard.putMarkInSquare('O', 8);
         } else {
             makeSmartMove();
         }
@@ -39,6 +41,13 @@ public class UnbeatableAI implements AI {
            gameBoard.getMarkInSquare(2) == 'X' ||
            gameBoard.getMarkInSquare(6) == 'X' ||
            gameBoard.getMarkInSquare(8) == 'X')
+            return true;
+        return false;
+    }
+
+    private boolean xStartsInRightOrBottomMiddle() {
+        if(gameBoard.getMarkInSquare(7) == 'X' ||
+                gameBoard.getMarkInSquare(5) == 'X')
             return true;
         return false;
     }
