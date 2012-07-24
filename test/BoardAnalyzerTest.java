@@ -85,11 +85,12 @@ public class BoardAnalyzerTest {
 
     @Test
     public void numberOfPossibleWinsShouldBe2WhenXCanWinIn2Places() {
+        board.putMarkInSquare('X', 3);
         board.putMarkInSquare('O', 0);
+        board.putMarkInSquare('X', 7);
+        board.putMarkInSquare('O', 1);
         board.putMarkInSquare('X', 2);
-        board.putMarkInSquare('O', 4);
         board.putMarkInSquare('X', 6);
-        board.putMarkInSquare('X', 8);
         assertEquals(2, analyzer.numberOfPossibleWins('X'));
     }
 
