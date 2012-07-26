@@ -17,6 +17,7 @@ public class MiniMaxAI implements AI {
     public void move(char playerMark) {
         int square = findBestMove(playerMark);
         board.putMarkInSquare(playerMark, square);
+        System.out.println("---------------------------");
     }
 
     private int findBestMove(char mark) {
@@ -34,6 +35,7 @@ public class MiniMaxAI implements AI {
             }
             scores[i][POSITION] = position;
             scores[i][SCORE] = currentScore;
+            System.out.printf("The score for position %d is %d \n", position, currentScore);
         }
         if(mark == 'O')
             return determineBestMoveForMax(scores);
