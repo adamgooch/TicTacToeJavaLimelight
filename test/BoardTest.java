@@ -15,7 +15,7 @@ public class BoardTest extends TestSuite {
     }
 
     @Test
-    public void printBoardShouldReturnAnAsciiTicTacToeBoard() {
+    public void asStringShouldReturnAnAsciiTicTacToeBoard() {
         assertEquals(board.asString(),
                 "\n 0 | 1 | 2\n" +
                   "-----------\n" +
@@ -90,5 +90,32 @@ public class BoardTest extends TestSuite {
                         " 3 | 4 | 5\n" +
                         "-----------\n" +
                         " 6 | 7 | 8\n\n");
+    }
+
+    @Test
+    public void getMarkInSquareShouldReturnXIfXIsInTheGivenSquare() {
+        board.putMarkInSquare('X', 4);
+        assertEquals('X', board.getMarkInSquare(4));
+    }
+
+    @Test
+    public void getMarkInSquareShouldReturnOIfOIsInTheGivenSquare() {
+        board.putMarkInSquare('O', 8);
+        assertEquals('O', board.getMarkInSquare(8));
+    }
+
+    @Test
+    public void getMarkInSquareShouldReturnTheSquareNumberIfTheSquareIsAvailable() {
+        assertEquals('0', board.getMarkInSquare(0));
+    }
+
+    @Test
+    public void cloneShouldReturnACopyOfTheBoard() {
+        Board newBoard = new Board();
+        newBoard = board.clone(newBoard);
+        for(int i = 0; i < Board.NUMBER_OF_SQUARES; i++) {
+            assertEquals(board.getMarkInSquare(i), newBoard.getMarkInSquare(i));
+        }
+        assertFalse(board == newBoard);
     }
 }

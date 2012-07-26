@@ -25,6 +25,14 @@ public class Board {
                  " " + gameBoard[2][0] + " | " + gameBoard[2][1] + " | " + gameBoard[2][2] + "\n\n";
     }
 
+    public Board clone(Board newBoard) {
+        for(int i = 0; i < NUMBER_OF_SQUARES; i++) {
+            char mark = this.getMarkInSquare(i);
+            newBoard.putMarkInSquare(mark, i);
+        }
+        return newBoard;
+    }
+
     public boolean putMarkInSquare(char mark, int square) {
         int row = getRow(square);
         int column = getColumn(square);
@@ -44,9 +52,7 @@ public class Board {
     }
 
     public void removeMarkInSquare(int square) {
-        int row = getRow(square);
-        int column = getColumn(square);
-        gameBoard[row][column] = Character.forDigit(square, 9);
+        gameBoard[getRow(square)][getColumn(square)] = Character.forDigit(square, 9);
     }
 
     public char getMarkInSquare(int square) {
@@ -63,36 +69,21 @@ public class Board {
 
     public ArrayList getAvailableSquares() {
         ArrayList moves = new ArrayList();
-        for(int i = 0; i < 9; i++) {
-            int row = getRow(i);
-            int col = getColumn(i);
-            if(gameBoard[row][col] != 'X' &&
-                    gameBoard[row][col] != 'O')
-                moves.add((Integer)i);
+        for(int square = 0; square < NUMBER_OF_SQUARES; square++) {
+            if(squareIsAvailable(square))
+                moves.add(square);
         }
         return moves;
     }
 
     public int countSquaresAvailable() {
         int count = 0;
-        for(int row = 0; row < 3; row++) {
-            for(int col = 0; col < 3; col++) {
-                if(gameBoard[row][col] != 'X' &&
-                        gameBoard[row][col] != 'O')
-                    count++;
-            }
+        for(int square = 0; square < NUMBER_OF_SQUARES; square++) {
+            if(squareIsAvailable(square))
+                count++;
+
         }
         return count;
-    }
-
-    public Board(Board from, int square, char mark){
-        gameBoard = new char[3][3];
-        for(int y = 0; y < 3; y++){
-            for(int x = 0; x < 3; x++){
-                gameBoard[x][y] = from.gameBoard[x][y];
-            }
-        }
-        gameBoard[getRow(square)][getColumn(square)] = mark;
     }
 
 

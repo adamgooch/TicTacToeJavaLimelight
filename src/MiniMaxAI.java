@@ -15,17 +15,18 @@ public class MiniMaxAI implements AI {
 
     @Override
     public void move(char playerMark) {
-        int square = findBestMove(board, playerMark);
+        int square = findBestMove(playerMark);
         board.putMarkInSquare(playerMark, square);
     }
 
-    public int findBestMove(Board board, char mark) {
+    private int findBestMove(char mark) {
         ArrayList<Integer> positions = board.getAvailableSquares();
         int[][] scores = new int[positions.size()][2];
         int bestScore;
         for(int i = 0; i < positions.size(); i++){
             int position = positions.get(i);
-            Board child = new Board(board, position, mark);
+            Board child = board.clone(new Board());
+            child.putMarkInSquare(mark, position);
             int currentScore;
             if(mark == 'O') {
                 currentScore = min(child);
@@ -38,50 +39,54 @@ public class MiniMaxAI implements AI {
             //        scores[i][POSITION] + " is : " + scores[i][SCORE]);
         }
         if(mark == 'O')
-            return determineBestMoveForO(scores);
+            return determineBestMoveForMax(scores);
         else
-            return determineBestMoveForX(scores);
+            return determineBestMoveForMin(scores);
     }
 
-    public int max(Board board){
+    private int max(Board board){
+        char mark = 'O';
         BoardAnalyzer analyzer = new BoardAnalyzer(board);
-        if(analyzer.thereIsAWinner() && analyzer.winner == 'O')
+        if(board.countSquaresAvailable() == 0 && analyzer.getWinner() == 'O')
             return 1;
-        else if(analyzer.thereIsAWinner() && analyzer.winner == 'X')
+        else if(board.countSquaresAvailable() == 0 && analyzer.getWinner() == 'X')
             return -1;
         else if(board.countSquaresAvailable() == 0)
             return 0;
         ArrayList<Integer> positions = board.getAvailableSquares();
         int best = Integer.MIN_VALUE;
-        for(Integer p : positions){
-            Board b = new Board(board, p, 'O');
-            int move = min(b);
+        for(Integer position : positions){
+            Board child = board.clone(new Board());
+            child.putMarkInSquare(mark, position);
+            int move = min(child);
             if(move > best)
                 best = move;
         }
         return best;
     }
 
-    public int min(Board board){
+    private int min(Board board){
+        char mark = 'X';
         BoardAnalyzer analyzer = new BoardAnalyzer(board);
-        if(analyzer.thereIsAWinner() && analyzer.winner == 'O')
+        if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'O')
             return 1;
-        else if(analyzer.thereIsAWinner() && analyzer.winner == 'X')
+        else if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'X')
             return -1;
         else if(board.countSquaresAvailable() == 0)
             return 0;
         ArrayList<Integer> positions = board.getAvailableSquares();
         int best = Integer.MAX_VALUE;
-        for(Integer p : positions){
-            Board b = new Board(board, p, 'X');
-            int move = max(b);
+        for(Integer position : positions){
+            Board child = board.clone(new Board());
+            child.putMarkInSquare(mark, position);
+            int move = max(child);
             if(move < best)
                 best = move;
         }
         return best;
     }
 
-    public int determineBestMoveForO(int[][] scores) {
+    private int determineBestMoveForMax(int[][] scores) {
         int bestIndex = 0;
         int bestScore = Integer.MIN_VALUE;
         for(int i = 0; i < scores.length; i++){
@@ -93,7 +98,7 @@ public class MiniMaxAI implements AI {
         return scores[bestIndex][POSITION];
     }
 
-    public int determineBestMoveForX(int[][] scores) {
+    private int determineBestMoveForMin(int[][] scores) {
         int bestIndex = 0;
         int bestScore = Integer.MAX_VALUE;
         for(int i = 0; i < scores.length; i++){
@@ -104,4 +109,5 @@ public class MiniMaxAI implements AI {
         }
         return scores[bestIndex][POSITION];
     }
+
 }

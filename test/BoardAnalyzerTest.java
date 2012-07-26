@@ -18,88 +18,85 @@ public class BoardAnalyzerTest {
     }
 
     @Test
-    public void squareMarkCanWinShouldBe4WhenXCanWinInSquare4() {
+    public void thereIsAWinnerShouldBeTrueIfXHasWonInARow() {
         board.putMarkInSquare('X', 3);
+        board.putMarkInSquare('X', 4);
         board.putMarkInSquare('X', 5);
-        assertEquals(4, analyzer.squareMarkCanWinIn('X'));
+        assertTrue(analyzer.thereIsAWinner());
     }
 
     @Test
-    public void squareMarkCanWinShouldBe4WhenOCanWinInSquare8() {
+    public void thereIsAWinnerShouldBeTrueIfOHasWonInARow() {
         board.putMarkInSquare('O', 6);
         board.putMarkInSquare('O', 7);
-        assertEquals(8, analyzer.squareMarkCanWinIn('O'));
+        board.putMarkInSquare('O', 8);
+        assertTrue(analyzer.thereIsAWinner());
     }
 
     @Test
-    public void squareMarkCanWinShouldBe4WhenXCanWinInSquare6() {
-        board.putMarkInSquare('X', 4);
-        board.putMarkInSquare('X', 2);
-        assertEquals(6, analyzer.squareMarkCanWinIn('X'));
-    }
-
-    @Test
-    public void numberOfPossibleWinsShouldBe0WhenNoOneCanWin() {
-        board.putMarkInSquare('X', 4);
-        assertEquals(0, analyzer.numberOfPossibleWins('X'));
-        assertEquals(0, analyzer.numberOfPossibleWins('O'));
-    }
-
-    @Test
-    public void numberOfPossibleWinsShouldBe1WhenXCanWinInARow() {
-        board.putMarkInSquare('X', 4);
-        board.putMarkInSquare('X', 5);
-        assertEquals(1, analyzer.numberOfPossibleWins('X'));
-    }
-
-    @Test
-    public void numberOfPossibleWinsShouldBe1WhenXCanWinInAColumn() {
-        board.putMarkInSquare('X', 1);
-        board.putMarkInSquare('X', 4);
-        assertEquals(1, analyzer.numberOfPossibleWins('X'));
-    }
-
-    @Test
-    public void numberOfPossibleWinsShouldBe1WhenXCanWinInADiagonal() {
-        board.putMarkInSquare('X', 2);
-        board.putMarkInSquare('X', 4);
-        assertEquals(1, analyzer.numberOfPossibleWins('X'));
-    }
-
-    @Test
-    public void numberOfPossibleWinsShouldBe2WhenXCanWinInARowAndColumn() {
+    public void thereIsAWinnerShouldBeTrueIfXHasWonInAColumn() {
         board.putMarkInSquare('X', 0);
-        board.putMarkInSquare('X', 5);
-        board.putMarkInSquare('X', 6);
-        board.putMarkInSquare('X', 7);
-        assertEquals(2, analyzer.numberOfPossibleWins('X'));
-    }
-
-    @Test
-    public void numberOfPossibleWinsShouldBe1WhenXCanWin() {
-        board.putMarkInSquare('X', 4);
-        board.putMarkInSquare('X', 5);
-        assertEquals(1, analyzer.numberOfPossibleWins('X'));
-        assertEquals(0, analyzer.numberOfPossibleWins('O'));
-    }
-
-    @Test
-    public void numberOfPossibleWinsShouldBe2WhenXCanWinIn2Places() {
         board.putMarkInSquare('X', 3);
-        board.putMarkInSquare('O', 0);
-        board.putMarkInSquare('X', 7);
-        board.putMarkInSquare('O', 1);
-        board.putMarkInSquare('X', 2);
         board.putMarkInSquare('X', 6);
-        assertEquals(2, analyzer.numberOfPossibleWins('X'));
+        assertTrue(analyzer.thereIsAWinner());
     }
 
     @Test
-    public void numberOfPossibleWinsShouldBe1WhenOCanWinInColumn() {
-        board.putMarkInSquare('O', 1);
-        board.putMarkInSquare('X', 2);
-        board.putMarkInSquare('O', 4);
-        board.putMarkInSquare('X', 6);
-        assertEquals(1, analyzer.numberOfPossibleWins('O'));
+    public void thereIsAWinnerShouldBeTrueIfOHasWonInAColumn() {
+        board.putMarkInSquare('O', 2);
+        board.putMarkInSquare('O', 5);
+        board.putMarkInSquare('O', 8);
+        assertTrue(analyzer.thereIsAWinner());
     }
+
+    @Test
+    public void thereIsAWinnerShouldBeTrueIfXHasWonInADiagonal() {
+        board.putMarkInSquare('X', 0);
+        board.putMarkInSquare('X', 4);
+        board.putMarkInSquare('X', 8);
+        assertTrue(analyzer.thereIsAWinner());
+    }
+
+    @Test
+    public void thereIsAWinnerShouldBeTrueIfOHasWonInADiagonal() {
+        board.putMarkInSquare('O', 2);
+        board.putMarkInSquare('O', 4);
+        board.putMarkInSquare('O', 6);
+        assertTrue(analyzer.thereIsAWinner());
+    }
+
+    @Test
+    public void thereIsAWinnerShouldBeFalseIfNobodyHasWon() {
+        board.putMarkInSquare('O', 2);
+        board.putMarkInSquare('X', 4);
+        board.putMarkInSquare('O', 6);
+        assertFalse(analyzer.thereIsAWinner());
+    }
+
+    @Test
+    public void getWinnerShouldReturnXWhenXHasWon() {
+        board.putMarkInSquare('X', 2);
+        board.putMarkInSquare('X', 4);
+        board.putMarkInSquare('X', 6);
+        assertEquals('X', analyzer.getWinner());
+
+    }
+
+    @Test
+    public void getWinnerShouldReturnOWhenOHasWon() {
+        board.putMarkInSquare('O', 0);
+        board.putMarkInSquare('O', 4);
+        board.putMarkInSquare('O', 8);
+        assertEquals('O', analyzer.getWinner());
+
+    }
+
+    @Test
+    public void getWinnerShouldReturnNWhenNobodyHasWon() {
+        board.putMarkInSquare('X', 0);
+        board.putMarkInSquare('O', 8);
+        assertEquals('N', analyzer.getWinner());
+
+    }
+
 }

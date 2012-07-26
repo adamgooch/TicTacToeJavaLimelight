@@ -34,4 +34,21 @@ public class GameTest extends TestSuite {
         assertTrue(game.gameOver());
     }
 
+    @Test
+    public void playShouldDisplayTheBoard10Times() {
+        game.play();
+        verify(mockIO, times(10)).displayBoard();
+    }
+
+    @Test
+    public void playShouldAllowXToMove5Times() {
+        game.play();
+        verify(mockAi, times(5)).move('X');
+    }
+
+    @Test
+    public void playShouldAllowXToMove4Times() {
+        game.play();
+        verify(mockAi, times(4)).move('O');
+    }
 }

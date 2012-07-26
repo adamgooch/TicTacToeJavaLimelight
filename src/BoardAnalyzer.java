@@ -3,96 +3,12 @@
  * Date: 7/24/12
  */
 public class BoardAnalyzer {
-    public char winner;
+    private char winner;
     private Board gameBoard;
-    private int squareToWin;
 
     public BoardAnalyzer(Board board) {
         gameBoard = board;
-        winner = 'n';
-    }
-
-    public int squareMarkCanWinIn(char mark) {
-        if(markCanWin(mark))
-            return squareToWin;
-        return -1;
-    }
-
-    private boolean markCanWin(char mark) {
-        for(int i = 0; i < 3; i++) {
-            if(canWinInRow(mark, i))
-                return true;
-            if(canWinInCol(mark, i))
-                return true;
-        }
-        if(canWinInDiagonalOne(mark) || canWinInDiagonalTwo(mark))
-            return true;
-        return false;
-    }
-
-    public int numberOfPossibleWins(char mark) {
-        int possibleWins = 0;
-        for(int i = 0; i < 3; i++){
-            if(canWinInRow(mark, i))
-                possibleWins++;
-            if(canWinInCol(mark, i))
-                possibleWins++;
-        }
-        if(canWinInDiagonalOne(mark) || canWinInDiagonalTwo(mark))
-            possibleWins++;
-        return possibleWins;
-    }
-
-    private boolean canWinInRow(char mark, int row) {
-        int count = 0;
-        for(int col = 0; col < 3; col++) {
-            count += incOrDec(getSquare(row, col));
-        }
-        return someoneCanWin(mark, count);
-    }
-
-    private boolean canWinInCol(char mark, int col) {
-        int count = 0;
-        for(int row = 0; row < 3; row++) {
-            count += incOrDec(getSquare(row, col));
-        }
-        return someoneCanWin(mark, count);
-    }
-
-    private boolean canWinInDiagonalOne(char mark) {
-        int count = 0;
-        for(int square = 0; square < 9; square += 4) {
-            count = count + incOrDec(square);
-        }
-        return someoneCanWin(mark, count);
-
-    }
-
-    private boolean canWinInDiagonalTwo(char mark) {
-        int count = 0;
-        for(int square = 2; square < 8; square += 2) {
-            count = count + incOrDec(square);
-        }
-        return someoneCanWin(mark, count);
-    }
-
-    private int incOrDec(int square) {
-        if(gameBoard.getMarkInSquare(square) == 'O') {
-            return 1;
-        } else if(gameBoard.getMarkInSquare(square) == 'X') {
-            return -1;
-        } else {
-            squareToWin = square;
-            return 0;
-        }
-    }
-
-    private boolean someoneCanWin(char mark, int count) {
-        if(mark == 'X' && count == -2)
-            return true;
-        if(mark == 'O' && count == 2)
-            return true;
-        return false;
+        winner = 'N';
     }
 
     public boolean thereIsAWinner() {
@@ -106,30 +22,30 @@ public class BoardAnalyzer {
     }
 
     private boolean winnerInRow(int row) {
-        char pos1 = gameBoard.getMarkInSquare(getSquare(row, 0));
-        char pos2 = gameBoard.getMarkInSquare(getSquare(row, 1));
-        char pos3 = gameBoard.getMarkInSquare(getSquare(row, 2));
+        char pos1 = gameBoard.getMarkInSquare(getSquareNumber(row, 0));
+        char pos2 = gameBoard.getMarkInSquare(getSquareNumber(row, 1));
+        char pos3 = gameBoard.getMarkInSquare(getSquareNumber(row, 2));
         return checkForWinner(pos1, pos2, pos3);
     }
 
     private boolean winnerInColumn(int column) {
-        char pos1 = gameBoard.getMarkInSquare(getSquare(0, column));
-        char pos2 = gameBoard.getMarkInSquare(getSquare(1, column));
-        char pos3 = gameBoard.getMarkInSquare(getSquare(2, column));
+        char pos1 = gameBoard.getMarkInSquare(getSquareNumber(0, column));
+        char pos2 = gameBoard.getMarkInSquare(getSquareNumber(1, column));
+        char pos3 = gameBoard.getMarkInSquare(getSquareNumber(2, column));
         return checkForWinner(pos1, pos2, pos3);
     }
 
     private boolean winnerInDiagonalOne() {
-        char pos1 = gameBoard.getMarkInSquare(getSquare(0, 0));
-        char pos2 = gameBoard.getMarkInSquare(getSquare(1, 1));
-        char pos3 = gameBoard.getMarkInSquare(getSquare(2, 2));
+        char pos1 = gameBoard.getMarkInSquare(getSquareNumber(0, 0));
+        char pos2 = gameBoard.getMarkInSquare(getSquareNumber(1, 1));
+        char pos3 = gameBoard.getMarkInSquare(getSquareNumber(2, 2));
         return checkForWinner(pos1, pos2, pos3);
     }
 
     private boolean winnerInDiagonalTwo() {
-        char pos1 = gameBoard.getMarkInSquare(getSquare(0, 2));
-        char pos2 = gameBoard.getMarkInSquare(getSquare(1, 1));
-        char pos3 = gameBoard.getMarkInSquare(getSquare(2, 0));
+        char pos1 = gameBoard.getMarkInSquare(getSquareNumber(0, 2));
+        char pos2 = gameBoard.getMarkInSquare(getSquareNumber(1, 1));
+        char pos3 = gameBoard.getMarkInSquare(getSquareNumber(2, 0));
         return checkForWinner(pos1, pos2, pos3);
     }
 
@@ -141,23 +57,13 @@ public class BoardAnalyzer {
         return false;
     }
 
-    private int getSquare(int row, int column) {
+    private int getSquareNumber(int row, int column) {
         return row * Board.BOARD_DIMENSION + column;
     }
-    /*
-    public boolean thereIsAWinner(int[] board) {
-        char[][] newBoard = new char[3][3];
-        for(int i = 0; i < board.length; i++) {
-            if(board[i] == -1){
-                newBoard[i/3][i%3] = 'X';
-            } else if(board[i] == 1){
-                newBoard[i/3][i%3] = 'O';
-            } else {
-                newBoard[i/3][i%3] = Character.forDigit(i, 9);
-            }
-        }
-        gameBoard.setBoard(newBoard);
-        return thereIsAWinner();
+
+    public char getWinner() {
+        thereIsAWinner();
+        return winner;
     }
-    */
+
 }

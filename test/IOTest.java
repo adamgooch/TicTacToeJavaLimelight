@@ -16,12 +16,9 @@ import static org.mockito.Mockito.when;
 public class IOTest extends TestSuite {
     private ConsoleIO io;
     private Board mockBoard;
-    private ByteArrayOutputStream outContent;
 
     @Before
     public void setUp() {
-        outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
         mockBoard = mock(Board.class);
         io = new ConsoleIO(mockBoard);
     }

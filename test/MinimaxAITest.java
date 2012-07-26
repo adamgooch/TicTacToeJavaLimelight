@@ -56,7 +56,7 @@ public class MinimaxAITest extends TestSuite {
             ai.move('X');
             ai.move('O');
             ai.move('X');
-            assertEquals(analyzer.winner, 'n');
+            assertEquals(analyzer.getWinner(), 'N');
             board = new Board();
             ai = new MiniMaxAI(board);
         }

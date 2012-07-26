@@ -23,23 +23,17 @@ public class Game {
     public void play() {
         console.displayBoard();
         while(!gameOver()) {
-            if(gameType == PLAYER_VS_AI || gameType == PLAYER_VS_PLAYER)
-                console.getPlayerMove('X');
-            else
-                ai.move('X');
+            playerOneMove();
             console.displayBoard();
             movesMade++;
-            if(!gameOver()){
-                if(gameType == PLAYER_VS_AI || gameType == AI_VS_AI)
-                    ai.move('O');
-                else
-                    console.getPlayerMove('O');
+            if(!gameOver()) {
+                playerTwoMove();
                 console.displayBoard();
                 movesMade++;
             }
         }
         console.displayMessage("GAME OVER!\n");
-        console.displayMessage(getWinnerMessage());
+        console.displayMessage(getWinnerMessage() + "\n");
     }
 
     protected boolean gameOver() {
@@ -49,12 +43,26 @@ public class Game {
     }
 
     protected String getWinnerMessage() {
-        if(analyzer.winner == 'X') {
-            return "YOU WIN!\n";
-        } else if(analyzer.winner == 'O') {
-            return "I WIN!\n";
+        if(analyzer.getWinner() == 'X') {
+            return "X WINS!";
+        } else if(analyzer.getWinner() == 'O') {
+            return "O WINS!";
         } else {
-            return "Nobody wins.\n";
+            return "Nobody wins.";
         }
+    }
+
+    private void playerOneMove() {
+        if(gameType != AI_VS_AI)
+            console.getPlayerMove('X');
+        else
+            ai.move('X');
+    }
+
+    private void playerTwoMove() {
+        if(gameType != PLAYER_VS_PLAYER)
+            ai.move('O');
+        else
+            console.getPlayerMove('O');
     }
 }

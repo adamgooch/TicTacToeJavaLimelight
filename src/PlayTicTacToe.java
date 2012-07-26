@@ -8,7 +8,10 @@ public class PlayTicTacToe {
         Board gameBoard = new Board();
         IO io = new ConsoleIO(gameBoard);
         AI ai = new MiniMaxAI(gameBoard);
-        Game game = new Game(ai, io, gameBoard, Game.PLAYER_VS_AI);
+        int playType = Game.PLAYER_VS_AI;
+        playType = Integer.parseInt(args[0]);
+        System.out.println("play type = " + args[0]);
+        Game game = new Game(ai, io, gameBoard, playType);
         game.play();
     }
 
