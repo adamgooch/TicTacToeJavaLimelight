@@ -22,7 +22,6 @@ public class MiniMaxAI implements AI {
     private int findBestMove(char mark) {
         ArrayList<Integer> positions = board.getAvailableSquares();
         int[][] scores = new int[positions.size()][2];
-        int bestScore;
         for(int i = 0; i < positions.size(); i++){
             int position = positions.get(i);
             Board child = board.clone(new Board());
@@ -35,8 +34,6 @@ public class MiniMaxAI implements AI {
             }
             scores[i][POSITION] = position;
             scores[i][SCORE] = currentScore;
-            //System.out.println("Child Score for position " +
-            //        scores[i][POSITION] + " is : " + scores[i][SCORE]);
         }
         if(mark == 'O')
             return determineBestMoveForMax(scores);
