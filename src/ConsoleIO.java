@@ -27,16 +27,16 @@ public class ConsoleIO implements IO {
     }
 
     @Override
-    public void getPlayerMove() {
+    public void getPlayerMove(char playerMark) {
         displayMessage("What is your move? ");
-        while(!isValidPlayerMove()){
+        while(!isValidPlayerMove(playerMark)){
             displayMessage("Invalid Move: Please enter a valid move ");
         };
     }
 
-    protected boolean isValidPlayerMove() {
-        String userInput = "9";
-        int desiredSquare = 9;
+    protected boolean isValidPlayerMove(char playerMark) {
+        String userInput;
+        int desiredSquare = 10;
         try {
             userInput = inputReader.readLine();
             desiredSquare = Integer.parseInt(userInput);
@@ -45,6 +45,6 @@ public class ConsoleIO implements IO {
         } catch (NumberFormatException e) {
             // bad user input doesn't matter, gameBoard doesn't care
         }
-        return gameBoard.putMarkInSquare('X', desiredSquare);
+        return gameBoard.putMarkInSquare(playerMark, desiredSquare);
     }
 }

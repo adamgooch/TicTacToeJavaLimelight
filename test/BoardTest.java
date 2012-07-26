@@ -18,7 +18,9 @@ public class BoardTest extends TestSuite {
     public void printBoardShouldReturnAnAsciiTicTacToeBoard() {
         assertEquals(board.asString(),
                 "\n 0 | 1 | 2\n" +
+                  "-----------\n" +
                   " 3 | 4 | 5\n" +
+                  "-----------\n" +
                   " 6 | 7 | 8\n\n");
     }
 
@@ -45,11 +47,18 @@ public class BoardTest extends TestSuite {
     }
 
     @Test
+    public void putMarkInSquareShouldReturnFalseWhenXIsPutIntoSquareNeg9() {
+        assertFalse(board.putMarkInSquare('X', -9));
+    }
+
+    @Test
     public void printBoardShouldHaveAnXInTheCenterAfterAnXHasMovedInSquare4() {
         board.putMarkInSquare('X', 4);
         assertEquals(board.asString(),
                 "\n 0 | 1 | 2\n" +
+                  "-----------\n" +
                   " 3 | X | 5\n" +
+                  "-----------\n" +
                   " 6 | 7 | 8\n\n");
     }
 
@@ -59,7 +68,9 @@ public class BoardTest extends TestSuite {
         board.putMarkInSquare('O', 0);
         assertEquals(board.asString(),
                 "\n O | 1 | 2\n" +
+                  "-----------\n" +
                   " 3 | X | 5\n" +
+                  "-----------\n" +
                   " 6 | 7 | 8\n\n");
     }
 
@@ -68,12 +79,16 @@ public class BoardTest extends TestSuite {
         board.putMarkInSquare('X', 4);
         assertEquals(board.asString(),
                       "\n 0 | 1 | 2\n" +
+                        "-----------\n" +
                         " 3 | X | 5\n" +
+                        "-----------\n" +
                         " 6 | 7 | 8\n\n");
         board.removeMarkInSquare(4);
         assertEquals(board.asString(),
                       "\n 0 | 1 | 2\n" +
+                        "-----------\n" +
                         " 3 | 4 | 5\n" +
+                        "-----------\n" +
                         " 6 | 7 | 8\n\n");
     }
 }

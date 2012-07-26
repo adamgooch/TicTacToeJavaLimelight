@@ -2,8 +2,6 @@ import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
-
 import static junit.framework.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -13,26 +11,26 @@ import static org.mockito.Mockito.*;
  */
 public class GameTest extends TestSuite {
     private Game game;
-    private UnbeatableAI mockAi;
+    private MiniMaxAI mockAi;
     private IO mockIO;
+    private Board board;
 
     @Before
     public void setUp() {
-        mockAi = mock(UnbeatableAI.class);
+        mockAi = mock(MiniMaxAI.class);
         mockIO = mock(ConsoleIO.class);
-        Board.squaresTaken = 0;
-        game = new Game(mockAi, mockIO);
+        board = new Board();
+        game = new Game(mockAi, mockIO, board, Game.AI_VS_AI);
     }
 
     @Test
-    public void gameOverShouldBeFalseAfter1MoveHasBeenMade() {
-        Board.squaresTaken = 1;
+    public void gameOverShouldBeFalseWhenTheGameHasJustBegun() {
         assertFalse(game.gameOver());
     }
 
     @Test
     public void gameOverShouldBeTrueAfter9MovesHaveBeenMade() {
-        Board.squaresTaken = 9;
+        game.play();
         assertTrue(game.gameOver());
     }
 

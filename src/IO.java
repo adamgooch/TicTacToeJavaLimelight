@@ -5,5 +5,5 @@
 public interface IO {
     public void displayBoard();
     public void displayMessage(String message);
-    public void getPlayerMove();
+    public void getPlayerMove(char playerMark);
 }
