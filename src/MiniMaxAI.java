@@ -17,7 +17,6 @@ public class MiniMaxAI implements AI {
     public void move(char playerMark) {
         int square = findBestMove(playerMark);
         board.putMarkInSquare(playerMark, square);
-        System.out.println("---------------------------");
     }
 
     private int findBestMove(char mark) {
@@ -35,12 +34,8 @@ public class MiniMaxAI implements AI {
             }
             scores[i][POSITION] = position;
             scores[i][SCORE] = currentScore;
-            System.out.printf("The score for position %d is %d \n", position, currentScore);
         }
-        if(mark == 'O')
-            return determineBestMoveForMax(scores);
-        else
-            return determineBestMoveForMin(scores);
+        return determineBestMove(scores, mark);
     }
 
     private int max(Board board){
@@ -85,23 +80,12 @@ public class MiniMaxAI implements AI {
         return best;
     }
 
-    private int determineBestMoveForMax(int[][] scores) {
+    private int determineBestMove(int[][] scores, char mark) {
         int bestIndex = 0;
-        int bestScore = Integer.MIN_VALUE;
+        int bestScore = scores[bestIndex][SCORE];
         for(int i = 0; i < scores.length; i++){
-            if(scores[i][SCORE] > bestScore) {
-                bestScore = scores[i][SCORE];
-                bestIndex = i;
-            }
-        }
-        return scores[bestIndex][POSITION];
-    }
-
-    private int determineBestMoveForMin(int[][] scores) {
-        int bestIndex = 0;
-        int bestScore = Integer.MAX_VALUE;
-        for(int i = 0; i < scores.length; i++){
-            if(scores[i][SCORE] < bestScore) {
+            if((mark == 'O' && scores[i][SCORE] > bestScore) ||
+                    (mark == 'X' && scores[i][SCORE] < bestScore)) {
                 bestScore = scores[i][SCORE];
                 bestIndex = i;
             }
