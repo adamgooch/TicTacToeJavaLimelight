@@ -44,6 +44,15 @@ public class MinimaxAITest extends TestSuite {
     }
 
     @Test
+    public void moveShouldGoInSquare6() {
+        board.putMarkInSquare('X', 7);
+        board.putMarkInSquare('O', 1);
+        board.putMarkInSquare('X', 5);
+        ai.move('O');
+        assertEquals('O', board.getMarkInSquare(6));
+    }
+
+    @Test
     public void exhaustiveAITest() {
         BoardAnalyzer analyzer = new BoardAnalyzer(board);
         for(int i = 0; i < 9; i++){

@@ -38,12 +38,11 @@ public class MiniMaxAI implements AI {
         return determineBestMove(scores, mark);
     }
 
-    private int max(Board board){
-        char mark = 'O';
+    public int max(Board board){
         BoardAnalyzer analyzer = new BoardAnalyzer(board);
-        if(board.countSquaresAvailable() == 0 && analyzer.getWinner() == 'O')
+        if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'O')
             return 1;
-        else if(board.countSquaresAvailable() == 0 && analyzer.getWinner() == 'X')
+        else if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'X')
             return -1;
         else if(board.countSquaresAvailable() == 0)
             return 0;
@@ -51,7 +50,7 @@ public class MiniMaxAI implements AI {
         int best = Integer.MIN_VALUE;
         for(Integer position : positions){
             Board child = board.clone(new Board());
-            child.putMarkInSquare(mark, position);
+            child.putMarkInSquare('O', position);
             int move = min(child);
             if(move > best)
                 best = move;
@@ -59,8 +58,7 @@ public class MiniMaxAI implements AI {
         return best;
     }
 
-    private int min(Board board){
-        char mark = 'X';
+    public int min(Board board){
         BoardAnalyzer analyzer = new BoardAnalyzer(board);
         if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'O')
             return 1;
@@ -70,15 +68,16 @@ public class MiniMaxAI implements AI {
             return 0;
         ArrayList<Integer> positions = board.getAvailableSquares();
         int best = Integer.MAX_VALUE;
-        for(Integer position : positions){
-            Board child = board.clone(new Board());
-            child.putMarkInSquare(mark, position);
-            int move = max(child);
+        for(Integer p : positions){
+            Board b = board.clone(new Board());
+            b.putMarkInSquare('X', p);
+            int move = max(b);
             if(move < best)
                 best = move;
         }
         return best;
     }
+
 
     private int determineBestMove(int[][] scores, char mark) {
         int bestIndex = 0;
