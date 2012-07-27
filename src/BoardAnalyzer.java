@@ -25,31 +25,31 @@ public class BoardAnalyzer {
         char pos1 = gameBoard.getMarkInSquare(getSquareNumber(row, 0));
         char pos2 = gameBoard.getMarkInSquare(getSquareNumber(row, 1));
         char pos3 = gameBoard.getMarkInSquare(getSquareNumber(row, 2));
-        return checkForWinner(pos1, pos2, pos3);
+        return helpCheckForWinner(pos1, pos2, pos3);
     }
 
     private boolean winnerInColumn(int column) {
         char pos1 = gameBoard.getMarkInSquare(getSquareNumber(0, column));
         char pos2 = gameBoard.getMarkInSquare(getSquareNumber(1, column));
         char pos3 = gameBoard.getMarkInSquare(getSquareNumber(2, column));
-        return checkForWinner(pos1, pos2, pos3);
+        return helpCheckForWinner(pos1, pos2, pos3);
     }
 
     private boolean winnerInDiagonalOne() {
         char pos1 = gameBoard.getMarkInSquare(getSquareNumber(0, 0));
         char pos2 = gameBoard.getMarkInSquare(getSquareNumber(1, 1));
         char pos3 = gameBoard.getMarkInSquare(getSquareNumber(2, 2));
-        return checkForWinner(pos1, pos2, pos3);
+        return helpCheckForWinner(pos1, pos2, pos3);
     }
 
     private boolean winnerInDiagonalTwo() {
         char pos1 = gameBoard.getMarkInSquare(getSquareNumber(0, 2));
         char pos2 = gameBoard.getMarkInSquare(getSquareNumber(1, 1));
         char pos3 = gameBoard.getMarkInSquare(getSquareNumber(2, 0));
-        return checkForWinner(pos1, pos2, pos3);
+        return helpCheckForWinner(pos1, pos2, pos3);
     }
 
-    private boolean checkForWinner(char pos1, char pos2, char pos3) {
+    private boolean helpCheckForWinner(char pos1, char pos2, char pos3) {
         if( pos1 == pos2 && pos2 == pos3) {
             winner = pos1;
             return true;

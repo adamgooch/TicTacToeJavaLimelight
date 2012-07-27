@@ -112,7 +112,7 @@ public class BoardTest extends TestSuite {
     @Test
     public void cloneShouldReturnACopyOfTheBoard() {
         Board newBoard = new Board();
-        newBoard = board.clone(newBoard);
+        newBoard = board.clone();
         for(int i = 0; i < Board.NUMBER_OF_SQUARES; i++) {
             assertEquals(board.getMarkInSquare(i), newBoard.getMarkInSquare(i));
         }

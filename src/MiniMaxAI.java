@@ -24,7 +24,7 @@ public class MiniMaxAI implements AI {
         int[][] scores = new int[positions.size()][2];
         for(int i = 0; i < positions.size(); i++){
             int position = positions.get(i);
-            Board child = board.clone(new Board());
+            Board child = board.clone();
             child.putMarkInSquare(mark, position);
             int currentScore;
             if(mark == 'O') {
@@ -38,40 +38,40 @@ public class MiniMaxAI implements AI {
         return determineBestMove(scores, mark);
     }
 
-    public int max(Board board){
-        BoardAnalyzer analyzer = new BoardAnalyzer(board);
+    public int max(Board childBoard){
+        BoardAnalyzer analyzer = new BoardAnalyzer(childBoard);
         if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'O')
             return 1;
         else if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'X')
             return -1;
-        else if(board.countSquaresAvailable() == 0)
+        else if(childBoard.countSquaresAvailable() == 0)
             return 0;
-        ArrayList<Integer> positions = board.getAvailableSquares();
+        ArrayList<Integer> positions = childBoard.getAvailableSquares();
         int best = Integer.MIN_VALUE;
-        for(Integer position : positions){
-            Board child = board.clone(new Board());
-            child.putMarkInSquare('O', position);
-            int move = min(child);
+        for(Integer pos : positions){
+            Board newChild = childBoard.clone();
+            newChild.putMarkInSquare('O', pos);
+            int move = min(newChild);
             if(move > best)
                 best = move;
         }
         return best;
     }
 
-    public int min(Board board){
-        BoardAnalyzer analyzer = new BoardAnalyzer(board);
+    public int min(Board childBoard){
+        BoardAnalyzer analyzer = new BoardAnalyzer(childBoard);
         if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'O')
             return 1;
         else if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'X')
             return -1;
-        else if(board.countSquaresAvailable() == 0)
+        else if(childBoard.countSquaresAvailable() == 0)
             return 0;
-        ArrayList<Integer> positions = board.getAvailableSquares();
+        ArrayList<Integer> positions = childBoard.getAvailableSquares();
         int best = Integer.MAX_VALUE;
-        for(Integer p : positions){
-            Board b = board.clone(new Board());
-            b.putMarkInSquare('X', p);
-            int move = max(b);
+        for(Integer pos : positions){
+            Board newChild = childBoard.clone();
+            newChild.putMarkInSquare('X', pos);
+            int move = max(newChild);
             if(move < best)
                 best = move;
         }

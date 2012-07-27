@@ -25,7 +25,8 @@ public class Board {
                  " " + gameBoard[2][0] + " | " + gameBoard[2][1] + " | " + gameBoard[2][2] + "\n\n";
     }
 
-    public Board clone(Board newBoard) {
+    public Board clone() {
+        Board newBoard = new Board();
         for(int i = 0; i < NUMBER_OF_SQUARES; i++) {
             char mark = this.getMarkInSquare(i);
             newBoard.putMarkInSquare(mark, i);
