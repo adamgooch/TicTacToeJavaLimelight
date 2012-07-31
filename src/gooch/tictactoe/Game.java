@@ -1,9 +1,5 @@
 package gooch.tictactoe;
 
-/**
- * Author: Adam Gooch
- * Date: 7/16/12
- */
 public class Game {
     public static int PLAYER_VS_PLAYER = 0;
     public static int PLAYER_VS_AI = 1;

@@ -1,4 +1,5 @@
 *.iws
 .idea/
 .DS_Store
+*.swp
 

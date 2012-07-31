@@ -1,11 +1,5 @@
 package gooch.tictactoe;
 
-import gooch.tictactoe.Board;
-
-/**
- * Author: Adam Gooch
- * Date: 7/24/12
- */
 public class BoardAnalyzer {
     private char winner;
     private Board gameBoard;

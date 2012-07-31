@@ -1,15 +1,7 @@
 package gooch.tictactoe;
 
-import gooch.tictactoe.AI;
-import gooch.tictactoe.Board;
-import gooch.tictactoe.BoardAnalyzer;
-
 import java.util.ArrayList;
 
-/**
- * Author: Adam Gooch
- * Date: 7/25/12
- */
 public class MiniMaxAI implements AI {
     private static final int POSITION = 0;
     private static final int SCORE = 1;

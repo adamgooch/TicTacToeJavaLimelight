@@ -2,10 +2,6 @@ package gooch.tictactoe;
 
 import java.util.ArrayList;
 
-/**
- * Author: Adam Gooch
- * Date: 7/16/12
- */
 public class Board {
     public static final int NUMBER_OF_SQUARES = 9;
     public static final int BOARD_DIMENSION = 3;
