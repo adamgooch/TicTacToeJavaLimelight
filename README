@@ -1,17 +1,14 @@
-This is an unbeatable game of Tic Tac Toe played via a console.
+This is an unbeatable game of Tic Tac Toe played via a console or a gui.
 
-To play, open your console and set your working directory to:
-TicTacToe/out/production/TicTacToe/
+To play the console version, simply run: ./play_console
 
-Then run:
-java gooch.tictactoe.PlayTicTacToe
+You will be presented with a menu.
+Enter 0 to play against a friend.
+Enter 1 to play against the computer.
+Enter 2 to watch the computer play against itself.
 
-The default play type is you against the computer.
+To play the GUI version, you must be running JRuby with the Limelight
+gem installed.  This game was tested with JRuby 1.6.7 and Limelight 0.5.5.
+If these requirements are met, simply run: ./play_gui
 
-If you want to play against a friend (or yourself, I don't judge) enter a zero after the command:
-
-java gooch.tictactoe.PlayTicTacToe 0
-
-If you want to see the computer play against itself in a blink of an eye, enter:
-
-java gooch.tictactoe.PlayTicTacToe 2
+Currently, you can only play against the computer with the GUI version.
