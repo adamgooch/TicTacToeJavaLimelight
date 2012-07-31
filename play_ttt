@@ -1,0 +1,3 @@
+cd out/production/TicTacToe
+java gooch/tictactoe/PlayTicTacToe
+
