@@ -1,0 +1,3 @@
+export CLASSPATH=/Users/Tank/IdeaProjects/TicTacToe/out/production/TicTacToe/
+jruby -S spec spec
+

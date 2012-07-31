@@ -1,7 +1,8 @@
 message_partial do
-  label :text => @text,
+  label :id => 9,
+    :text => @text,
     :text_color => :black,
-    :font_size => 48,
+    :font_size => 40,
     :horizontal_alignment => :center,
     :vertical_alignment => :center,
     :height => 80,

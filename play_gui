@@ -1,3 +1,3 @@
 export CLASSPATH=out/production/TicTacToe/
-limelight open tic_tac_toe_limelight
+limelight open limelight
 
