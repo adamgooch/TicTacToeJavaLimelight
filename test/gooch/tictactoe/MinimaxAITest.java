@@ -1,3 +1,8 @@
+package gooch.tictactoe;
+
+import gooch.tictactoe.Board;
+import gooch.tictactoe.BoardAnalyzer;
+import gooch.tictactoe.MiniMaxAI;
 import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;

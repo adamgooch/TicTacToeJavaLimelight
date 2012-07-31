@@ -1,3 +1,6 @@
+package gooch.tictactoe;
+
+import gooch.tictactoe.*;
 import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;

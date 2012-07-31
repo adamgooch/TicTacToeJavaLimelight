@@ -1,12 +1,18 @@
+package gooch.tictactoe;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Author: Adam Gooch
- * Date: 7/22/12
- */
 public class ConsoleIO implements IO {
+
+    private static final String OPENING_MESSAGE = "Welcome To Tic Tac Toe\n" +
+            "How would you like to play?\n" +
+            "0: Player vs. Player\n" +
+            "1: Player vs. Computer\n" +
+            "2: Computer vs. Computer\n" +
+            "Please enter a number: ";
+
     private Board gameBoard;
     protected BufferedReader inputReader;
 
@@ -35,16 +41,44 @@ public class ConsoleIO implements IO {
     }
 
     protected boolean isValidPlayerMove(char playerMark) {
-        String userInput;
+        String userInput = getUserInput();
         int desiredSquare = 10;
         try {
-            userInput = inputReader.readLine();
             desiredSquare = Integer.parseInt(userInput);
-        } catch (IOException e) {
-            // Something wrong with the system
         } catch (NumberFormatException e) {
             // bad user input doesn't matter, gameBoard doesn't care
         }
         return gameBoard.putMarkInSquare(playerMark, desiredSquare);
     }
+
+    public int getPlayTypeFromUser(String[] args) {
+        int playType;
+        if(args.length > 0) {
+            playType = validatedUserPlayType(Integer.parseInt(args[0]));
+        } else {
+            displayMessage(OPENING_MESSAGE);
+            playType = validatedUserPlayType(Integer.parseInt(getUserInput()));
+        }
+        return playType;
+    }
+
+    private String getUserInput() {
+        String userInput = "";
+        try {
+            userInput = inputReader.readLine();
+        } catch (IOException e) {
+            // Something wrong with the system
+        }
+        return userInput;
+    }
+
+    private int validatedUserPlayType(int userInput) {
+        if(userInput >= Game.PLAYER_VS_PLAYER && userInput <= Game.AI_VS_AI)
+            return userInput;
+        else
+            return Game.PLAYER_VS_AI;
+    }
+
+
+
 }

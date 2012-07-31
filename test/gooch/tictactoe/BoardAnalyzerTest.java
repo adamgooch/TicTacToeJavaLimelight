@@ -1,3 +1,7 @@
+package gooch.tictactoe;
+
+import gooch.tictactoe.Board;
+import gooch.tictactoe.BoardAnalyzer;
 import org.junit.Before;
 import org.junit.Test;
 

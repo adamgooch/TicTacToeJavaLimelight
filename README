@@ -4,14 +4,14 @@ To play, open your console and set your working directory to:
 TicTacToe/out/production/TicTacToe/
 
 Then run:
-java PlayTicTacToe
+java gooch.tictactoe.PlayTicTacToe
 
 The default play type is you against the computer.
 
 If you want to play against a friend (or yourself, I don't judge) enter a zero after the command:
 
-java PlayTicTacToe 0
+java gooch.tictactoe.PlayTicTacToe 0
 
 If you want to see the computer play against itself in a blink of an eye, enter:
 
-java PlayTicTacToe 2
+java gooch.tictactoe.PlayTicTacToe 2

@@ -1,5 +1,6 @@
+package gooch.tictactoe;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Author: Adam Gooch

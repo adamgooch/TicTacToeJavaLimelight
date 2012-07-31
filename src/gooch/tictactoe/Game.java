@@ -1,3 +1,5 @@
+package gooch.tictactoe;
+
 /**
  * Author: Adam Gooch
  * Date: 7/16/12
@@ -7,33 +9,33 @@ public class Game {
     public static int PLAYER_VS_AI = 1;
     public static int AI_VS_AI = 2;
     private AI ai;
-    private IO console;
+    private IO io;
     private BoardAnalyzer analyzer;
     private int movesMade;
     private int gameType;
 
     public Game(AI ai, IO io, Board board, int type) {
         this.ai = ai;
-        this.console = io;
+        this.io = io;
         this.analyzer = new BoardAnalyzer(board);
         this.gameType = type;
         movesMade = 0;
     }
 
     public void play() {
-        console.displayBoard();
+        io.displayBoard();
         while(!gameOver()) {
             playerOneMove();
-            console.displayBoard();
+            io.displayBoard();
             movesMade++;
             if(!gameOver()) {
                 playerTwoMove();
-                console.displayBoard();
+                io.displayBoard();
                 movesMade++;
             }
         }
-        console.displayMessage("GAME OVER!\n");
-        console.displayMessage(getWinnerMessage() + "\n");
+        io.displayMessage("GAME OVER!\n");
+        io.displayMessage(getWinnerMessage() + "\n");
     }
 
     protected boolean gameOver() {
@@ -54,7 +56,7 @@ public class Game {
 
     private void playerOneMove() {
         if(gameType != AI_VS_AI)
-            console.getPlayerMove('X');
+            io.getPlayerMove('X');
         else
             ai.move('X');
     }
@@ -63,6 +65,6 @@ public class Game {
         if(gameType != PLAYER_VS_PLAYER)
             ai.move('O');
         else
-            console.getPlayerMove('O');
+            io.getPlayerMove('O');
     }
 }

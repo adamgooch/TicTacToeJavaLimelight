@@ -1,9 +1,14 @@
+package gooch.tictactoe;
+
+import gooch.tictactoe.Board;
+import gooch.tictactoe.ConsoleIO;
 import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -49,6 +54,24 @@ public class IOTest extends TestSuite {
         createUserInput("what\n");
         when(mockBoard.putMarkInSquare('X', 9)).thenReturn(false);
         assertFalse(io.isValidPlayerMove('X'));
+    }
+
+    @Test
+    public void getPlayTypeFromUserShouldReturn1WhenGiven1() {
+        String[] args = {"1"};
+        assertEquals(1, io.getPlayTypeFromUser(args));
+    }
+
+    @Test
+    public void getPlayTypeFromUserShouldReturn1WhenGiven99() {
+        String[] args = {"99"};
+        assertEquals(1, io.getPlayTypeFromUser(args));
+    }
+
+    @Test
+    public void getPlayTypeFromUserShouldReturn1WhenGivenNeg1() {
+        String[] args = {"-1"};
+        assertEquals(1, io.getPlayTypeFromUser(args));
     }
 
     private void createUserInput(String input) {

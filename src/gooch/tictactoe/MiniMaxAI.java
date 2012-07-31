@@ -1,3 +1,9 @@
+package gooch.tictactoe;
+
+import gooch.tictactoe.AI;
+import gooch.tictactoe.Board;
+import gooch.tictactoe.BoardAnalyzer;
+
 import java.util.ArrayList;
 
 /**

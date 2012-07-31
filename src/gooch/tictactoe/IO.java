@@ -1,3 +1,5 @@
+package gooch.tictactoe;
+
 /**
  * Author: Adam Gooch
  * Date: 7/22/12

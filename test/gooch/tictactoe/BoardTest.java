@@ -1,3 +1,6 @@
+package gooch.tictactoe;
+
+import gooch.tictactoe.Board;
 import junit.framework.TestSuite;
 import org.junit.*;
 import static junit.framework.Assert.*;
