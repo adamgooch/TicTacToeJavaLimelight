@@ -21,6 +21,17 @@ module Production
     @analyzer = BoardAnalyzer.new(@board)
   end
 
+  def move_production_forward(scene, id)
+      board.putMarkInSquare(X, id.to_i)
+      if !game_over 
+        ai.move(O)
+      end
+      drawboard(scene)
+      if game_over
+        show_message(scene) 
+      end
+  end
+
   def drawboard scene
     9.times do |i|
       mark = board.getMarkInSquare(i)
