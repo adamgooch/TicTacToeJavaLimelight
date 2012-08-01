@@ -26,6 +26,7 @@ module Production
       draw_board(scene)
       if game_over
         show_message(scene)
+        play_audio_message(scene, id)
       end
   end
 
@@ -66,6 +67,17 @@ module Production
       return "I Win!!"
     else
       return "Draw."
+    end
+  end
+
+  def play_audio_message (scene, id)
+    prop = scene.find(id)
+    if @analyzer.getWinner() == X
+      prop.play_sound('sounds/reverseit.au')
+    elsif @analyzer.getWinner() == O
+      prop.play_sound('sounds/yougetnothing.au')
+    else
+      prop.play_sound('sounds/journeysover.au')
     end
   end
 
