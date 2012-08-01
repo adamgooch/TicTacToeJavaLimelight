@@ -1,4 +1,4 @@
-stage "default" do
+stage "main" do
   default_scene "default_scene"
   title "Tic Tac Toe"
   location [200, 200]

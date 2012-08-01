@@ -1,7 +1,7 @@
 module StartOverButton
 
   def mouse_clicked e
-    production.clear_board(scene)
+    production.clear_board
   end
 
   def mouse_entered e

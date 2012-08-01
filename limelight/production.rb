@@ -18,16 +18,22 @@ module Production
     @analyzer = BoardAnalyzer.new(@board)
   end
 
+  def production_opened
+    puts self.theater.has_stages?
+    puts self.theater.active_stage
+  end
+
   def move_production_forward(scene, id)
-      @board.putMarkInSquare(X, id.to_i)
-      if !game_over
-        @ai.move(O)
-      end
-      draw_board(scene)
-      if game_over
-        show_message(scene)
-        play_audio_message(scene, id)
-      end
+    @scene = scene
+    @board.putMarkInSquare(X, id.to_i)
+    if !game_over
+      @ai.move(O)
+    end
+    draw_board
+    if game_over
+      show_message
+      play_audio_message(id)
+    end
   end
 
   def game_over
@@ -35,27 +41,27 @@ module Production
       @board.countSquaresAvailable() == 0
   end
 
-  def clear_board scene
+  def clear_board
     9.times do |i|
       @board.removeMarkInSquare(i)
-      scene.find(i).text = ""
+      @scene.find(i).text = ""
     end
-    message = scene.find(:message)
+    message = @scene.find(:message)
     message.remove_all
   end
 
-  def draw_board scene
+  def draw_board
     9.times do |i|
       mark = @board.getMarkInSquare(i)
       if mark == X || mark == O 
-        scene.find(i).text = mark.chr
+        @scene.find(i).text = mark.chr
       end
     end
   end
 
   def show_message scene
     message = get_message
-    scene.find(:message).build do
+    @scene.find(:message).build do
       __install 'partials/message_label.rb', :text => message
     end
   end
@@ -70,8 +76,8 @@ module Production
     end
   end
 
-  def play_audio_message (scene, id)
-    prop = scene.find(id)
+  def play_audio_message (id)
+    prop = @scene.find(id)
     if @analyzer.getWinner() == X
       prop.play_sound('sounds/reverseit.au')
     elsif @analyzer.getWinner() == O
