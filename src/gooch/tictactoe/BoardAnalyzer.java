@@ -60,7 +60,8 @@ public class BoardAnalyzer {
     }
 
     public char getWinner() {
-        thereIsAWinner();
+        if(!thereIsAWinner())
+            winner = 'N';
         return winner;
     }
 

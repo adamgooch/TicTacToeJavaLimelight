@@ -1,5 +1,5 @@
 message_partial do
-  label :id => 9,
+  label :id => :message_label,
     :text => @text,
     :text_color => :black,
     :font_size => 40,

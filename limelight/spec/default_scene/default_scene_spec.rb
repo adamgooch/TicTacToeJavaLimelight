@@ -28,7 +28,7 @@ describe "Default Scene" do
   end
 
   it "should display a message when the game is over" do
-    scene.children.size.should == 4 #there are 3 rows and a button
+    scene.find(:message_label).should be_nil
     scene.find(3).mouse_clicked nil
     scene.find(4).mouse_clicked nil
     scene.find(6).mouse_clicked nil
@@ -40,7 +40,7 @@ describe "Default Scene" do
     scene.find(3).mouse_clicked nil
     scene.find(6).mouse_clicked nil
     scene.find(4).mouse_clicked nil
-    message = scene.find(9)
+    message = scene.find(:message_label)
     message.text.should == "I Win!!"
   end
 
@@ -56,6 +56,14 @@ describe "Default Scene" do
     scene.find(:start_over).mouse_clicked nil
     scene.find(0).text.should == ""
     scene.find(5).text.should == ""
+  end
+
+  it "should remove the message if it exists" do
+    scene.find(3).mouse_clicked nil
+    scene.find(6).mouse_clicked nil
+    scene.find(4).mouse_clicked nil
+    scene.find(:start_over).mouse_clicked nil
+    scene.find(:message_label).should be_nil
   end
 
 end

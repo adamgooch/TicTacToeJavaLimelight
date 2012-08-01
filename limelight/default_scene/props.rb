@@ -1,7 +1,5 @@
 start_over_button :id => :start_over,
-  :text => "Start Over",
-  :on_mouse_entered => "style.background_color = :red",
-  :on_mouse_exited => "style.background_color = '#550000'"
+  :text => "Start Over"
 row do
   ttt_square :id => 0
   ttt_square :id => 1
@@ -17,3 +15,4 @@ row do
   ttt_square :id => 7
   ttt_square :id => 8
 end
+message_label :id => :message
