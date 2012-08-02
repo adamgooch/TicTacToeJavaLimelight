@@ -1,5 +1,6 @@
 message_partial do
   label :id => :message_label,
+    :name => "message",
     :text => @text,
     :text_color => :black,
     :font_size => 40,

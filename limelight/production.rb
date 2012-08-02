@@ -1,12 +1,16 @@
 require 'java'
+require File.expand_path(File.dirname(__FILE__) + '/gui_io')
 
 import 'gooch.tictactoe.Board'
 import 'gooch.tictactoe.MiniMaxAI'
 import 'gooch.tictactoe.BoardAnalyzer'
+import 'gooch.tictactoe.Game'
 
 module Production
   X = 88
   O = 79
+
+  attr_accessor :scene
 
   def name
     return "Tic Tac Toe"
@@ -16,68 +20,31 @@ module Production
     @board = Board.new()
     @ai = MiniMaxAI.new(@board)
     @analyzer = BoardAnalyzer.new(@board)
+    @gui_io = GuiIo.new(self, @board)
+    @game = Game.new(@ai, @gui_io, @board, 1)
   end
 
   def production_opened
-    puts self.theater.has_stages?
-    puts self.theater.active_stage
+    stage = theater.stages[0]
+    @scene = stage.current_scene
+    @game.play
   end
 
-  def move_production_forward(scene, id)
-    @scene = scene
+  def move_production_forward(id)
     @board.putMarkInSquare(X, id.to_i)
-    if !game_over
-      @ai.move(O)
-    end
-    draw_board
-    if game_over
-      show_message
-      play_audio_message(id)
-    end
+    @gui_io.user_has_moved = true
   end
 
-  def game_over
-    @analyzer.thereIsAWinner() ||
-      @board.countSquaresAvailable() == 0
+  def game_over?
+    @game.game_over
   end
 
-  def clear_board
-    9.times do |i|
-      @board.removeMarkInSquare(i)
-      @scene.find(i).text = ""
-    end
-    message = @scene.find(:message)
-    message.remove_all
+# this is for testing purposes only
+  def gui_io
+    @gui_io
   end
 
-  def draw_board
-    9.times do |i|
-      mark = @board.getMarkInSquare(i)
-      if mark == X || mark == O 
-        @scene.find(i).text = mark.chr
-      end
-    end
-  end
-
-  def show_message scene
-    message = get_message
-    @scene.find(:message).build do
-      __install 'partials/message_label.rb', :text => message
-    end
-  end
-
-  def get_message
-    if @analyzer.getWinner() == X
-      return "I Can't Believe It!"
-    elsif @analyzer.getWinner() == O
-      return "I Win!!"
-    else
-      return "Draw."
-    end
-  end
-
-  def play_audio_message (id)
-    prop = @scene.find(id)
+  def play_audio_message prop
     if @analyzer.getWinner() == X
       prop.play_sound('sounds/reverseit.au')
     elsif @analyzer.getWinner() == O

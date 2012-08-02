@@ -54,4 +54,5 @@ public class GameTest extends TestSuite {
         game.play();
         verify(mockAi, times(4)).move('O');
     }
+
 }

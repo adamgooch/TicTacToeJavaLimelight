@@ -34,7 +34,7 @@ public class Game {
         io.displayMessage(getWinnerMessage() + "\n");
     }
 
-    protected boolean gameOver() {
+    public boolean gameOver() {
         if(analyzer.thereIsAWinner() || movesMade >= 9)
             return true;
         return false;
@@ -63,4 +63,5 @@ public class Game {
         else
             io.getPlayerMove('O');
     }
+
 }
