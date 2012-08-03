@@ -14,7 +14,7 @@ class GuiIo
     @user_has_moved = false
   end
 
-  def displayBoard()
+  def displayBoard
     Board::NUMBER_OF_SQUARES.times do |square|
       put_text_in_square square
     end
@@ -31,20 +31,24 @@ class GuiIo
   end
 
   def displayMessage message
-    if message_is_not_displayed
-      message_prop.build do
-        __install 'partials/message_label.rb', :text => message
-      end
+    message_container = @production.scene.find(:message)
+    if message_is_not_displayed(message_container)
+      build_message(message_container, message)
     else
       child_props[0].text = message
     end
-    @production.play_audio_message message_prop
+    @production.play_audio_message message_container
   end
 
-  def message_is_not_displayed
-    message_prop = @production.scene.find(:message)
-    child_props = message_prop.find_by_name("message")
+  def message_is_not_displayed message_container
+    child_props = message_container.find_by_name("message")
     child_props.length == 0
+  end
+
+  def build_message(message_container, message)
+    message_container.build do
+      __install 'partials/message_label.rb', :text => message
+    end
   end
 
   def getPlayerMove player_mark

@@ -15,6 +15,7 @@ public class Game {
     private BoardAnalyzer analyzer;
     private int movesMade;
     private int gameType;
+    private boolean playerOnesTurn;
 
     public Game(AI ai, IO io, Board board, int type) {
         this.ai = ai;
@@ -22,19 +23,16 @@ public class Game {
         this.analyzer = new BoardAnalyzer(board);
         this.gameType = type;
         movesMade = 0;
+        playerOnesTurn = true;
     }
 
     public void play() {
         io.displayBoard();
         while(!gameOver()) {
-            playerOneMove();
+            playerMove();
+            playerOnesTurn = !playerOnesTurn;
             io.displayBoard();
             movesMade++;
-            if(!gameOver()) {
-                playerTwoMove();
-                io.displayBoard();
-                movesMade++;
-            }
         }
         io.displayMessage(getWinnerMessage() + "\n");
     }
@@ -53,6 +51,13 @@ public class Game {
         } else {
             return NOBODY_WINS;
         }
+    }
+
+    private void playerMove() {
+        if(playerOnesTurn)
+            playerOneMove();
+        else
+            playerTwoMove();
     }
 
     private void playerOneMove() {
