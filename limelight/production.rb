@@ -9,6 +9,9 @@ import 'gooch.tictactoe.Game'
 module Production
   X = 88
   O = 79
+  X_WIN_SOUND = 'sounds/reverseit.au'
+  O_WIN_SOUND = 'sounds/yougetnothing.au'
+  DRAW_SOUND = 'sounds/journeysover.au'
 
   attr_accessor :scene
 
@@ -39,19 +42,18 @@ module Production
     @game.game_over
   end
 
-# this is for testing purposes only
-  def gui_io
-    @gui_io
-  end
-
   def play_audio_message prop
     if @analyzer.getWinner() == X
-      prop.play_sound('sounds/reverseit.au')
+      prop.play_sound(X_WIN_SOUND)
     elsif @analyzer.getWinner() == O
-      prop.play_sound('sounds/yougetnothing.au')
+      prop.play_sound(O_WIN_SOUND)
     else
-      prop.play_sound('sounds/journeysover.au')
+      prop.play_sound(DRAW_SOUND)
     end
+  end
+
+  def gui_io
+    @gui_io
   end
 
 end

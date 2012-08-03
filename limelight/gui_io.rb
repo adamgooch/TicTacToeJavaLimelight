@@ -1,6 +1,8 @@
 require 'java'
 require File.expand_path(File.dirname(__FILE__) + '/production')
 
+import 'gooch.tictactoe.Board'
+
 class GuiIo
   include Java::gooch.tictactoe.IO
 
@@ -13,21 +15,23 @@ class GuiIo
   end
 
   def displayBoard()
-    9.times do |i|
-      mark = @board.getMarkInSquare(i)
-      square = @production.scene.find(i)
-      if mark == Production::X || mark == Production::O 
-        square.text = mark.chr
-      else
-        square.text = ""
-      end
+    Board::NUMBER_OF_SQUARES.times do |square|
+      put_text_in_square square
+    end
+  end
+
+  def put_text_in_square square
+    mark = @board.getMarkInSquare(square)
+    square = @production.scene.find(square)
+    if mark == Production::X || mark == Production::O
+      square.text = mark.chr
+    else
+      square.text = ""
     end
   end
 
   def displayMessage message
-    message_prop = @production.scene.find(:message)
-    child_props = message_prop.find_by_name("message")
-    if child_props.length == 0
+    if message_is_not_displayed
       message_prop.build do
         __install 'partials/message_label.rb', :text => message
       end
@@ -37,23 +41,17 @@ class GuiIo
     @production.play_audio_message message_prop
   end
 
+  def message_is_not_displayed
+    message_prop = @production.scene.find(:message)
+    child_props = message_prop.find_by_name("message")
+    child_props.length == 0
+  end
+
   def getPlayerMove player_mark
     until @user_has_moved
       sleep 0.5
     end
     @user_has_moved = false
-  end
-
-  def clear_board
-    9.times do |i|
-      @board.removeMarkInSquare(i)
-    end
-    displayBoard
-  end
-
-  def remove_message
-    message = @production.scene.find(:message)
-    message.remove_all
   end
 
 end
