@@ -1,9 +1,15 @@
 package gooch.tictactoe;
 
 public class Game {
-    public static int PLAYER_VS_PLAYER = 0;
-    public static int PLAYER_VS_AI = 1;
-    public static int AI_VS_AI = 2;
+    public static final int PLAYER_VS_PLAYER = 0;
+    public static final int PLAYER_VS_AI = 1;
+    public static final int AI_VS_AI = 2;
+    public static final char PLAYER_ONE = 'X';
+    public static final char PLAYER_TWO = 'O';
+    private static final String PLAYER_ONE_WINS = "X WINS!";
+    private static final String PLAYER_TWO_WINS = "O WINS!";
+    private static final String NOBODY_WINS = "Nobody Wins.";
+
     private AI ai;
     private IO io;
     private BoardAnalyzer analyzer;
@@ -30,38 +36,37 @@ public class Game {
                 movesMade++;
             }
         }
-        io.displayMessage("GAME OVER!\n");
         io.displayMessage(getWinnerMessage() + "\n");
     }
 
     public boolean gameOver() {
-        if(analyzer.thereIsAWinner() || movesMade >= 9)
+        if(analyzer.thereIsAWinner() || movesMade >= Board.NUMBER_OF_SQUARES)
             return true;
         return false;
     }
 
     protected String getWinnerMessage() {
-        if(analyzer.getWinner() == 'X') {
-            return "X WINS!";
-        } else if(analyzer.getWinner() == 'O') {
-            return "O WINS!";
+        if(analyzer.getWinner() == PLAYER_ONE) {
+            return PLAYER_ONE_WINS;
+        } else if(analyzer.getWinner() == PLAYER_TWO) {
+            return PLAYER_TWO_WINS;
         } else {
-            return "Nobody wins.";
+            return NOBODY_WINS;
         }
     }
 
     private void playerOneMove() {
         if(gameType != AI_VS_AI)
-            io.getPlayerMove('X');
+            io.getPlayerMove(PLAYER_ONE);
         else
-            ai.move('X');
+            ai.move(PLAYER_ONE);
     }
 
     private void playerTwoMove() {
         if(gameType != PLAYER_VS_PLAYER)
-            ai.move('O');
+            ai.move(PLAYER_TWO);
         else
-            io.getPlayerMove('O');
+            io.getPlayerMove(PLAYER_TWO);
     }
 
 }

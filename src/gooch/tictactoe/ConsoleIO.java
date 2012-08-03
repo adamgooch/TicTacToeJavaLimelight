@@ -12,6 +12,8 @@ public class ConsoleIO implements IO {
             "1: Player vs. Computer\n" +
             "2: Computer vs. Computer\n" +
             "Please enter a number: ";
+    private static final String ASK_FOR_MOVE = "What is your move? ";
+    private static final String INVALID_MOVE = "Invalid Move: Please enter a valid move ";
 
     private Board gameBoard;
     protected BufferedReader inputReader;
@@ -34,15 +36,15 @@ public class ConsoleIO implements IO {
 
     @Override
     public void getPlayerMove(char playerMark) {
-        displayMessage("What is your move? ");
+        displayMessage(ASK_FOR_MOVE);
         while(!isValidPlayerMove(playerMark)){
-            displayMessage("Invalid Move: Please enter a valid move ");
+            displayMessage(INVALID_MOVE);
         };
     }
 
     protected boolean isValidPlayerMove(char playerMark) {
         String userInput = getUserInput();
-        int desiredSquare = 10;
+        int desiredSquare = Board.NUMBER_OF_SQUARES;
         try {
             desiredSquare = Integer.parseInt(userInput);
         } catch (NumberFormatException e) {
@@ -78,7 +80,5 @@ public class ConsoleIO implements IO {
         else
             return Game.PLAYER_VS_AI;
     }
-
-
 
 }

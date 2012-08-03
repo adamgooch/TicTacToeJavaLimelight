@@ -1,12 +1,13 @@
 package gooch.tictactoe;
 
 public class BoardAnalyzer {
+    private static final char NOBODY = 'N';
     private char winner;
     private Board gameBoard;
 
     public BoardAnalyzer(Board board) {
         gameBoard = board;
-        winner = 'N';
+        winner = NOBODY;
     }
 
     public boolean thereIsAWinner() {
@@ -61,7 +62,7 @@ public class BoardAnalyzer {
 
     public char getWinner() {
         if(!thereIsAWinner())
-            winner = 'N';
+            winner = NOBODY;
         return winner;
     }
 

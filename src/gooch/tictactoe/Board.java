@@ -10,7 +10,7 @@ public class Board {
     public Board() {
         gameBoard = new char[BOARD_DIMENSION][BOARD_DIMENSION];
         for(int i = 0; i < NUMBER_OF_SQUARES; i++) {
-            gameBoard[getRow(i)][getColumn(i)] = Character.forDigit(i, 9);
+            gameBoard[getRow(i)][getColumn(i)] = Character.forDigit(i, NUMBER_OF_SQUARES);
         }
     }
 
@@ -43,14 +43,15 @@ public class Board {
 
     private boolean squareIsAvailable(int square) {
         if(square < NUMBER_OF_SQUARES &&
-                getMarkInSquare(square) != 'X' &&
-                getMarkInSquare(square) != 'O')
+                getMarkInSquare(square) != Game.PLAYER_ONE &&
+                getMarkInSquare(square) != Game.PLAYER_TWO)
             return true;
         return false;
     }
 
     public void removeMarkInSquare(int square) {
-        gameBoard[getRow(square)][getColumn(square)] = Character.forDigit(square, 9);
+        gameBoard[getRow(square)][getColumn(square)] = Character.forDigit(square,
+                                                                NUMBER_OF_SQUARES);
     }
 
     public char getMarkInSquare(int square) {

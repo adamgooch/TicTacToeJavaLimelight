@@ -25,7 +25,7 @@ public class MiniMaxAI implements AI {
             Board child = board.clone();
             child.putMarkInSquare(mark, position);
             int currentScore;
-            if(mark == 'O') {
+            if(mark == Game.PLAYER_TWO) {
                 currentScore = min(child);
             } else {
                 currentScore = max(child);
@@ -38,9 +38,9 @@ public class MiniMaxAI implements AI {
 
     public int max(Board childBoard){
         BoardAnalyzer analyzer = new BoardAnalyzer(childBoard);
-        if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'O')
+        if(analyzer.thereIsAWinner() && analyzer.getWinner() == Game.PLAYER_TWO)
             return 1;
-        else if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'X')
+        else if(analyzer.thereIsAWinner() && analyzer.getWinner() == Game.PLAYER_ONE)
             return -1;
         else if(childBoard.countSquaresAvailable() == 0)
             return 0;
@@ -48,7 +48,7 @@ public class MiniMaxAI implements AI {
         int best = Integer.MIN_VALUE;
         for(Integer pos : positions){
             Board newChild = childBoard.clone();
-            newChild.putMarkInSquare('O', pos);
+            newChild.putMarkInSquare(Game.PLAYER_TWO, pos);
             int move = min(newChild);
             if(move > best)
                 best = move;
@@ -58,9 +58,9 @@ public class MiniMaxAI implements AI {
 
     public int min(Board childBoard){
         BoardAnalyzer analyzer = new BoardAnalyzer(childBoard);
-        if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'O')
+        if(analyzer.thereIsAWinner() && analyzer.getWinner() == Game.PLAYER_TWO)
             return 1;
-        else if(analyzer.thereIsAWinner() && analyzer.getWinner() == 'X')
+        else if(analyzer.thereIsAWinner() && analyzer.getWinner() == Game.PLAYER_ONE)
             return -1;
         else if(childBoard.countSquaresAvailable() == 0)
             return 0;
@@ -68,7 +68,7 @@ public class MiniMaxAI implements AI {
         int best = Integer.MAX_VALUE;
         for(Integer pos : positions){
             Board newChild = childBoard.clone();
-            newChild.putMarkInSquare('X', pos);
+            newChild.putMarkInSquare(Game.PLAYER_ONE, pos);
             int move = max(newChild);
             if(move < best)
                 best = move;
@@ -76,13 +76,12 @@ public class MiniMaxAI implements AI {
         return best;
     }
 
-
     private int determineBestMove(int[][] scores, char mark) {
         int bestIndex = 0;
         int bestScore = scores[bestIndex][SCORE];
         for(int i = 0; i < scores.length; i++){
-            if((mark == 'O' && scores[i][SCORE] > bestScore) ||
-                    (mark == 'X' && scores[i][SCORE] < bestScore)) {
+            if((mark == Game.PLAYER_TWO && scores[i][SCORE] > bestScore) ||
+                    (mark == Game.PLAYER_ONE && scores[i][SCORE] < bestScore)) {
                 bestScore = scores[i][SCORE];
                 bestIndex = i;
             }
