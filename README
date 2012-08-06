@@ -1,14 +1,25 @@
 This is an unbeatable game of Tic Tac Toe played via a console or a gui.
 
-To play the console version, simply run: ./play_console
+To play the console version, simply run: 
+
+./play_console
 
 You will be presented with a menu.
 Enter 0 to play against a friend.
 Enter 1 to play against the computer.
 Enter 2 to watch the computer play against itself.
 
-To play the GUI version, you must be running JRuby with the Limelight
-gem installed.  This game was tested with JRuby 1.6.7 and Limelight 0.5.5.
-If these requirements are met, simply run: ./play_gui
+To play the GUI version, you must be running JRuby.  If you're running rvm enter:
 
-Currently, you can only play against the computer with the GUI version.
+rvm use jruby
+
+Next, the limelight v.0.5.5 gem must be installed.  Enter:
+
+bundle install
+
+Finally, run the game with:
+
+./play_gui
+
+This game was tested with JRuby 1.6.7 and Limelight 0.5.5.
+If these requirements are met, simply run: ./play_gui
