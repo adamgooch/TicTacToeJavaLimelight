@@ -5,6 +5,8 @@ import gooch.tictactoe.BoardAnalyzer;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static junit.framework.Assert.*;
 
 /**
@@ -101,6 +103,25 @@ public class BoardAnalyzerTest {
         board.putMarkInSquare('O', 8);
         assertEquals('N', analyzer.getWinner());
 
+    }
+
+    @Test
+    public void givesTheWinningSquaresWhenAsked() {
+        board.putMarkInSquare('O', 0);
+        board.putMarkInSquare('X', 1);
+        board.putMarkInSquare('O', 2);
+        board.putMarkInSquare('X', 3);
+        board.putMarkInSquare('O', 4);
+        board.putMarkInSquare('X', 5);
+        board.putMarkInSquare('X', 6);
+        board.putMarkInSquare('X', 7);
+        board.putMarkInSquare('O', 8);
+        if(analyzer.thereIsAWinner()) {
+            ArrayList<Integer> winningSquares = analyzer.getWinningSquares();
+            assertTrue(winningSquares.contains(0));
+            assertTrue(winningSquares.contains(4));
+            assertTrue(winningSquares.contains(8));
+        }
     }
 
 }
