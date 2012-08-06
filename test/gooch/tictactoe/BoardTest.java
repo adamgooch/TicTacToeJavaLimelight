@@ -50,11 +50,6 @@ public class BoardTest extends TestSuite {
     }
 
     @Test
-    public void putMarkInSquareShouldReturnFalseWhenXIsPutIntoSquareNeg9() {
-        assertFalse(board.putMarkInSquare('X', -9));
-    }
-
-    @Test
     public void printBoardShouldHaveAnXInTheCenterAfterAnXHasMovedInSquare4() {
         board.putMarkInSquare('X', 4);
         assertEquals(board.asString(),

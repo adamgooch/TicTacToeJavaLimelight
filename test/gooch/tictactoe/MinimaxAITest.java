@@ -1,8 +1,5 @@
 package gooch.tictactoe;
 
-import gooch.tictactoe.Board;
-import gooch.tictactoe.BoardAnalyzer;
-import gooch.tictactoe.MiniMaxAI;
 import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,8 +55,17 @@ public class MinimaxAITest extends TestSuite {
     }
 
     @Test
+    public void moveShouldBlockXInADiagonal() {
+        board.putMarkInSquare('X', 2);
+        board.putMarkInSquare('O', 0);
+        board.putMarkInSquare('X', 4);
+        ai.move('O');
+        assertEquals('O', board.getMarkInSquare(6));
+    }
+
+    @Test
     public void exhaustiveAITest() {
-        BoardAnalyzer analyzer = new BoardAnalyzer(board);
+        NineSquareChecker checker = new NineSquareChecker(board);
         for(int i = 0; i < 9; i++){
             board.putMarkInSquare('X', i);
             ai.move('O');
@@ -70,7 +76,7 @@ public class MinimaxAITest extends TestSuite {
             ai.move('X');
             ai.move('O');
             ai.move('X');
-            assertEquals(analyzer.getWinner(), 'N');
+            assertEquals(checker.getWinner(), 'N');
             board = new Board();
             ai = new MiniMaxAI(board);
         }

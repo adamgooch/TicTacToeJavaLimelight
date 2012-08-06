@@ -1,9 +1,6 @@
 package gooch.tictactoe;
 
 public class Game {
-    public static final int PLAYER_VS_PLAYER = 0;
-    public static final int PLAYER_VS_AI = 1;
-    public static final int AI_VS_AI = 2;
     public static final char PLAYER_ONE = 'X';
     public static final char PLAYER_TWO = 'O';
     private static final String PLAYER_ONE_WINS = "X WINS!";
@@ -12,16 +9,16 @@ public class Game {
 
     private AI ai;
     private IO io;
-    private BoardAnalyzer analyzer;
+    private BoardChecker checker;
     private int movesMade;
-    private int gameType;
+    private PlayType gameType;
     private boolean playerOnesTurn;
 
-    public Game(AI ai, IO io, Board board, int type) {
+    public Game(AI ai, IO io, BoardChecker checker, PlayType playType) {
         this.ai = ai;
         this.io = io;
-        this.analyzer = new BoardAnalyzer(board);
-        this.gameType = type;
+        this.checker = checker;
+        this.gameType = playType;
         movesMade = 0;
         playerOnesTurn = true;
     }
@@ -38,15 +35,15 @@ public class Game {
     }
 
     public boolean gameOver() {
-        if(analyzer.thereIsAWinner() || movesMade >= Board.NUMBER_OF_SQUARES)
+        if(checker.thereIsAWinner() || movesMade >= Board.NUMBER_OF_SQUARES)
             return true;
         return false;
     }
 
     protected String getWinnerMessage() {
-        if(analyzer.getWinner() == PLAYER_ONE) {
+        if(checker.getWinner() == PLAYER_ONE) {
             return PLAYER_ONE_WINS;
-        } else if(analyzer.getWinner() == PLAYER_TWO) {
+        } else if(checker.getWinner() == PLAYER_TWO) {
             return PLAYER_TWO_WINS;
         } else {
             return NOBODY_WINS;
@@ -61,14 +58,14 @@ public class Game {
     }
 
     private void playerOneMove() {
-        if(gameType != AI_VS_AI)
-            io.getPlayerMove(PLAYER_ONE);
+        if(gameType != PlayType.AI_VS_AI)
+            io.getPlayerMove(PLAYER_ONE); // human player always goes first
         else
             ai.move(PLAYER_ONE);
     }
 
     private void playerTwoMove() {
-        if(gameType != PLAYER_VS_PLAYER)
+        if(gameType != PlayType.PLAYER_VS_PLAYER)
             ai.move(PLAYER_TWO);
         else
             io.getPlayerMove(PLAYER_TWO);

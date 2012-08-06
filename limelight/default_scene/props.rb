@@ -1,3 +1,5 @@
+start_over_button :id => :start_over,
+  :text => "Start Over"
 row do
   ttt_square :id => 0
   ttt_square :id => 1

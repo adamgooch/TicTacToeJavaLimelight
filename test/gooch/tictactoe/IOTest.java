@@ -56,24 +56,6 @@ public class IOTest extends TestSuite {
         assertFalse(io.isValidPlayerMove('X'));
     }
 
-    @Test
-    public void getPlayTypeFromUserShouldReturn1WhenGiven1() {
-        String[] args = {"1"};
-        assertEquals(1, io.getPlayTypeFromUser(args));
-    }
-
-    @Test
-    public void getPlayTypeFromUserShouldReturn1WhenGiven99() {
-        String[] args = {"99"};
-        assertEquals(1, io.getPlayTypeFromUser(args));
-    }
-
-    @Test
-    public void getPlayTypeFromUserShouldReturn1WhenGivenNeg1() {
-        String[] args = {"-1"};
-        assertEquals(1, io.getPlayTypeFromUser(args));
-    }
-
     private void createUserInput(String input) {
         InputStream pseudoUserInput = new ByteArrayInputStream(input.getBytes());
         InputStreamReader userInputReader = new InputStreamReader(pseudoUserInput);

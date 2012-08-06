@@ -37,10 +37,10 @@ public class MiniMaxAI implements AI {
     }
 
     public int max(Board childBoard){
-        BoardAnalyzer analyzer = new BoardAnalyzer(childBoard);
-        if(analyzer.thereIsAWinner() && analyzer.getWinner() == Game.PLAYER_TWO)
+        NineSquareChecker checker = new NineSquareChecker(childBoard);
+        if(checker.thereIsAWinner() && checker.getWinner() == Game.PLAYER_TWO)
             return 1;
-        else if(analyzer.thereIsAWinner() && analyzer.getWinner() == Game.PLAYER_ONE)
+        else if(checker.thereIsAWinner() && checker.getWinner() == Game.PLAYER_ONE)
             return -1;
         else if(childBoard.countSquaresAvailable() == 0)
             return 0;
@@ -57,10 +57,10 @@ public class MiniMaxAI implements AI {
     }
 
     public int min(Board childBoard){
-        BoardAnalyzer analyzer = new BoardAnalyzer(childBoard);
-        if(analyzer.thereIsAWinner() && analyzer.getWinner() == Game.PLAYER_TWO)
+        NineSquareChecker checker = new NineSquareChecker(childBoard);
+        if(checker.thereIsAWinner() && checker.getWinner() == Game.PLAYER_TWO)
             return 1;
-        else if(analyzer.thereIsAWinner() && analyzer.getWinner() == Game.PLAYER_ONE)
+        else if(checker.thereIsAWinner() && checker.getWinner() == Game.PLAYER_ONE)
             return -1;
         else if(childBoard.countSquaresAvailable() == 0)
             return 0;

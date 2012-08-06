@@ -14,6 +14,10 @@ public class ConsoleIO implements IO {
             "Please enter a number: ";
     private static final String ASK_FOR_MOVE = "What is your move? ";
     private static final String INVALID_MOVE = "Invalid Move: Please enter a valid move ";
+    private static final int PLAYER_VS_PLAYER = 0;
+    private static final int PLAYER_VS_AI = 1;
+    private static final int AI_VS_AI = 2;
+    private static final int INVALID_SQUARE = 9;
 
     private Board gameBoard;
     protected BufferedReader inputReader;
@@ -44,23 +48,19 @@ public class ConsoleIO implements IO {
 
     protected boolean isValidPlayerMove(char playerMark) {
         String userInput = getUserInput();
-        int desiredSquare = Board.NUMBER_OF_SQUARES;
+        int desiredSquare = INVALID_SQUARE;
         try {
-            desiredSquare = Integer.parseInt(userInput);
+            desiredSquare = Math.abs(Integer.parseInt(userInput));
         } catch (NumberFormatException e) {
             // bad user input doesn't matter, gameBoard doesn't care
         }
         return gameBoard.putMarkInSquare(playerMark, desiredSquare);
     }
 
-    public int getPlayTypeFromUser(String[] args) {
-        int playType;
-        if(args.length > 0) {
-            playType = validatedUserPlayType(Integer.parseInt(args[0]));
-        } else {
-            displayMessage(OPENING_MESSAGE);
-            playType = validatedUserPlayType(Integer.parseInt(getUserInput()));
-        }
+    public PlayType getPlayTypeFromUser() {
+        displayMessage(OPENING_MESSAGE);
+        int userInput = Integer.parseInt(getUserInput());
+        PlayType playType = associatePlayType(userInput);
         return playType;
     }
 
@@ -74,11 +74,15 @@ public class ConsoleIO implements IO {
         return userInput;
     }
 
-    private int validatedUserPlayType(int userInput) {
-        if(userInput >= Game.PLAYER_VS_PLAYER && userInput <= Game.AI_VS_AI)
-            return userInput;
-        else
-            return Game.PLAYER_VS_AI;
+    public PlayType associatePlayType(int num) {
+        switch(num) {
+            case AI_VS_AI:
+                return PlayType.AI_VS_AI;
+            case PLAYER_VS_PLAYER:
+                return PlayType.PLAYER_VS_AI;
+            default:
+                return PlayType.PLAYER_VS_AI;
+        }
     }
 
 }

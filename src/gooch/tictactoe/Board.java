@@ -34,7 +34,7 @@ public class Board {
     public boolean putMarkInSquare(char mark, int square) {
         int row = getRow(square);
         int column = getColumn(square);
-        if(squareIsAvailable(Math.abs(square))) {
+        if(squareIsAvailable(square)) {
             gameBoard[row][column] = mark;
             return true;
         }
