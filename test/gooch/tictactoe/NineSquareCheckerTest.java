@@ -7,10 +7,6 @@ import java.util.ArrayList;
 
 import static junit.framework.Assert.*;
 
-/**
- * Author: Adam Gooch
- * Date: 7/24/12
- */
 public class NineSquareCheckerTest {
     private Board board;
     private NineSquareChecker checker;

@@ -79,7 +79,7 @@ public class ConsoleIO implements IO {
             case AI_VS_AI:
                 return PlayType.AI_VS_AI;
             case PLAYER_VS_PLAYER:
-                return PlayType.PLAYER_VS_AI;
+                return PlayType.PLAYER_VS_PLAYER;
             default:
                 return PlayType.PLAYER_VS_AI;
         }

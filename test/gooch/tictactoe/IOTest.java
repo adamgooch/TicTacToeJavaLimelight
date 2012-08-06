@@ -56,6 +56,7 @@ public class IOTest extends TestSuite {
         assertFalse(io.isValidPlayerMove('X'));
     }
 
+
     private void createUserInput(String input) {
         InputStream pseudoUserInput = new ByteArrayInputStream(input.getBytes());
         InputStreamReader userInputReader = new InputStreamReader(pseudoUserInput);
