@@ -10,7 +10,7 @@ public class Game {
     private AI ai;
     private IO io;
     private BoardChecker checker;
-    private int movesMade;
+    public int movesMade;
     private PlayType gameType;
     private boolean playerOnesTurn;
 
@@ -40,7 +40,7 @@ public class Game {
         return false;
     }
 
-    protected String getWinnerMessage() {
+    public String getWinnerMessage() {
         if(checker.getWinner() == PLAYER_ONE) {
             return PLAYER_ONE_WINS;
         } else if(checker.getWinner() == PLAYER_TWO) {

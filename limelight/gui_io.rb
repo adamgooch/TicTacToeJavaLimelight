@@ -6,17 +6,14 @@ import 'gooch.tictactoe.Board'
 class GuiIo
   include Java::gooch.tictactoe.IO
 
-  attr_accessor :user_has_moved
-
   def initialize (prod, board)
     @board = board
     @production = prod
-    @user_has_moved = false
   end
 
   def displayBoard
     Board::NUMBER_OF_SQUARES.times do |square|
-      put_text_in_square square
+      put_text_in_square(square)
     end
   end
 
@@ -52,10 +49,6 @@ class GuiIo
   end
 
   def getPlayerMove player_mark
-    until @user_has_moved
-      sleep 0.5
-    end
-    @user_has_moved = false
   end
 
 end

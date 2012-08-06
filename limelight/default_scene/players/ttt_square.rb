@@ -3,7 +3,7 @@ module TttSquare
   def mouse_clicked e
     if active?
       self.style.background_color = "#444"
-      production.move_production_forward(scene, self.id)
+      production.move_production_forward(self.id)
     end
   end
 
@@ -20,7 +20,7 @@ module TttSquare
   end
 
   def active?
-    self.text == "" && !production.game_over?
+    self.text == "" && !production.game.gameOver
   end
 
 end
