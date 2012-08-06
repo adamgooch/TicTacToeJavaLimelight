@@ -16,7 +16,7 @@ ttt_square {
   width 100
   border_color "#aaa"
   border_width 2
-  background_color "#444"
+  background_color Colors::SQUARE_INACTIVE
   horizontal_alignment :center
   vertical_alignment :center
   margin 5
@@ -29,8 +29,8 @@ start_over_button {
   margin 10
   horizontal_alignment :center
   vertical_alignment :center
-  background_color "#550000"
-  secondary_background_color "#aa0000"
+  background_color Colors::START_OVER_ACTIVE
+  secondary_background_color Colors::START_OVER_INACTIVE
   gradient :on
   rounded_corner_radius 30
   font_size 40

@@ -1,0 +1,9 @@
+module Colors
+
+  SQUARE_ACTIVE = "#999999ff"
+  SQUARE_INACTIVE = "#444444ff"
+
+  START_OVER_ACTIVE = "#550000ff"
+  START_OVER_INACTIVE = "#aa0000ff"
+
+end

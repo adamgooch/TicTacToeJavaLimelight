@@ -1,5 +1,6 @@
 require 'java'
 require File.expand_path(File.dirname(__FILE__) + '/gui_io')
+require File.expand_path(File.dirname(__FILE__) + '/colors')
 
 import 'gooch.tictactoe.Board'
 import 'gooch.tictactoe.MiniMaxAI'
@@ -54,7 +55,7 @@ module Production
     9.times do |i|
       @board.removeMarkInSquare(i)
       @scene.find(i).text = ""
-      @scene.find(i).style.background_color = "#444444ff"
+      @scene.find(i).style.background_color = Colors::SQUARE_INACTIVE
     end
     message = @scene.find(:message)
     message.remove_all
@@ -74,7 +75,8 @@ module Production
     if @checker.thereIsAWinner()
       winning_squares = @checker.getWinningSquares()
       3.times do |i|
-        @scene.find(winning_squares[i]).style.background_color = "#999999ff"
+        @scene.find(winning_squares[i]).style.background_color =
+            Colors::SQUARE_ACTIVE
       end
     end
   end

@@ -1,3 +1,5 @@
+require File.expand_path(File.dirname(__FILE__) + '/../../colors')
+
 module StartOverButton
 
   def mouse_clicked e
@@ -9,7 +11,7 @@ module StartOverButton
   end
 
   def mouse_exited e
-    self.style.background_color = "#550000" 
+    self.style.background_color = Colors::START_OVER_ACTIVE
   end
 
 end

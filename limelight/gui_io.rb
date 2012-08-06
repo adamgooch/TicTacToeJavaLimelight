@@ -17,7 +17,7 @@ class GuiIo
     end
   end
 
-  def put_text_in_square square
+  def put_text_in_square (square)
     mark = @board.getMarkInSquare(square)
     square = @production.scene.find(square)
     if mark == Production::X || mark == Production::O
@@ -27,28 +27,28 @@ class GuiIo
     end
   end
 
-  def displayMessage message
+  def displayMessage (message)
     message_container = @production.scene.find(:message)
     if message_is_not_displayed(message_container)
       build_message(message_container, message)
     else
       child_props[0].text = message
     end
-    @production.play_audio_message message_container
+    @production.play_audio_message(message_container)
   end
 
-  def message_is_not_displayed message_container
+  def message_is_not_displayed (message_container)
     child_props = message_container.find_by_name("message")
     child_props.length == 0
   end
 
-  def build_message(message_container, message)
+  def build_message (message_container, message)
     message_container.build do
       __install 'partials/message_label.rb', :text => message
     end
   end
 
-  def getPlayerMove player_mark
+  def getPlayerMove (player_mark)
   end
 
 end
