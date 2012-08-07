@@ -1,14 +1,9 @@
 package gooch.tictactoe;
 
-import gooch.tictactoe.Board;
 import junit.framework.TestSuite;
 import org.junit.*;
 import static junit.framework.Assert.*;
 
-/**
- * Author: Adam Gooch
- * Date: 7/17/12
- */
 public class BoardTest extends TestSuite {
     private Board board;
 
@@ -24,7 +19,7 @@ public class BoardTest extends TestSuite {
                   "-----------\n" +
                   " 3 | 4 | 5\n" +
                   "-----------\n" +
-                  " 6 | 7 | 8\n\n");
+                  " 6 | 7 | 8\n");
     }
 
     @Test
@@ -57,7 +52,7 @@ public class BoardTest extends TestSuite {
                   "-----------\n" +
                   " 3 | X | 5\n" +
                   "-----------\n" +
-                  " 6 | 7 | 8\n\n");
+                  " 6 | 7 | 8\n");
     }
 
     @Test
@@ -69,7 +64,7 @@ public class BoardTest extends TestSuite {
                   "-----------\n" +
                   " 3 | X | 5\n" +
                   "-----------\n" +
-                  " 6 | 7 | 8\n\n");
+                  " 6 | 7 | 8\n");
     }
 
     @Test
@@ -80,14 +75,14 @@ public class BoardTest extends TestSuite {
                         "-----------\n" +
                         " 3 | X | 5\n" +
                         "-----------\n" +
-                        " 6 | 7 | 8\n\n");
+                        " 6 | 7 | 8\n");
         board.removeMarkInSquare(4);
         assertEquals(board.asString(),
                       "\n 0 | 1 | 2\n" +
                         "-----------\n" +
                         " 3 | 4 | 5\n" +
                         "-----------\n" +
-                        " 6 | 7 | 8\n\n");
+                        " 6 | 7 | 8\n");
     }
 
     @Test

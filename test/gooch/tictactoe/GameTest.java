@@ -18,8 +18,7 @@ public class GameTest extends TestSuite {
         mockAi = mock(MiniMaxAI.class);
         mockIO = mock(ConsoleIO.class);
         board = new Board();
-        NineSquareChecker checker = new NineSquareChecker(board);
-        game = new Game(mockAi, mockIO, checker, PlayType.AI_VS_AI);
+        game = new Game(mockAi, mockIO, board, PlayType.AI_VS_AI);
     }
 
     @Test

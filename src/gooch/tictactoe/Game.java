@@ -3,9 +3,9 @@ package gooch.tictactoe;
 public class Game {
     public static final char PLAYER_ONE = 'X';
     public static final char PLAYER_TWO = 'O';
-    public static final String PLAYER_ONE_WINS = "X WINS!";
-    public static final String PLAYER_TWO_WINS = "O WINS!";
-    public static final String NOBODY_WINS = "Nobody Wins.";
+    public static final String PLAYER_ONE_WINS = "X WINS!\n";
+    public static final String PLAYER_TWO_WINS = "O WINS!\n";
+    public static final String NOBODY_WINS = "Nobody Wins.\n";
 
     private AI ai;
     private IO io;
@@ -14,11 +14,11 @@ public class Game {
     private PlayType gameType;
     private boolean playerOnesTurn;
 
-    public Game(AI ai, IO io, BoardChecker checker, PlayType playType) {
+    public Game(AI ai, IO io, Board board, PlayType playType) {
         this.ai = ai;
         this.io = io;
-        this.checker = checker;
         this.gameType = playType;
+        checker = new NineSquareChecker(board);
         movesMade = 0;
         playerOnesTurn = true;
     }
@@ -55,12 +55,6 @@ public class Game {
         } else {
             return NOBODY_WINS;
         }
-    }
-
-    public void reset() {
-        movesMade = 0;
-        playerOnesTurn = true;
-        checker = new NineSquareChecker(GameMaker.board);
     }
 
     private void getPlayerMove() {

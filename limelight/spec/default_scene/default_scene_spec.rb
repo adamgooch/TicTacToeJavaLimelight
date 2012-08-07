@@ -5,8 +5,8 @@ describe "Default Scene" do
   uses_limelight :scene => "default_scene", :hidden => true
 
   before(:each) do
-    production.production_opened
     production.scene = scene
+    production.production_opened
   end
 
   it "should have 9 buttons with no text" do
@@ -37,7 +37,7 @@ describe "Default Scene" do
     scene.find(6).mouse_clicked nil
     scene.find(4).mouse_clicked nil
     message = scene.find(:message_label)
-    message.text.should == "O WINS!"
+    message.text.should == "O WINS!\n"
   end
 
   it "should have a start over button" do

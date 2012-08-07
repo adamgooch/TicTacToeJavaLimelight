@@ -80,14 +80,20 @@ class GuiIo
     end
   end
 
-  def clear_board
-    GameMaker::game.reset
+  def reset_game
+    reset_square_color
+    @production.production_opened
+    remove_message
+  end
+
+  def reset_square_color
     Board::NUMBER_OF_SQUARES.times do |i|
-      GameMaker::board.removeMarkInSquare(i)
       square = @production.scene.find(i)
-      square.text = ""
       square.style.background_color = Colors::SQUARE_INACTIVE
     end
+  end
+
+  def remove_message
     message = @production.scene.find(:message)
     message.remove_all
   end

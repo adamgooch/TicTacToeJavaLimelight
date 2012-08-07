@@ -10,9 +10,11 @@ module Production
 
   def production_opened
     stage = theater.stages[0]
-    @scene = stage.current_scene
+    if stage.current_scene != nil
+      @scene = stage.current_scene
+    end
     @io = GuiIo.new(self)
-    gameMaker = GameMaker.new(@io)
+    GameMaker.makeGame(@io)
   end
 
   def io

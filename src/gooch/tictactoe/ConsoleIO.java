@@ -30,7 +30,7 @@ public class ConsoleIO implements IO {
 
     @Override
     public void displayBoard() {
-        System.out.print(GameMaker.board.asString());
+        System.out.println(GameMaker.board.asString());
     }
 
     @Override
