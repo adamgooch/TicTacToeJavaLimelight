@@ -6,9 +6,10 @@ public class GameMaker {
 
     public static void makeGame (IO io) {
         board = new Board();
-        AI ai = new MiniMaxAI(board);
+        AI ai = new MiniMaxAI();
         PlayType type = io.getPlayType();
-        game = new Game(ai, io, board, type);
+        BoardChecker checker = new NineSquareChecker(board);
+        game = new Game(ai, io, checker, type);
         game.play();
     }
 }

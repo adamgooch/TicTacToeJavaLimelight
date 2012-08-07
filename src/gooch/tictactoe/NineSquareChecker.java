@@ -82,4 +82,12 @@ public class NineSquareChecker implements BoardChecker {
         return winningSquares;
     }
 
+    @Override
+    public boolean boardIsFull() {
+        if(gameBoard.countSquaresAvailable() == 0)
+            return true;
+        else
+            return false;
+    }
+
 }

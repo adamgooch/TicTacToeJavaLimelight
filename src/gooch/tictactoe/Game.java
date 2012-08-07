@@ -1,6 +1,6 @@
 package gooch.tictactoe;
 
-public class Game {
+public class Game implements InputListener {
     public static final char PLAYER_ONE = 'X';
     public static final char PLAYER_TWO = 'O';
     public static final String PLAYER_ONE_WINS = "X WINS!\n";
@@ -10,16 +10,14 @@ public class Game {
     private AI ai;
     private IO io;
     private BoardChecker checker;
-    private int movesMade;
     private PlayType gameType;
     private boolean playerOnesTurn;
 
-    public Game(AI ai, IO io, Board board, PlayType playType) {
+    public Game(AI ai, IO io, BoardChecker checker, PlayType playType) {
         this.ai = ai;
         this.io = io;
         this.gameType = playType;
-        checker = new NineSquareChecker(board);
-        movesMade = 0;
+        this.checker = checker;
         playerOnesTurn = true;
     }
 
@@ -28,10 +26,9 @@ public class Game {
         getPlayerMove();
     }
 
-    public void moveGameForward() {
+    public void inputReceived() {
         io.displayBoard();
         playerOnesTurn = !playerOnesTurn;
-        movesMade++;
         if(gameOver()) {
             io.displayMessage(getWinnerMessage());
             io.highlightWin(checker.getWinningSquares());
@@ -42,12 +39,12 @@ public class Game {
     }
 
     public boolean gameOver() {
-        if(checker.thereIsAWinner() || movesMade >= Board.NUMBER_OF_SQUARES)
+        if(checker.thereIsAWinner() || checker.boardIsFull())
             return true;
         return false;
     }
 
-    public String getWinnerMessage() {
+    private String getWinnerMessage() {
         if(checker.getWinner() == PLAYER_ONE) {
             return PLAYER_ONE_WINS;
         } else if(checker.getWinner() == PLAYER_TWO) {

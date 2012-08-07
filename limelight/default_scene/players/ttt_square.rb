@@ -6,7 +6,7 @@ module TttSquare
     if active?
       self.style.background_color = Colors::SQUARE_INACTIVE
       GameMaker::board.putMarkInSquare(GuiIo::X, self.id.to_i)
-      GameMaker::game.moveGameForward()
+      GameMaker::game.inputReceived()
     end
   end
 

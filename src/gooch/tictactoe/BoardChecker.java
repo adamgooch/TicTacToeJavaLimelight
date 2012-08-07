@@ -6,4 +6,5 @@ public interface BoardChecker {
     public boolean thereIsAWinner();
     public char getWinner();
     public ArrayList<Integer> getWinningSquares();
+    public boolean boardIsFull();
 }

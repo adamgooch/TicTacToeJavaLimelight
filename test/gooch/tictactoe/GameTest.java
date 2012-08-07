@@ -18,7 +18,8 @@ public class GameTest extends TestSuite {
         mockAi = mock(MiniMaxAI.class);
         mockIO = mock(ConsoleIO.class);
         board = new Board();
-        game = new Game(mockAi, mockIO, board, PlayType.AI_VS_AI);
+        BoardChecker checker = new NineSquareChecker(board);
+        game = new Game(mockAi, mockIO, checker, PlayType.AI_VS_AI);
     }
 
     @Test
@@ -30,7 +31,7 @@ public class GameTest extends TestSuite {
     public void gameOverShouldBeTrueAfter9MovesHaveBeenMade() {
         game.play();
         for(int i = 0; i < 9; i++)
-            game.moveGameForward();
+            board.putMarkInSquare('X', i);
         assertTrue(game.gameOver());
     }
 

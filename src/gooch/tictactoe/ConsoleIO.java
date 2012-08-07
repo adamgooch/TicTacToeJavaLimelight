@@ -1,6 +1,5 @@
 package gooch.tictactoe;
 
-import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,7 +43,7 @@ public class ConsoleIO implements IO {
         while(!isValidPlayerMove(playerMark)){
             displayMessage(INVALID_MOVE);
         }
-        GameMaker.game.moveGameForward();
+        GameMaker.game.inputReceived();
     }
 
     protected boolean isValidPlayerMove(char playerMark) {
@@ -75,7 +74,7 @@ public class ConsoleIO implements IO {
         return userInput;
     }
 
-    public PlayType associatePlayType(int num) {
+    private PlayType associatePlayType(int num) {
         switch(num) {
             case AI_VS_AI:
                 return PlayType.AI_VS_AI;

@@ -5,25 +5,20 @@ import java.util.ArrayList;
 public class MiniMaxAI implements AI {
     private static final int POSITION = 0;
     private static final int SCORE = 1;
-    private Board board;
-
-    public MiniMaxAI(Board board) {
-        this.board = board;
-    }
 
     @Override
     public void move(char playerMark) {
         int square = findBestMove(playerMark);
-        board.putMarkInSquare(playerMark, square);
-        GameMaker.game.moveGameForward();
+        GameMaker.board.putMarkInSquare(playerMark, square);
+        GameMaker.game.inputReceived();
     }
 
     private int findBestMove(char mark) {
-        ArrayList<Integer> positions = board.getAvailableSquares();
+        ArrayList<Integer> positions = GameMaker.board.getAvailableSquares();
         int[][] scores = new int[positions.size()][2];
         for(int i = 0; i < positions.size(); i++){
             int position = positions.get(i);
-            Board child = board.clone();
+            Board child = GameMaker.board.clone();
             child.putMarkInSquare(mark, position);
             int currentScore;
             if(mark == Game.PLAYER_TWO) {
