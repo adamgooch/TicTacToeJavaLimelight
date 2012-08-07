@@ -15,6 +15,7 @@ public class MiniMaxAI implements AI {
     public void move(char playerMark) {
         int square = findBestMove(playerMark);
         board.putMarkInSquare(playerMark, square);
+        GameMaker.game.moveGameForward();
     }
 
     private int findBestMove(char mark) {

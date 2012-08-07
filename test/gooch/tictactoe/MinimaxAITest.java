@@ -5,17 +5,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
-/**
- * Author: Adam Gooch
- * Date: 7/26/12
- */
 public class MinimaxAITest extends TestSuite {
     private Board board;
     private MiniMaxAI ai;
 
+
     @Before
     public void setUp() {
+        GameMaker.game = mock(Game.class);
         board = new Board();
         ai = new MiniMaxAI(board);
     }

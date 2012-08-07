@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../colors')
 module StartOverButton
 
   def mouse_clicked e
-    production.clear_board
+    production.io.clear_board
   end
 
   def mouse_entered e

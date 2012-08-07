@@ -23,15 +23,16 @@ describe "Default Scene" do
   end
 
   it "should display a message when the game is over" do
-    scene.find(:message_label).should be_nil
+    message_container = scene.children[0]
+    message_container.children.size.should == 0
     scene.find(3).mouse_clicked nil
     scene.find(4).mouse_clicked nil
     scene.find(6).mouse_clicked nil
     scene.find(7).mouse_clicked nil
-    scene.children.size.should == 5 #the message is the fifth child
+    message_container.children.size.should == 0
   end
 
-  it "should display I Win!! when the computer has won" do
+  it "should display the correct message when the computer has won" do
     scene.find(3).mouse_clicked nil
     scene.find(6).mouse_clicked nil
     scene.find(4).mouse_clicked nil
@@ -48,12 +49,13 @@ describe "Default Scene" do
   it "should clear the board when the start over button is clicked" do
     scene.find(0).mouse_clicked nil
     scene.find(5).mouse_clicked nil
+    scene.find(0).text.should == "X"
     scene.find(:start_over).mouse_clicked nil
     scene.find(0).text.should == ""
     scene.find(5).text.should == ""
   end
 
-  it "should remove the message if it exists" do
+  it "should remove the message if it exists when the start over button is clicked" do
     scene.find(3).mouse_clicked nil
     scene.find(6).mouse_clicked nil
     scene.find(4).mouse_clicked nil

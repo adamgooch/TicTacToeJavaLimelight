@@ -1,8 +1,10 @@
 package gooch.tictactoe;
 
+import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class ConsoleIO implements IO {
 
@@ -19,18 +21,16 @@ public class ConsoleIO implements IO {
     private static final int AI_VS_AI = 2;
     private static final int INVALID_SQUARE = 9;
 
-    private Board gameBoard;
     protected BufferedReader inputReader;
 
-    public ConsoleIO(Board gameBoard) {
-        this.gameBoard = gameBoard;
+    public ConsoleIO() {
         InputStreamReader inputStreamReader = new InputStreamReader(System.in);
         inputReader = new BufferedReader(inputStreamReader);
     }
 
     @Override
     public void displayBoard() {
-        System.out.print(gameBoard.asString());
+        System.out.print(GameMaker.board.asString());
     }
 
     @Override
@@ -43,7 +43,8 @@ public class ConsoleIO implements IO {
         displayMessage(ASK_FOR_MOVE);
         while(!isValidPlayerMove(playerMark)){
             displayMessage(INVALID_MOVE);
-        };
+        }
+        GameMaker.game.moveGameForward();
     }
 
     protected boolean isValidPlayerMove(char playerMark) {
@@ -54,10 +55,10 @@ public class ConsoleIO implements IO {
         } catch (NumberFormatException e) {
             // bad user input doesn't matter, gameBoard doesn't care
         }
-        return gameBoard.putMarkInSquare(playerMark, desiredSquare);
+        return GameMaker.board.putMarkInSquare(playerMark, desiredSquare);
     }
 
-    public PlayType getPlayTypeFromUser() {
+    public PlayType getPlayType() {
         displayMessage(OPENING_MESSAGE);
         int userInput = Integer.parseInt(getUserInput());
         PlayType playType = associatePlayType(userInput);
@@ -83,6 +84,16 @@ public class ConsoleIO implements IO {
             default:
                 return PlayType.PLAYER_VS_AI;
         }
+    }
+
+    @Override
+    public void highlightWin(ArrayList winningSquares) {
+
+    }
+
+    @Override
+    public void playAudioMessage(String winner) {
+
     }
 
 }

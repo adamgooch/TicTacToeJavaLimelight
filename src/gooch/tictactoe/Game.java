@@ -3,14 +3,14 @@ package gooch.tictactoe;
 public class Game {
     public static final char PLAYER_ONE = 'X';
     public static final char PLAYER_TWO = 'O';
-    private static final String PLAYER_ONE_WINS = "X WINS!";
-    private static final String PLAYER_TWO_WINS = "O WINS!";
-    private static final String NOBODY_WINS = "Nobody Wins.";
+    public static final String PLAYER_ONE_WINS = "X WINS!";
+    public static final String PLAYER_TWO_WINS = "O WINS!";
+    public static final String NOBODY_WINS = "Nobody Wins.";
 
     private AI ai;
     private IO io;
     private BoardChecker checker;
-    public int movesMade;
+    private int movesMade;
     private PlayType gameType;
     private boolean playerOnesTurn;
 
@@ -25,13 +25,20 @@ public class Game {
 
     public void play() {
         io.displayBoard();
-        while(!gameOver()) {
-            playerMove();
-            playerOnesTurn = !playerOnesTurn;
-            io.displayBoard();
-            movesMade++;
+        getPlayerMove();
+    }
+
+    public void moveGameForward() {
+        io.displayBoard();
+        playerOnesTurn = !playerOnesTurn;
+        movesMade++;
+        if(gameOver()) {
+            io.displayMessage(getWinnerMessage());
+            io.highlightWin(checker.getWinningSquares());
+            io.playAudioMessage(getWinnerMessage());
+        } else {
+            getPlayerMove();
         }
-        io.displayMessage(getWinnerMessage() + "\n");
     }
 
     public boolean gameOver() {
@@ -50,7 +57,13 @@ public class Game {
         }
     }
 
-    private void playerMove() {
+    public void reset() {
+        movesMade = 0;
+        playerOnesTurn = true;
+        checker = new NineSquareChecker(GameMaker.board);
+    }
+
+    private void getPlayerMove() {
         if(playerOnesTurn)
             playerOneMove();
         else
@@ -70,5 +83,4 @@ public class Game {
         else
             io.getPlayerMove(PLAYER_TWO);
     }
-
 }

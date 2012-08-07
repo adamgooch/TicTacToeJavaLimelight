@@ -1,13 +1,22 @@
 require 'java'
-require File.expand_path(File.dirname(__FILE__) + '/production')
+require File.expand_path(File.dirname(__FILE__) + '/colors')
 
 import 'gooch.tictactoe.Board'
+import 'gooch.tictactoe.Game'
+import 'gooch.tictactoe.PlayType'
+import 'gooch.tictactoe.GameMaker'
 
 class GuiIo
   include Java::gooch.tictactoe.IO
 
-  def initialize (prod, board)
-    @board = board
+  X = 88
+  O = 79
+
+  X_WIN_SOUND = 'sounds/reverseit.au'
+  O_WIN_SOUND = 'sounds/yougetnothing.au'
+  DRAW_SOUND = 'sounds/journeysover.au'
+
+  def initialize (prod)
     @production = prod
   end
 
@@ -18,9 +27,9 @@ class GuiIo
   end
 
   def put_text_in_square (square)
-    mark = @board.getMarkInSquare(square)
+    mark = GameMaker::board.getMarkInSquare(square)
     square = @production.scene.find(square)
-    if mark == Production::X || mark == Production::O
+    if mark == X || mark == O
       square.text = mark.chr
     else
       square.text = ""
@@ -34,7 +43,6 @@ class GuiIo
     else
       child_props[0].text = message
     end
-    @production.play_audio_message(message_container)
   end
 
   def message_is_not_displayed (message_container)
@@ -49,6 +57,39 @@ class GuiIo
   end
 
   def getPlayerMove (player_mark)
+  end
+
+  def getPlayType
+    PlayType::PLAYER_VS_AI
+  end
+
+  def playAudioMessage(message)
+    if message == Game::PLAYER_ONE_WINS
+      @production.scene.play_sound(X_WIN_SOUND)
+    elsif message == Game::PLAYER_TWO_WINS
+      @production.scene.play_sound(O_WIN_SOUND)
+    else
+      @production.scene.play_sound(DRAW_SOUND)
+    end
+  end
+
+  def highlightWin(winning_squares)
+    winning_squares.each do |i|
+      square = @production.scene.find(i)
+      square.style.background_color = Colors::SQUARE_ACTIVE
+    end
+  end
+
+  def clear_board
+    GameMaker::game.reset
+    Board::NUMBER_OF_SQUARES.times do |i|
+      GameMaker::board.removeMarkInSquare(i)
+      square = @production.scene.find(i)
+      square.text = ""
+      square.style.background_color = Colors::SQUARE_INACTIVE
+    end
+    message = @production.scene.find(:message)
+    message.remove_all
   end
 
 end

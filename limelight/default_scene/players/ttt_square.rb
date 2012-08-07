@@ -1,11 +1,12 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../colors')
+require File.expand_path(File.dirname(__FILE__) + '/../../gui_io')
 
 module TttSquare
 
   def mouse_clicked e
     if active?
       self.style.background_color = Colors::SQUARE_INACTIVE
-      production.move_production_forward(self.id)
+      GameMaker::board.putMarkInSquare(GuiIo::X, self.id.to_i)
+      GameMaker::game.moveGameForward()
     end
   end
 
@@ -22,7 +23,7 @@ module TttSquare
   end
 
   def active?
-    self.text == "" && !production.game.gameOver
+    self.text == "" && !GameMaker::game.gameOver
   end
 
 end

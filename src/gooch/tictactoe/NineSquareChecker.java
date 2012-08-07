@@ -10,6 +10,7 @@ public class NineSquareChecker implements BoardChecker {
 
     public NineSquareChecker(Board board) {
         gameBoard = board;
+        winningSquares = new ArrayList<Integer>();
     }
 
     public char getWinner() {
