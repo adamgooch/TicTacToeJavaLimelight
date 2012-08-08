@@ -2,8 +2,10 @@ package gooch.tictactoe;
 
 public class PlayTicTacToe {
     public static void main (String[] args) {
-        ConsoleIO io = new ConsoleIO();
-        GameMaker.makeGame(io);
+        Board board = new Board();
+        ConsoleIO io = new ConsoleIO(board);
+        Game game = new Game(io, board);
+        game.begin();
     }
 
 }

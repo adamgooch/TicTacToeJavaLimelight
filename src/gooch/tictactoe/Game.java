@@ -1,41 +1,28 @@
 package gooch.tictactoe;
 
-public class Game implements InputListener {
-    public static final char PLAYER_ONE = 'X';
-    public static final char PLAYER_TWO = 'O';
+public class Game {
     public static final String PLAYER_ONE_WINS = "X WINS!\n";
     public static final String PLAYER_TWO_WINS = "O WINS!\n";
     public static final String NOBODY_WINS = "Nobody Wins.\n";
+    public static final char PLAYER_ONE = 'X';
+    public static final char PLAYER_TWO = 'O';
 
-    private AI ai;
+    protected BoardChecker checker;
     private IO io;
-    private BoardChecker checker;
-    private PlayType gameType;
-    private boolean playerOnesTurn;
+    private GameRunner runner;
 
-    public Game(AI ai, IO io, BoardChecker checker, PlayType playType) {
-        this.ai = ai;
+    public Game(IO io, Board board) {
         this.io = io;
-        this.gameType = playType;
-        this.checker = checker;
-        playerOnesTurn = true;
+        MiniMaxAI ai = new MiniMaxAI(board);
+        PlayType type = io.getPlayType();
+        this.runner = new GameRunner(ai, io, this, type);
+        io.addActionListener(runner);
+        ai.addActionListener(runner);
+        checker = new NineSquareChecker(board);
     }
 
-    public void play() {
-        io.displayBoard();
-        getPlayerMove();
-    }
-
-    public void inputReceived() {
-        io.displayBoard();
-        playerOnesTurn = !playerOnesTurn;
-        if(gameOver()) {
-            io.displayMessage(getWinnerMessage());
-            io.highlightWin(checker.getWinningSquares());
-            io.playAudioMessage(getWinnerMessage());
-        } else {
-            getPlayerMove();
-        }
+    public void begin() {
+        runner.start();
     }
 
     public boolean gameOver() {
@@ -54,24 +41,9 @@ public class Game implements InputListener {
         }
     }
 
-    private void getPlayerMove() {
-        if(playerOnesTurn)
-            playerOneMove();
-        else
-            playerTwoMove();
-    }
-
-    private void playerOneMove() {
-        if(gameType != PlayType.AI_VS_AI)
-            io.getPlayerMove(PLAYER_ONE); // human player always goes first
-        else
-            ai.move(PLAYER_ONE);
-    }
-
-    private void playerTwoMove() {
-        if(gameType != PlayType.PLAYER_VS_PLAYER)
-            ai.move(PLAYER_TWO);
-        else
-            io.getPlayerMove(PLAYER_TWO);
+    public void end() {
+        io.displayMessage(getWinnerMessage());
+        io.highlightWin(checker.getWinningSquares());
+        io.playAudioMessage(getWinnerMessage());
     }
 }

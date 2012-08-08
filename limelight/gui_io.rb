@@ -4,9 +4,9 @@ require File.expand_path(File.dirname(__FILE__) + '/colors')
 import 'gooch.tictactoe.Board'
 import 'gooch.tictactoe.Game'
 import 'gooch.tictactoe.PlayType'
-import 'gooch.tictactoe.GameMaker'
+import 'gooch.tictactoe.InputListener'
 
-class GuiIo
+class GuiIo < Java::gooch.tictactoe.InputListener
   include Java::gooch.tictactoe.IO
 
   X = 88
@@ -16,8 +16,10 @@ class GuiIo
   O_WIN_SOUND = 'sounds/yougetnothing.au'
   DRAW_SOUND = 'sounds/journeysover.au'
 
-  def initialize (prod)
-    @production = prod
+  attr_accessor :production
+
+  def initialize (board)
+    @board = board
   end
 
   def displayBoard
@@ -27,7 +29,7 @@ class GuiIo
   end
 
   def put_text_in_square (square)
-    mark = GameMaker::board.getMarkInSquare(square)
+    mark = @board.getMarkInSquare(square)
     square = @production.scene.find(square)
     if mark == X || mark == O
       square.text = mark.chr
@@ -96,6 +98,10 @@ class GuiIo
   def remove_message
     message = @production.scene.find(:message)
     message.remove_all
+  end
+
+  def button_clicked
+    notifyListeners()
   end
 
 end

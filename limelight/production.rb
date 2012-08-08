@@ -13,12 +13,23 @@ module Production
     if stage.current_scene != nil
       @scene = stage.current_scene
     end
-    @io = GuiIo.new(self)
-    GameMaker.makeGame(@io)
+    @board = Board.new()
+    @io = GuiIo.new(board)
+    @io.production = self
+    @game = Game.new(@io, @board)
+    game.begin()
   end
 
   def io
     @io
+  end
+
+  def game
+    @game
+  end
+
+  def board
+    @board
   end
 
 end

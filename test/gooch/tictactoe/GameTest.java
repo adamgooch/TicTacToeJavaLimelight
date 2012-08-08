@@ -4,35 +4,63 @@ import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.Assert.*;
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class GameTest extends TestSuite {
+
     private Game game;
-    private MiniMaxAI mockAi;
     private IO mockIO;
-    private Board board;
 
     @Before
     public void setUp() {
-        mockAi = mock(MiniMaxAI.class);
-        mockIO = mock(ConsoleIO.class);
-        board = new Board();
-        BoardChecker checker = new NineSquareChecker(board);
-        game = new Game(mockAi, mockIO, checker, PlayType.AI_VS_AI);
+        Board mockBoard = mock(Board.class);
+        mockIO = mock(IO.class);
+        game = new Game(mockIO, mockBoard);
+        game.checker = mock(BoardChecker.class);
     }
 
     @Test
-    public void gameOverShouldBeFalseWhenTheGameHasJustBegun() {
+    public void shouldGetTheDesiredPlayTypeAsAGameIsCreated() {
+        verify(mockIO).getPlayType();
+    }
+
+    @Test
+    public void shouldBeOverWhenTheBoardIsFull() {
+        when(game.checker.boardIsFull()).thenReturn(true);
+        assertTrue(game.gameOver());
+    }
+
+    @Test
+    public void shouldBeOverWhenAPlayerWins() {
+        when(game.checker.thereIsAWinner()).thenReturn(true);
+        assertTrue(game.gameOver());
+    }
+
+    @Test
+    public void shouldNotBeOverWhenTheBoardIsNotFullAndNoOneHasWon() {
+        when(game.checker.boardIsFull()).thenReturn(false);
+        when(game.checker.thereIsAWinner()).thenReturn(false);
         assertFalse(game.gameOver());
     }
 
     @Test
-    public void gameOverShouldBeTrueAfter9MovesHaveBeenMade() {
-        game.play();
-        for(int i = 0; i < 9; i++)
-            board.putMarkInSquare('X', i);
-        assertTrue(game.gameOver());
+    public void shouldDisplayAMessageWhenItHasEnded() {
+        game.end();
+        verify(mockIO).displayMessage(Game.NOBODY_WINS);
     }
 
+    @Test
+    public void shouldPlayAnAudioMessageWhenItHasEnded() {
+        game.end();
+        verify(mockIO).playAudioMessage(Game.NOBODY_WINS);
+    }
+
+    @Test
+    public void shouldHighlightWinningSquaresWhenItHasEnded() {
+        game.end();
+        verify(mockIO).highlightWin(new ArrayList());
+    }
 }

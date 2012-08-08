@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class ConsoleIO implements IO {
+public class ConsoleIO extends InputListener implements IO {
 
     private static final String OPENING_MESSAGE = "Welcome To Tic Tac Toe\n" +
-            "How would you like to play?\n" +
+            "How would you like to start?\n" +
             "0: Player vs. Player\n" +
             "1: Player vs. Computer\n" +
             "2: Computer vs. Computer\n" +
@@ -20,30 +20,33 @@ public class ConsoleIO implements IO {
     private static final int AI_VS_AI = 2;
     private static final int INVALID_SQUARE = 9;
 
+    private Board board;
     protected BufferedReader inputReader;
 
-    public ConsoleIO() {
+    public ConsoleIO(Board board) {
+        super(board);
+        this.board = board;
         InputStreamReader inputStreamReader = new InputStreamReader(System.in);
         inputReader = new BufferedReader(inputStreamReader);
     }
 
     @Override
     public void displayBoard() {
-        System.out.println(GameMaker.board.asString());
-    }
-
-    @Override
-    public void displayMessage(String message) {
-        System.out.print(message);
+        System.out.println(board.asString());
     }
 
     @Override
     public void getPlayerMove(char playerMark) {
         displayMessage(ASK_FOR_MOVE);
-        while(!isValidPlayerMove(playerMark)){
+        while(!isValidPlayerMove(playerMark)) {
             displayMessage(INVALID_MOVE);
         }
-        GameMaker.game.inputReceived();
+        notifyListeners();
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        System.out.print(message);
     }
 
     protected boolean isValidPlayerMove(char playerMark) {
@@ -54,7 +57,7 @@ public class ConsoleIO implements IO {
         } catch (NumberFormatException e) {
             // bad user input doesn't matter, gameBoard doesn't care
         }
-        return GameMaker.board.putMarkInSquare(playerMark, desiredSquare);
+        return board.putMarkInSquare(playerMark, desiredSquare);
     }
 
     public PlayType getPlayType() {

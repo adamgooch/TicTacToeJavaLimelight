@@ -9,63 +9,62 @@ import static org.mockito.Mockito.mock;
 
 public class MinimaxAITest extends TestSuite {
     private MiniMaxAI ai;
-
+    private Board board;
 
     @Before
     public void setUp() {
-        GameMaker.game = mock(Game.class);
-        ai = new MiniMaxAI();
-        GameMaker.board = new Board();
+        board = new Board();
+        ai = new MiniMaxAI(board);
     }
 
     @Test
     public void moveShouldStartInCenterIfPossible() {
-        GameMaker.board.putMarkInSquare('X', 0);
+        board.putMarkInSquare('X', 0);
         ai.move('O');
-        assertEquals('O', GameMaker.board.getMarkInSquare(4));
+        assertEquals('O', board.getMarkInSquare(4));
     }
 
     @Test
     public void moveShouldBlockXInARow() {
-        GameMaker.board.putMarkInSquare('X', 0);
-        GameMaker.board.putMarkInSquare('O', 3);
-        GameMaker.board.putMarkInSquare('X', 1);
+        board.putMarkInSquare('X', 0);
+        board.putMarkInSquare('O', 3);
+        board.putMarkInSquare('X', 1);
         ai.move('O');
-        assertEquals('O', GameMaker.board.getMarkInSquare(2));
+        assertEquals('O', board.getMarkInSquare(2));
     }
 
     @Test
     public void moveShouldBlockXInAColumn() {
-        GameMaker.board.putMarkInSquare('X', 1);
-        GameMaker.board.putMarkInSquare('O', 0);
-        GameMaker.board.putMarkInSquare('X', 4);
+        board.putMarkInSquare('X', 1);
+        board.putMarkInSquare('O', 0);
+        board.putMarkInSquare('X', 4);
         ai.move('O');
-        assertEquals('O', GameMaker.board.getMarkInSquare(7));
+        assertEquals('O', board.getMarkInSquare(7));
     }
 
     @Test
     public void moveShouldGoInSquare6() {
-        GameMaker.board.putMarkInSquare('X', 7);
-        GameMaker.board.putMarkInSquare('O', 1);
-        GameMaker.board.putMarkInSquare('X', 5);
+        board.putMarkInSquare('X', 7);
+        board.putMarkInSquare('O', 1);
+        board.putMarkInSquare('X', 5);
         ai.move('O');
-        assertEquals('O', GameMaker.board.getMarkInSquare(6));
+        assertEquals('O', board.getMarkInSquare(6));
     }
 
     @Test
     public void moveShouldBlockXInADiagonal() {
-        GameMaker.board.putMarkInSquare('X', 2);
-        GameMaker.board.putMarkInSquare('O', 0);
-        GameMaker.board.putMarkInSquare('X', 4);
+        board.putMarkInSquare('X', 2);
+        board.putMarkInSquare('O', 0);
+        board.putMarkInSquare('X', 4);
         ai.move('O');
-        assertEquals('O', GameMaker.board.getMarkInSquare(6));
+        assertEquals('O', board.getMarkInSquare(6));
     }
 
     @Test
     public void exhaustiveAITest() {
-        NineSquareChecker checker = new NineSquareChecker(GameMaker.board);
+        NineSquareChecker checker = new NineSquareChecker(board);
         for(int i = 0; i < 9; i++){
-            GameMaker.board.putMarkInSquare('X', i);
+            board.putMarkInSquare('X', i);
             ai.move('O');
             ai.move('X');
             ai.move('O');
@@ -75,8 +74,8 @@ public class MinimaxAITest extends TestSuite {
             ai.move('O');
             ai.move('X');
             assertEquals(checker.getWinner(), 'N');
-            ai = new MiniMaxAI();
-            GameMaker.board = new Board();
+            board = new Board();
+            ai = new MiniMaxAI(board);
         }
     }
 }

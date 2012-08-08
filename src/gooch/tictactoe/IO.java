@@ -9,4 +9,5 @@ public interface IO {
     public PlayType getPlayType();
     public void highlightWin(ArrayList winningSquares);
     public void playAudioMessage(String winner);
+    public void addActionListener(Object object);
 }

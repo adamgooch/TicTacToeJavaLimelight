@@ -2,23 +2,30 @@ package gooch.tictactoe;
 
 import java.util.ArrayList;
 
-public class MiniMaxAI implements AI {
+public class MiniMaxAI extends InputListener implements AI {
     private static final int POSITION = 0;
     private static final int SCORE = 1;
+
+    private Board board;
+
+    public MiniMaxAI(Board board) {
+        super(board);
+        this.board = board;
+    }
 
     @Override
     public void move(char playerMark) {
         int square = findBestMove(playerMark);
-        GameMaker.board.putMarkInSquare(playerMark, square);
-        GameMaker.game.inputReceived();
+        board.putMarkInSquare(playerMark, square);
+        notifyListeners();
     }
 
     private int findBestMove(char mark) {
-        ArrayList<Integer> positions = GameMaker.board.getAvailableSquares();
+        ArrayList<Integer> positions = board.getAvailableSquares();
         int[][] scores = new int[positions.size()][2];
         for(int i = 0; i < positions.size(); i++){
             int position = positions.get(i);
-            Board child = GameMaker.board.clone();
+            Board child = board.clone();
             child.putMarkInSquare(mark, position);
             int currentScore;
             if(mark == Game.PLAYER_TWO) {

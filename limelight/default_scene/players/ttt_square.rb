@@ -5,8 +5,8 @@ module TttSquare
   def mouse_clicked e
     if active?
       self.style.background_color = Colors::SQUARE_INACTIVE
-      GameMaker::board.putMarkInSquare(GuiIo::X, self.id.to_i)
-      GameMaker::game.inputReceived()
+      production.board.putMarkInSquare(GuiIo::X, self.id.to_i)
+      production.io.notifyListeners()
     end
   end
 
@@ -23,7 +23,7 @@ module TttSquare
   end
 
   def active?
-    self.text == "" && !GameMaker::game.gameOver
+    self.text == "" && !production.game.gameOver
   end
 
 end
