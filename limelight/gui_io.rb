@@ -4,9 +4,9 @@ require File.expand_path(File.dirname(__FILE__) + '/colors')
 import 'gooch.tictactoe.Board'
 import 'gooch.tictactoe.Game'
 import 'gooch.tictactoe.PlayType'
-import 'gooch.tictactoe.InputListener'
+import 'gooch.tictactoe.InputReceiver'
 
-class GuiIo < Java::gooch.tictactoe.InputListener
+class GuiIo < Java::gooch.tictactoe.InputReceiver
   include Java::gooch.tictactoe.IO
 
   X = 88

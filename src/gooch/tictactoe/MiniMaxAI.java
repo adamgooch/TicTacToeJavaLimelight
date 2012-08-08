@@ -2,7 +2,7 @@ package gooch.tictactoe;
 
 import java.util.ArrayList;
 
-public class MiniMaxAI extends InputListener implements AI {
+public class MiniMaxAI extends InputReceiver implements AI {
     private static final int POSITION = 0;
     private static final int SCORE = 1;
 

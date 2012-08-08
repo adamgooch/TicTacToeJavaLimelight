@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class ConsoleIO extends InputListener implements IO {
+public class ConsoleIO extends InputReceiver implements IO {
 
     private static final String OPENING_MESSAGE = "Welcome To Tic Tac Toe\n" +
             "How would you like to start?\n" +

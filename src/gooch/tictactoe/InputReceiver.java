@@ -4,11 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public abstract class InputListener {
+public abstract class InputReceiver {
     private ArrayList<ActionListener> listeners = new ArrayList<ActionListener>();
 
-    public InputListener(Board board) {
-
+    public InputReceiver(Board board) {
+        //required for limelight app to run
     }
 
     protected void notifyListeners() {
