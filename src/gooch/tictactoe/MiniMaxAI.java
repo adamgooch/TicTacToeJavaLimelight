@@ -25,56 +25,56 @@ public class MiniMaxAI extends InputReceiver implements AI {
         int[][] scores = new int[positions.size()][2];
         for(int i = 0; i < positions.size(); i++){
             int position = positions.get(i);
-            Board child = board.clone();
-            child.putMarkInSquare(mark, position);
+            board.putMarkInSquare(mark, position);
             int currentScore;
             if(mark == Game.PLAYER_TWO) {
-                currentScore = min(child);
+                currentScore = min();
             } else {
-                currentScore = max(child);
+                currentScore = max();
             }
+            board.removeMarkInSquare(position);
             scores[i][POSITION] = position;
             scores[i][SCORE] = currentScore;
         }
         return determineBestMove(scores, mark);
     }
 
-    public int max(Board childBoard){
-        NineSquareChecker checker = new NineSquareChecker(childBoard);
+    public int max(){
+        NineSquareChecker checker = new NineSquareChecker(board);
         if(checker.thereIsAWinner() && checker.getWinner() == Game.PLAYER_TWO)
             return 1;
         else if(checker.thereIsAWinner() && checker.getWinner() == Game.PLAYER_ONE)
             return -1;
-        else if(childBoard.countSquaresAvailable() == 0)
+        else if(board.countSquaresAvailable() == 0)
             return 0;
-        ArrayList<Integer> positions = childBoard.getAvailableSquares();
+        ArrayList<Integer> positions = board.getAvailableSquares();
         int best = Integer.MIN_VALUE;
         for(Integer pos : positions){
-            Board newChild = childBoard.clone();
-            newChild.putMarkInSquare(Game.PLAYER_TWO, pos);
-            int move = min(newChild);
+            board.putMarkInSquare(Game.PLAYER_TWO, pos);
+            int move = min();
             if(move > best)
                 best = move;
+            board.removeMarkInSquare(pos);
         }
         return best;
     }
 
-    public int min(Board childBoard){
-        NineSquareChecker checker = new NineSquareChecker(childBoard);
+    public int min(){
+        NineSquareChecker checker = new NineSquareChecker(board);
         if(checker.thereIsAWinner() && checker.getWinner() == Game.PLAYER_TWO)
             return 1;
         else if(checker.thereIsAWinner() && checker.getWinner() == Game.PLAYER_ONE)
             return -1;
-        else if(childBoard.countSquaresAvailable() == 0)
+        else if(board.countSquaresAvailable() == 0)
             return 0;
-        ArrayList<Integer> positions = childBoard.getAvailableSquares();
+        ArrayList<Integer> positions = board.getAvailableSquares();
         int best = Integer.MAX_VALUE;
         for(Integer pos : positions){
-            Board newChild = childBoard.clone();
-            newChild.putMarkInSquare(Game.PLAYER_ONE, pos);
-            int move = max(newChild);
+            board.putMarkInSquare(Game.PLAYER_ONE, pos);
+            int move = max();
             if(move < best)
                 best = move;
+            board.removeMarkInSquare(pos);
         }
         return best;
     }
