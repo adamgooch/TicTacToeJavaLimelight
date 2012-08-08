@@ -13,6 +13,20 @@ To play the GUI version, you must be running JRuby.  If you're running rvm enter
 
 rvm use jruby
 
+If you get an error enter:
+
+rvm list
+
+Then use a version of jruby that is installed.  ie:
+
+rvm use jruby-1.6.7
+
+If you don't have jruby installed, enter:
+
+rvm install jruby
+
+If you aren't using rvm...you should be.  Check out rvm.io on the Interweb.
+
 Next, the limelight v.0.5.5 gem must be installed.  Enter:
 
 bundle install
