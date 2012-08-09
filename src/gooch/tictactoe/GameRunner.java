@@ -44,14 +44,18 @@ public class GameRunner implements ActionListener {
     private void playerOneMove() {
         if(gameType != PlayType.AI_VS_AI)
             io.getPlayerMove(Game.PLAYER_ONE); // human player always goes first
-        else
+        else {
+            io.displayMessage(IO.THINKING);
             ai.move(Game.PLAYER_ONE);
+        }
     }
 
     private void playerTwoMove() {
-        if(gameType != PlayType.PLAYER_VS_PLAYER)
+        if(gameType != PlayType.PLAYER_VS_PLAYER) {
+            io.displayMessage(IO.THINKING);
             ai.move(Game.PLAYER_TWO);
-        else
+
+        } else
             io.getPlayerMove(Game.PLAYER_TWO);
     }
 

@@ -3,18 +3,16 @@ package gooch.tictactoe;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static junit.framework.Assert.*;
 
-public class NineSquareCheckerTest {
+public class BoardCheckerTest {
     private Board board;
-    private NineSquareChecker checker;
+    private BoardChecker checker;
 
     @Before
     public void setUp() {
-        board = new Board();
-        checker = new NineSquareChecker(board);
+        board = new Board(3);
+        checker = new BoardChecker(board);
     }
 
     @Test
@@ -110,12 +108,40 @@ public class NineSquareCheckerTest {
         board.putMarkInSquare('X', 6);
         board.putMarkInSquare('X', 7);
         board.putMarkInSquare('O', 8);
-        if(checker.thereIsAWinner()) {
-            ArrayList<Integer> winningSquares = checker.getWinningSquares();
-            assertTrue(winningSquares.contains(0));
-            assertTrue(winningSquares.contains(4));
-            assertTrue(winningSquares.contains(8));
-        }
+        assertTrue(checker.thereIsAWinner());
+        int[] winningSquares = checker.getWinningSquares();
+        assertEquals(0, winningSquares[0]);
+        assertEquals(4, winningSquares[1]);
+        assertEquals(8, winningSquares[2]);
     }
 
+    @Test
+    public void shouldReportIfTheBoardIsFullOrNot() {
+        board.putMarkInSquare('O', 0);
+        board.putMarkInSquare('X', 1);
+        board.putMarkInSquare('O', 2);
+        board.putMarkInSquare('X', 3);
+        board.putMarkInSquare('O', 4);
+        board.putMarkInSquare('X', 5);
+        board.putMarkInSquare('X', 6);
+        board.putMarkInSquare('X', 7);
+        assertFalse(checker.boardIsFull());
+        board.putMarkInSquare('O', 8);
+        assertTrue(checker.boardIsFull());
+    }
+
+    @Test
+    public void shouldBehaveWhenTheBoardIs4x4() {
+        board = new Board(4);
+        checker = new BoardChecker(board);
+        assertFalse(checker.boardIsFull());
+        assertFalse(checker.thereIsAWinner());
+        assertEquals('N', checker.getWinner());
+        board.putMarkInSquare('X', 4);
+        board.putMarkInSquare('X', 5);
+        board.putMarkInSquare('X', 6);
+        board.putMarkInSquare('X', 7);
+        assertTrue(checker.thereIsAWinner());
+        assertEquals('X', checker.getWinner());
+    }
 }

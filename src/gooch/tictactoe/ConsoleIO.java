@@ -18,7 +18,7 @@ public class ConsoleIO extends InputReceiver implements IO {
     private static final int PLAYER_VS_PLAYER = 0;
     private static final int PLAYER_VS_AI = 1;
     private static final int AI_VS_AI = 2;
-    private static final int INVALID_SQUARE = 9;
+    private static final int INVALID_SQUARE = 99;
 
     private Board board;
     protected BufferedReader inputReader;
@@ -89,13 +89,8 @@ public class ConsoleIO extends InputReceiver implements IO {
     }
 
     @Override
-    public void highlightWin(ArrayList winningSquares) {
-
-    }
-
-    @Override
-    public void playAudioMessage(String winner) {
-
+    public void doEndOfGameTasks(String message, int[] winningSquares) {
+        displayMessage(message);
     }
 
 }

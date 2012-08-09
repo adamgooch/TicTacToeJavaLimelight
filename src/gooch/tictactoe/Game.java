@@ -1,9 +1,6 @@
 package gooch.tictactoe;
 
 public class Game {
-    public static final String PLAYER_ONE_WINS = "X WINS!\n";
-    public static final String PLAYER_TWO_WINS = "O WINS!\n";
-    public static final String NOBODY_WINS = "Nobody Wins.\n";
     public static final char PLAYER_ONE = 'X';
     public static final char PLAYER_TWO = 'O';
 
@@ -18,7 +15,7 @@ public class Game {
         this.runner = new GameRunner(ai, io, this, type);
         io.addActionListener(runner);
         ai.addActionListener(runner);
-        checker = new NineSquareChecker(board);
+        checker = new BoardChecker(board);
     }
 
     public void begin() {
@@ -33,17 +30,15 @@ public class Game {
 
     private String getWinnerMessage() {
         if(checker.getWinner() == PLAYER_ONE) {
-            return PLAYER_ONE_WINS;
+            return IO.PLAYER_ONE_WINS;
         } else if(checker.getWinner() == PLAYER_TWO) {
-            return PLAYER_TWO_WINS;
+            return IO.PLAYER_TWO_WINS;
         } else {
-            return NOBODY_WINS;
+            return IO.NOBODY_WINS;
         }
     }
 
     public void end() {
-        io.displayMessage(getWinnerMessage());
-        io.highlightWin(checker.getWinningSquares());
-        io.playAudioMessage(getWinnerMessage());
+        io.doEndOfGameTasks(getWinnerMessage(), checker.getWinningSquares());
     }
 }

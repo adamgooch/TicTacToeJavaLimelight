@@ -4,8 +4,6 @@ import junit.framework.TestSuite;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -49,18 +47,6 @@ public class GameTest extends TestSuite {
     @Test
     public void shouldDisplayAMessageWhenItHasEnded() {
         game.end();
-        verify(mockIO).displayMessage(Game.NOBODY_WINS);
-    }
-
-    @Test
-    public void shouldPlayAnAudioMessageWhenItHasEnded() {
-        game.end();
-        verify(mockIO).playAudioMessage(Game.NOBODY_WINS);
-    }
-
-    @Test
-    public void shouldHighlightWinningSquaresWhenItHasEnded() {
-        game.end();
-        verify(mockIO).highlightWin(new ArrayList());
+        verify(mockIO).doEndOfGameTasks(IO.NOBODY_WINS, null);
     }
 }

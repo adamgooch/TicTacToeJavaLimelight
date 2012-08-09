@@ -13,7 +13,7 @@ module Production
     if stage.current_scene != nil
       @scene = stage.current_scene
     end
-    @board = Board.new()
+    @board = Board.new(3)
     @io = GuiIo.new(board)
     @io.production = self
     @game = Game.new(@io, @board)

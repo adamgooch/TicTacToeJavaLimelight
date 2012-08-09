@@ -13,7 +13,7 @@ public class MinimaxAITest extends TestSuite {
 
     @Before
     public void setUp() {
-        board = new Board();
+        board = new Board(3);
         ai = new MiniMaxAI(board);
     }
 
@@ -62,7 +62,7 @@ public class MinimaxAITest extends TestSuite {
 
     @Test
     public void exhaustiveAITest() {
-        NineSquareChecker checker = new NineSquareChecker(board);
+        BoardChecker checker = new BoardChecker(board);
         for(int i = 0; i < 9; i++){
             board.putMarkInSquare('X', i);
             ai.move('O');
@@ -74,8 +74,24 @@ public class MinimaxAITest extends TestSuite {
             ai.move('O');
             ai.move('X');
             assertEquals('N', checker.getWinner());
-            board = new Board();
+            board = new Board(3);
             ai = new MiniMaxAI(board);
         }
+    }
+
+    @Test
+    public void spike() {
+        board.putMarkInSquare('X', 0);
+        //board.putMarkInSquare('X', 1);
+        //board.putMarkInSquare('X', 2);
+        //board.putMarkInSquare('X', 3);
+        //board.putMarkInSquare('X', 4);
+        //board.putMarkInSquare('X', 5);
+        //board.putMarkInSquare('X', 6);
+        //board.putMarkInSquare('X', 7);
+        //board.putMarkInSquare('X', 8);
+        ai.move('O');
+        //System.out.println(board.asString());
+        assertEquals('O', board.getMarkInSquare(4));
     }
 }

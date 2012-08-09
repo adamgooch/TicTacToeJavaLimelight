@@ -23,7 +23,7 @@ class GuiIo < Java::gooch.tictactoe.InputReceiver
   end
 
   def displayBoard
-    Board::NUMBER_OF_SQUARES.times do |square|
+    @board.numberOfSquares.times do |square|
       put_text_in_square(square)
     end
   end
@@ -39,17 +39,15 @@ class GuiIo < Java::gooch.tictactoe.InputReceiver
   end
 
   def displayMessage (message)
-    message_container = @production.scene.find(:message)
-    if message_is_not_displayed(message_container)
-      build_message(message_container, message)
-    else
-      child_props[0].text = message
+    unless message == THINKING
+      message_container = @production.scene.find(:message)
+      child_props = message_container.find_by_name("message")
+      if child_props.length == 0
+        build_message(message_container, message)
+      else
+        child_props[0].text = message
+      end
     end
-  end
-
-  def message_is_not_displayed (message_container)
-    child_props = message_container.find_by_name("message")
-    child_props.length == 0
   end
 
   def build_message (message_container, message)
@@ -58,17 +56,14 @@ class GuiIo < Java::gooch.tictactoe.InputReceiver
     end
   end
 
-  def getPlayerMove (player_mark)
-  end
-
   def getPlayType
     PlayType::PLAYER_VS_AI
   end
 
   def playAudioMessage(message)
-    if message == Game::PLAYER_ONE_WINS
+    if message == PLAYER_ONE_WINS
       @production.scene.play_sound(X_WIN_SOUND)
-    elsif message == Game::PLAYER_TWO_WINS
+    elsif message == PLAYER_TWO_WINS
       @production.scene.play_sound(O_WIN_SOUND)
     else
       @production.scene.play_sound(DRAW_SOUND)
@@ -82,6 +77,14 @@ class GuiIo < Java::gooch.tictactoe.InputReceiver
     end
   end
 
+  def doEndOfGameTasks(message, winning_squares)
+    displayMessage(message)
+    playAudioMessage(message)
+    unless message == NOBODY_WINS
+      highlightWin(winning_squares)
+    end
+  end
+
   def reset_game
     reset_square_color
     @production.production_opened
@@ -89,7 +92,7 @@ class GuiIo < Java::gooch.tictactoe.InputReceiver
   end
 
   def reset_square_color
-    Board::NUMBER_OF_SQUARES.times do |i|
+    @board.numberOfSquares.times do |i|
       square = @production.scene.find(i)
       square.style.background_color = Colors::SQUARE_INACTIVE
     end
@@ -102,6 +105,9 @@ class GuiIo < Java::gooch.tictactoe.InputReceiver
 
   def button_clicked
     notifyListeners()
+  end
+
+  def getPlayerMove (player_mark)
   end
 
 end
