@@ -17,6 +17,7 @@ module Production
     if @stage.current_scene != nil
       @scene = stage.current_scene
     end
+    start_game PlayType::PLAYER_VS_AI
   end
 
   def start_game selection
