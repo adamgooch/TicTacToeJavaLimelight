@@ -54,7 +54,6 @@ public class GameRunner implements ActionListener {
         if(gameType != PlayType.PLAYER_VS_PLAYER) {
             io.displayMessage(IO.THINKING);
             ai.move(Game.PLAYER_TWO);
-
         } else
             io.getPlayerMove(Game.PLAYER_TWO);
     }

@@ -5,7 +5,7 @@ module TttSquare
   def mouse_clicked e
     if active?
       self.style.background_color = Colors::SQUARE_INACTIVE
-      production.board.putMarkInSquare(GuiIo::X, self.id.to_i)
+      production.board.putMarkInSquare(production.io.mark, self.id.to_i)
       production.io.notifyListeners()
     end
   end

@@ -17,6 +17,8 @@ class GuiIo < Java::gooch.tictactoe.InputReceiver
   DRAW_SOUND = 'sounds/journeysover.au'
 
   attr_accessor :production
+  attr_accessor :play_type
+  attr_reader :mark
 
   def initialize (board)
     @board = board
@@ -57,7 +59,7 @@ class GuiIo < Java::gooch.tictactoe.InputReceiver
   end
 
   def getPlayType
-    PlayType::PLAYER_VS_AI
+    play_type
   end
 
   def playAudioMessage(message)
@@ -87,8 +89,8 @@ class GuiIo < Java::gooch.tictactoe.InputReceiver
 
   def reset_game
     reset_square_color
-    @production.production_opened
     remove_message
+    @production.start_game play_type
   end
 
   def reset_square_color
@@ -108,6 +110,7 @@ class GuiIo < Java::gooch.tictactoe.InputReceiver
   end
 
   def getPlayerMove (player_mark)
+    @mark = player_mark
   end
 
 end

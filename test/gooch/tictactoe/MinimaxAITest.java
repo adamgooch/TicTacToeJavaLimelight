@@ -13,7 +13,7 @@ public class MinimaxAITest extends TestSuite {
 
     @Before
     public void setUp() {
-        board = new Board(3);
+        board = new Board(Board.THREE_X_THREE);
         ai = new MiniMaxAI(board);
     }
 

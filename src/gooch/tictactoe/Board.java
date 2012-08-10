@@ -3,6 +3,8 @@ package gooch.tictactoe;
 import java.util.ArrayList;
 
 public class Board {
+    public static int FOUR_X_FOUR = 4;
+    public static int THREE_X_THREE = 3;
     public int dimension;
     public int numberOfSquares;
 
@@ -82,7 +84,6 @@ public class Board {
         for(int square = 0; square < numberOfSquares; square++) {
             if(squareIsAvailable(square))
                 count++;
-
         }
         return count;
     }

@@ -20,12 +20,10 @@ public class ConsoleIO extends InputReceiver implements IO {
     private static final int AI_VS_AI = 2;
     private static final int INVALID_SQUARE = 99;
 
-    private Board board;
     protected BufferedReader inputReader;
 
     public ConsoleIO(Board board) {
         super(board);
-        this.board = board;
         InputStreamReader inputStreamReader = new InputStreamReader(System.in);
         inputReader = new BufferedReader(inputStreamReader);
     }
